@@ -1,0 +1,292 @@
+@import 'tailwindcss';
+
+/* Self-hosted fonts — same stack as bryllim.com */
+@import '@fontsource-variable/geist/wght.css';
+@import '@fontsource-variable/geist-mono/wght.css';
+@import '@fontsource/geist-pixel/400.css';
+@import '@fontsource/source-serif-4/400.css';
+@import '@fontsource/source-serif-4/600.css';
+@import '@fontsource/source-serif-4/400-italic.css';
+
+/* Dark mode via data-theme attribute */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+@theme {
+  --font-sans: 'Geist Variable', 'Geist', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace, monospace;
+  --font-pixel: 'Geist Pixel', 'Geist Mono Variable', ui-monospace, monospace;
+  --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+  --color-bg: #ffffff;
+  --color-ink: #0a0a0a;
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #e9e9e9;
+  --color-gray-300: #d4d4d4;
+  --color-gray-400: #a3a3a3;
+  --color-gray-500: #737373;
+  --color-gray-600: #525252;
+  --color-muted: #737373;
+  --color-dim: #a3a3a3;
+  --color-border: #e9e9e9;
+  --color-border-strong: #d4d4d4;
+  --color-surface: #ffffff;
+  --color-surface-soft: #fafafa;
+
+  --color-gh-0: #ebedf0;
+  --color-gh-1: #9be9a8;
+  --color-gh-2: #40c463;
+  --color-gh-3: #30a14e;
+  --color-gh-4: #216e39;
+
+  --shadow-card: 0 8px 22px -14px rgb(0 0 0 / 0.25);
+  --shadow-card-hover: 0 18px 36px -20px rgb(0 0 0 / 0.4);
+  --shadow-modal: 0 40px 90px -20px rgb(0 0 0 / 0.35);
+
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --spacing-sidebar: 14rem;
+  --spacing-nav: 3.5rem;
+  --container-read: 42rem;
+  --container-wide: 56rem;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dark theme token overrides */
+[data-theme='dark'] {
+  --color-bg: #0c0c0f;
+  --color-ink: #f4f4f5;
+  --color-gray-50: #18181b;
+  --color-gray-100: #1e1e22;
+  --color-gray-200: #2a2a30;
+  --color-gray-300: #3a3a42;
+  --color-gray-400: #8a8a92;
+  --color-gray-500: #a0a0a8;
+  --color-gray-600: #b4b4bc;
+  --color-muted: #a0a0a8;
+  --color-dim: #8a8a92;
+  --color-border: #2a2a30;
+  --color-border-strong: #3a3a42;
+  --color-surface: #0c0c0f;
+  --color-surface-soft: #18181b;
+  --color-gh-0: #161b22;
+  --color-gh-1: #0e4429;
+  --color-gh-2: #006d32;
+  --color-gh-3: #26a641;
+  --color-gh-4: #39d353;
+  --shadow-card: 0 0 0 transparent;
+  --shadow-card-hover: 0 0 0 transparent;
+  --shadow-modal: 0 40px 90px -20px rgb(0 0 0 / 0.65);
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-ink);
+    background-color: var(--color-bg);
+    font-feature-settings: 'ss01' on, 'ss02' on, 'cv01' on;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    transition:
+      background-color 500ms ease,
+      color 500ms ease;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-bg);
+  }
+
+  :focus-visible {
+    outline: 1.5px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gray-300) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: var(--color-gray-300);
+    border-radius: 999px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray-400);
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+@layer utilities {
+  /* Slim scrollbar for left tab menu (bryllim-style: 6px, transparent track) */
+  .sidebar-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gray-300) transparent;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar-thumb {
+    background: var(--color-gray-300);
+    border-radius: 999px;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray-400);
+  }
+
+  .container-read {
+    width: min(100% - 2rem, var(--container-read));
+    margin-inline: auto;
+  }
+
+  @media (min-width: 1024px) {
+    .container-read {
+      /* Slightly wider for side-by-side hero (photo + text) */
+      width: min(100% - 3rem, 48rem);
+    }
+  }
+
+  /* Section headers like “01 — blog” on bryllim.com */
+  .section-label {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: var(--color-ink);
+  }
+
+  .section-link {
+    font-size: 0.875rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-dim);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .section-link:hover {
+    color: var(--color-ink);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    color: var(--color-muted);
+    border: 1px solid var(--color-border-strong);
+    background: transparent;
+  }
+
+  .chip-invert {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: var(--color-ink);
+    color: var(--color-bg);
+  }
+
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    transition:
+      transform 0.42s var(--ease-out-expo),
+      box-shadow 0.35s var(--ease-out-expo),
+      border-color 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-border-strong);
+  }
+
+  .prose-blog {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+
+  .prose-blog p + p {
+    margin-top: 1.1rem;
+  }
+
+  .gh-day-0 {
+    background: var(--color-gh-0);
+  }
+  .gh-day-1 {
+    background: var(--color-gh-1);
+  }
+  .gh-day-2 {
+    background: var(--color-gh-2);
+  }
+  .gh-day-3 {
+    background: var(--color-gh-3);
+  }
+  .gh-day-4 {
+    background: var(--color-gh-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
