@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { applyTheme, ThemeProvider } from './hooks/useTheme'
+import './lib/firebase'
 import './index.css'
 
 // Apply theme before paint — default is light (white), not OS night mode
