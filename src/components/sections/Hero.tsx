@@ -94,7 +94,7 @@ export default function Hero() {
             </motion.div>
 
             <motion.div className="flex-1 min-w-0 sm:pt-2" variants={item}>
-              <h1 className="font-mono text-[clamp(2.4rem,6vw,3.25rem)] font-normal tracking-tight leading-none lowercase mb-6 text-[var(--color-ink)]">
+              <h1 className="font-pixel text-[clamp(2.4rem,6vw,3.25rem)] font-normal tracking-tight leading-none lowercase mb-6 text-[var(--color-ink)]">
                 {site.name}
               </h1>
               <p className="text-[0.95rem] text-[var(--color-muted)] leading-[1.7] max-w-[26rem] mb-4">

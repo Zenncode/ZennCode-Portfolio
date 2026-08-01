@@ -17,6 +17,7 @@ import {
   GearPage,
   ResourcesPage,
   ShopPage,
+  ShopProductPage,
 } from './pages/SimplePages'
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="shop" element={<ShopPage />} />
+        <Route path="shop/:slug" element={<ShopProductPage />} />
         <Route path="blog" element={<BlogPage />} />
         <Route path="blog/:slug" element={<BlogPostPage />} />
         <Route path="gear" element={<GearPage />} />

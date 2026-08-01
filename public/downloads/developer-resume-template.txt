@@ -1,0 +1,38 @@
+﻿ZENN — DEVELOPER RESUME TEMPLATE (FREE)
+========================================
+ATS-friendly one-page layout for software developers.
+Open this file in Word or Google Docs and replace the placeholders.
+
+----------------------------------------
+YOUR NAME
+Full-Stack Developer · City, PH · email@example.com · github.com/you
+
+----------------------------------------
+EDUCATION
+University Name — B.S. Computer Science
+2020 – 2024
+
+----------------------------------------
+WORK EXPERIENCE
+Company Name — Software Engineer
+2024 – Present
+• Shipped full-stack features with React, Node.js, and PostgreSQL
+• Improved page load time by 40% via caching and code-splitting
+
+----------------------------------------
+PROJECTS
+Project Name — Personal
+• Built an offline-first app with TypeScript and modern tooling
+• Stack: React, Vite, Tailwind, Node
+
+----------------------------------------
+ACTIVITIES
+Hackathons · Open source · Tech community
+
+----------------------------------------
+SKILLS & CERTIFICATIONS
+TypeScript · React · Node.js · PostgreSQL · Docker
+Certifications: list yours here
+
+----------------------------------------
+Tip: keep it to one page. Lead with impact, not buzzwords.

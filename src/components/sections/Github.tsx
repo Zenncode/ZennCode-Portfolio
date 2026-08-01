@@ -43,7 +43,7 @@ export default function Github() {
             </div>
             <p className="text-[0.88rem] text-[var(--color-muted)]">
               {contributionCount.toLocaleString()} contributions in the last
-              year
+              year · @{site.socials.githubUser}
             </p>
           </a>
         </FadeIn>

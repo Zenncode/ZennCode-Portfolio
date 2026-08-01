@@ -15,11 +15,20 @@ export default function Recommendations() {
         </FadeIn>
 
         <div className="flex flex-col gap-4">
-          {recommendations.map((r, i) => (
-            <FadeIn key={r.name} delay={Math.min(i * 0.07, 0.33)}>
+          {/* Pick DICT + two strong Cambridge/mentor recs like bryllim home order */}
+          {(
+            [
+              recommendations.find((r) => r.initials === 'HA'),
+              recommendations.find((r) => r.initials === 'JS'),
+              recommendations.find((r) => r.initials === 'CM'),
+            ].filter(Boolean) as typeof recommendations
+          ).map((r, i, arr) => (
+            <FadeIn key={`${r.initials}-${r.name}`} delay={Math.min(i * 0.07, 0.33)}>
               <blockquote className="p-0 border-0">
-                <p className="text-[0.95rem] text-[var(--color-muted)] leading-[1.65] mb-4">
-                  {r.quote}
+                <p className="text-[0.95rem] text-[var(--color-muted)] leading-[1.65] mb-4 whitespace-pre-line">
+                  {r.quote.length > 320
+                    ? `${r.quote.slice(0, 320).trim()}…`
+                    : r.quote}
                 </p>
                 <footer className="flex items-center gap-3">
                   <span
@@ -38,7 +47,7 @@ export default function Recommendations() {
                   </div>
                 </footer>
               </blockquote>
-              {i < recommendations.length - 1 && (
+              {i < arr.length - 1 && (
                 <div className="mt-4 border-b border-[var(--color-border)]" />
               )}
             </FadeIn>

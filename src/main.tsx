@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
-import { applyTheme } from './hooks/useTheme'
+import { applyTheme, ThemeProvider } from './hooks/useTheme'
 import './index.css'
 
 // Apply theme before paint — default is light (white), not OS night mode
@@ -29,7 +29,9 @@ import './index.css'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </BrowserRouter>
   </StrictMode>,
 )

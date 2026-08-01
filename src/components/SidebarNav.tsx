@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useState, type MouseEvent, type ReactNode } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { site } from '../data/portfolio'
 import { useTheme } from '../hooks/useTheme'
@@ -15,8 +15,10 @@ import {
   IconMoon,
   IconMute,
   IconPeople,
+  IconSpeaker,
   IconSun,
 } from './navIcons'
+import { useSiteSound } from '../hooks/useSiteSound'
 
 type NavItem = {
   to: string
@@ -48,6 +50,7 @@ const NAV_GROUPS: NavItem[][] = [
 type Props = {
   onOpenCommand: () => void
   onOpenTyping: () => void
+  onOpenChat: () => void
 }
 
 function modLabel() {
@@ -93,7 +96,7 @@ function ThemeIconBtn({
 }: {
   children: ReactNode
   active: boolean
-  onClick: () => void
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void
   title: string
 }) {
   return (
@@ -101,7 +104,7 @@ function ThemeIconBtn({
       type="button"
       title={title}
       onClick={onClick}
-      className={`size-8 grid place-items-center rounded-full transition-colors ${
+      className={`size-6 grid place-items-center rounded-full transition-colors ${
         active
           ? 'bg-[var(--color-bg)] text-[var(--color-ink)] shadow-sm border border-[var(--color-border)]'
           : 'text-[var(--color-dim)] hover:text-[var(--color-ink)]'
@@ -112,12 +115,16 @@ function ThemeIconBtn({
   )
 }
 
-export default function SidebarNav({ onOpenCommand, onOpenTyping }: Props) {
+export default function SidebarNav({
+  onOpenCommand,
+  onOpenTyping,
+  onOpenChat,
+}: Props) {
   const [open, setOpen] = useState(false)
-  const [chatOpen, setChatOpen] = useState(false)
   const [viewers, setViewers] = useState(32)
   const [delta, setDelta] = useState(29)
   const { preference, setPreference } = useTheme()
+  const { enabled: soundOn, toggle: toggleSound } = useSiteSound()
   const location = useLocation()
   const mod = modLabel()
 
@@ -146,40 +153,52 @@ export default function SidebarNav({ onOpenCommand, onOpenTyping }: Props) {
 
   const avatars = ['Marcus', 'Alex', 'Sam']
 
+  /**
+   * Horizontal layout (bryllim):
+   *   sidePad | [arrow gutter] | icon | gap | label
+   * Brand name uses the same gutter so “Zenn” lines up with tab icons.
+   */
+  const sidePad = 'px-4 lg:px-5'
+  /** Fixed gutter for → active arrow; icon / brand text start after this */
+  const arrowGutter = 'w-5 shrink-0' // 1.25rem — same width as former pl-5
+
   const shell = (
     <div className="flex flex-col h-full min-h-0 bg-[var(--color-bg)]">
-      <div className="shrink-0 px-4 lg:px-5 pt-5 lg:pt-6 pb-3">
+      {/* Brand — gutter spacer + name = same column as tab icons */}
+      <div className={`shrink-0 ${sidePad} pt-5 lg:pt-6 pb-3`}>
         <Link
           to="/"
-          className="block font-sans font-semibold text-[0.95rem] tracking-tight no-underline text-[var(--color-ink)] border-0 outline-none shadow-none"
+          className="inline-flex items-center gap-2.5 font-pixel text-[1.35rem] font-normal tracking-tight leading-none no-underline text-[var(--color-ink)] border-0 outline-none shadow-none"
           onClick={() => setOpen(false)}
         >
+          <span className={arrowGutter} aria-hidden />
           {site.name}
         </Link>
       </div>
 
       <nav
         aria-label="Primary"
-        className="sidebar-tabs flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 lg:px-4"
+        className={`sidebar-tabs flex-1 min-h-0 overflow-y-auto overflow-x-hidden ${sidePad}`}
       >
         {NAV_GROUPS.map((group, gi) => (
           <div
             key={gi}
             className={
               gi === 0
-                ? 'pb-2'
-                : 'pt-2 pb-2 border-t border-[var(--color-border)]'
+                ? 'pb-2.5 flex flex-col gap-2.5'
+                : 'pt-2.5 pb-2.5 border-t border-[var(--color-border)] flex flex-col gap-2.5'
             }
           >
             {group.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
+                end={item.to === '/'}
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
                   [
-                    /* Layout: [→] [icon] Label  — arrow is own component */
-                    'flex items-center gap-2 w-full px-1 py-[0.42rem] text-[0.875rem] no-underline transition-colors bg-transparent',
+                    'inline-flex w-fit items-center gap-2.5 py-0.5',
+                    'text-[0.875rem] no-underline transition-colors bg-transparent',
                     isActive
                       ? 'text-[var(--color-ink)] font-medium'
                       : 'text-[var(--color-muted)] hover:text-[var(--color-ink)]',
@@ -188,18 +207,24 @@ export default function SidebarNav({ onOpenCommand, onOpenTyping }: Props) {
               >
                 {({ isActive }) => (
                   <>
-                    {/* Spacer keeps inactive rows aligned; arrow only when active */}
-                    <span className="w-3.5 shrink-0 flex items-center justify-center">
+                    {/* Arrow gutter — same width as brand spacer so icons = name */}
+                    <span
+                      className={`${arrowGutter} relative grid place-items-center`}
+                      aria-hidden
+                    >
                       {isActive ? <NavActiveArrow /> : null}
                     </span>
                     {item.icon ? (
-                      <span className="size-4 shrink-0 opacity-70 grid place-items-center">
+                      <span className="size-[1.15em] shrink-0 opacity-80 grid place-items-center [&_svg]:w-[1.15em] [&_svg]:h-[1.15em]">
                         {item.icon}
                       </span>
                     ) : (
-                      <span className="size-4 shrink-0" aria-hidden />
+                      <span
+                        className="size-[1.15em] shrink-0"
+                        aria-hidden
+                      />
                     )}
-                    <span>{item.label}</span>
+                    <span className="leading-none">{item.label}</span>
                   </>
                 )}
               </NavLink>
@@ -208,99 +233,109 @@ export default function SidebarNav({ onOpenCommand, onOpenTyping }: Props) {
         ))}
       </nav>
 
-      <div className="shrink-0 px-4 lg:px-5 pt-3 pb-5 border-t border-[var(--color-border)] space-y-3">
+      <div
+        className={`shrink-0 ${sidePad} pt-3 pb-5 border-t border-[var(--color-border)] space-y-3`}
+      >
         <div className="flex flex-col gap-0.5">
-          <ShortcutButton
-            label="Ask anything"
-            keys={[mod, 'K']}
-            onClick={() => {
-              setOpen(false)
-              onOpenCommand()
-            }}
-          />
-          <ShortcutButton
-            label="Typing test"
-            keys={[mod, 'J']}
-            onClick={() => {
-              setOpen(false)
-              onOpenTyping()
-            }}
-          />
+          {/* Same arrow gutter + gap as tabs so labels line up with icons */}
+          <div className="flex items-center gap-2.5">
+            <span className={arrowGutter} aria-hidden />
+            <div className="flex-1 min-w-0 flex flex-col gap-0.5">
+              <ShortcutButton
+                label="Ask anything"
+                keys={[mod, 'K']}
+                onClick={() => {
+                  setOpen(false)
+                  onOpenCommand()
+                }}
+              />
+              <ShortcutButton
+                label="Typing test"
+                keys={[mod, 'J']}
+                onClick={() => {
+                  setOpen(false)
+                  onOpenTyping()
+                }}
+              />
+            </div>
+          </div>
         </div>
 
         <div className="pt-2 border-t border-[var(--color-border)]">
+          <div className="flex items-center gap-2 mb-1.5">
+            <div className="flex">
+              {avatars.map((seed, i) => (
+                <img
+                  key={seed}
+                  src={`https://api.dicebear.com/9.x/notionists/svg?seed=${seed}&radius=50&backgroundColor=f1f1f1`}
+                  alt=""
+                  className={`size-6 rounded-full border-2 border-[var(--color-bg)] ${i > 0 ? '-ml-2' : ''}`}
+                />
+              ))}
+            </div>
+            <span className="text-[0.7rem] font-medium text-[var(--color-muted)] bg-[var(--color-surface-soft)] border border-[var(--color-border)] rounded-full px-1.5 py-0.5">
+              +{delta}
+            </span>
+          </div>
+          <p className="text-[0.8rem] text-[var(--color-ink)]">
+            <strong className="font-semibold tabular-nums">{viewers}</strong>{' '}
+            people viewing now
+          </p>
           <button
             type="button"
-            onClick={() => setChatOpen((v) => !v)}
-            className="w-full text-left"
+            onClick={() => {
+              setOpen(false)
+              onOpenChat()
+            }}
+            className="mt-0.5 flex items-center gap-1.5 text-[0.78rem] text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors"
           >
-            <div className="flex items-center gap-2 mb-1.5">
-              <div className="flex">
-                {avatars.map((seed, i) => (
-                  <img
-                    key={seed}
-                    src={`https://api.dicebear.com/9.x/notionists/svg?seed=${seed}&radius=50&backgroundColor=f1f1f1`}
-                    alt=""
-                    className={`size-6 rounded-full border-2 border-[var(--color-bg)] ${i > 0 ? '-ml-2' : ''}`}
-                  />
-                ))}
-              </div>
-              <span className="text-[0.7rem] font-medium text-[var(--color-muted)] bg-[var(--color-surface-soft)] border border-[var(--color-border)] rounded-full px-1.5 py-0.5">
-                +{delta}
-              </span>
-            </div>
-            <p className="text-[0.8rem] text-[var(--color-ink)]">
-              <strong className="font-semibold tabular-nums">{viewers}</strong>{' '}
-              people viewing now
-            </p>
-            <p className="flex items-center gap-1.5 text-[0.78rem] text-[var(--color-muted)] mt-0.5">
-              <IconChat />
-              community chat
-            </p>
+            <IconChat />
+            community chat
           </button>
-
-          {chatOpen && (
-            <div className="mt-2 p-2.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-soft)] text-[0.75rem] text-[var(--color-dim)] leading-relaxed">
-              For work, collabs & everything else, reach me at{' '}
-              <a
-                href={`mailto:${site.email}`}
-                className="text-[var(--color-ink)] underline underline-offset-2 break-all"
-              >
-                {site.email}
-              </a>
-            </div>
-          )}
         </div>
 
-        <div className="flex items-center justify-center gap-1 p-1 rounded-full border border-[var(--color-border)] bg-[var(--color-surface-soft)] w-fit mx-auto">
-          <ThemeIconBtn
-            active={preference === 'system'}
-            title="System"
-            onClick={() => setPreference('system')}
+        {/* Theme pill + speaker */}
+        <div className="flex items-center justify-center gap-1 w-fit mx-auto scale-[0.82] origin-center">
+          <div className="flex items-center gap-0 p-0.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface-soft)]">
+            <ThemeIconBtn
+              active={preference === 'system'}
+              title="System"
+              onClick={(e) => setPreference('system', e)}
+            >
+              <IconDesktop />
+            </ThemeIconBtn>
+            <ThemeIconBtn
+              active={preference === 'light'}
+              title="Light"
+              onClick={(e) => setPreference('light', e)}
+            >
+              <IconSun />
+            </ThemeIconBtn>
+            <ThemeIconBtn
+              active={preference === 'dark'}
+              title="Dark"
+              onClick={(e) => setPreference('dark', e)}
+            >
+              <IconMoon />
+            </ThemeIconBtn>
+          </div>
+
+          <button
+            type="button"
+            title={soundOn ? 'Sound on — click to mute' : 'Sound off — click to play music'}
+            aria-label={soundOn ? 'Mute site music' : 'Play site music'}
+            aria-pressed={soundOn}
+            onClick={() => {
+              void toggleSound()
+            }}
+            className={`size-6 grid place-items-center rounded-full border transition-colors ${
+              soundOn
+                ? 'border-[var(--color-border-strong)] bg-[var(--color-bg)] text-[var(--color-ink)] shadow-sm'
+                : 'border-[var(--color-border)] bg-[var(--color-surface-soft)] text-[var(--color-dim)] hover:text-[var(--color-ink)]'
+            }`}
           >
-            <IconDesktop />
-          </ThemeIconBtn>
-          <ThemeIconBtn
-            active={preference === 'light'}
-            title="Light"
-            onClick={() => setPreference('light')}
-          >
-            <IconSun />
-          </ThemeIconBtn>
-          <ThemeIconBtn
-            active={preference === 'dark'}
-            title="Dark"
-            onClick={() => setPreference('dark')}
-          >
-            <IconMoon />
-          </ThemeIconBtn>
-          <ThemeIconBtn
-            active={false}
-            title="Mute (coming soon)"
-            onClick={() => {}}
-          >
-            <IconMute />
-          </ThemeIconBtn>
+            {soundOn ? <IconSpeaker /> : <IconMute />}
+          </button>
         </div>
 
         <div className="pt-1 text-[0.75rem] text-[var(--color-dim)] leading-relaxed">
@@ -324,7 +359,7 @@ export default function SidebarNav({ onOpenCommand, onOpenTyping }: Props) {
       <header className="sticky top-0 z-50 h-[var(--spacing-nav)] flex items-center justify-between px-4 bg-[color-mix(in_srgb,var(--color-bg)_92%,transparent)] backdrop-blur-md border-b border-[var(--color-border)] lg:hidden">
         <Link
           to="/"
-          className="font-semibold text-[0.95rem] tracking-tight no-underline"
+          className="font-pixel text-[1.25rem] font-normal tracking-tight leading-none no-underline text-[var(--color-ink)]"
         >
           {site.name}
         </Link>

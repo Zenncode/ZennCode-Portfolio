@@ -1,6 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { blogPosts, projects, site } from '../data/portfolio'
+import OverlayBackButton from './OverlayBackButton'
+
+/**
+ * Ask Anything — full-screen minimal UI (bryllim-style)
+ * Large centered: "what do you want to ask?" + typeahead results
+ */
 
 type Item = {
   id: string
@@ -36,7 +42,22 @@ export default function CommandPalette({ open, onClose }: Props) {
 
     const base: Item[] = [
       { id: 'home', label: site.name, group: 'Pages', action: go('/') },
+      { id: 'shop', label: 'Shop', group: 'Pages', action: go('/shop') },
       { id: 'blog', label: 'Blog', group: 'Pages', action: go('/blog') },
+      { id: 'gear', label: 'Gear', group: 'Pages', action: go('/gear') },
+      {
+        id: 'resources',
+        label: 'Resources',
+        group: 'Pages',
+        action: go('/resources'),
+      },
+      { id: 'collabs', label: 'Collabs', group: 'Pages', action: go('/collabs') },
+      {
+        id: 'consulting',
+        label: 'Consulting',
+        group: 'Pages',
+        action: go('/consulting'),
+      },
       {
         id: 'projects',
         label: 'Projects',
@@ -87,6 +108,15 @@ export default function CommandPalette({ open, onClose }: Props) {
         },
       },
       {
+        id: 'linkedin',
+        label: 'Open LinkedIn',
+        group: 'Actions',
+        action: () => {
+          window.open(site.socials.linkedin, '_blank')
+          onClose()
+        },
+      },
+      {
         id: 'sec-blog',
         label: 'Jump to Blog',
         group: 'On this page',
@@ -131,7 +161,7 @@ export default function CommandPalette({ open, onClose }: Props) {
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
-    if (!q) return items
+    if (!q) return []
     return items.filter(
       (i) =>
         i.label.toLowerCase().includes(q) ||
@@ -144,7 +174,7 @@ export default function CommandPalette({ open, onClose }: Props) {
     if (!open) return
     setQuery('')
     setActive(0)
-    const t = window.setTimeout(() => inputRef.current?.focus(), 10)
+    const t = window.setTimeout(() => inputRef.current?.focus(), 20)
     return () => window.clearTimeout(t)
   }, [open])
 
@@ -180,87 +210,76 @@ export default function CommandPalette({ open, onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-100 grid place-items-start justify-center pt-[14vh] px-4"
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[var(--color-bg)] px-6"
       role="dialog"
       aria-modal="true"
-      aria-label="Search"
+      aria-label="Ask anything"
     >
-      <button
-        type="button"
-        className="absolute inset-0 bg-[color-mix(in_srgb,var(--color-ink)_30%,transparent)] backdrop-blur-sm cursor-default"
-        onClick={onClose}
-      />
-      <div className="relative w-full max-w-md bg-[var(--color-bg)] border border-[var(--color-border-strong)] rounded-[var(--radius-lg)] shadow-[var(--shadow-modal)] overflow-hidden animate-[cmd-in_0.2s_var(--ease-out-expo)]">
-        <div className="flex items-center gap-2.5 px-4 py-3.5 border-b border-[var(--color-border)]">
-          <span className="text-[var(--color-dim)] text-[0.95rem]" aria-hidden>
-            ⌕
-          </span>
-          <input
-            ref={inputRef}
-            className="flex-1 border-0 outline-none bg-transparent font-mono text-[0.85rem] text-[var(--color-ink)] placeholder:text-[var(--color-dim)]"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="what do you want to ask?"
-            autoComplete="off"
-            spellCheck={false}
+      <OverlayBackButton onClick={onClose} />
+
+      <div className="w-full max-w-xl flex flex-col items-start">
+        {/* Big prompt like the reference */}
+        <label
+          htmlFor="ask-input"
+          className="font-mono text-[clamp(1.35rem,4vw,1.85rem)] text-[var(--color-ink)] tracking-tight mb-4 select-none"
+        >
+          what do you want to ask?
+        </label>
+
+        {/* Invisible-looking input under the question */}
+        <input
+          id="ask-input"
+          ref={inputRef}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="w-full bg-transparent border-0 outline-none font-mono text-[1.05rem] text-[var(--color-ink)] caret-[var(--color-ink)] placeholder:text-[var(--color-dim)]"
+          placeholder=""
+          autoComplete="off"
+          spellCheck={false}
+          aria-label="Ask anything"
+        />
+
+        {/* Cursor line when empty (visual) */}
+        {!query && (
+          <span
+            className="block w-px h-5 bg-[var(--color-ink)] mt-1 animate-pulse"
+            aria-hidden
           />
-          <kbd className="font-mono text-[0.62rem] tracking-wider uppercase text-[var(--color-dim)] border border-[var(--color-border)] rounded px-1.5 py-0.5">
-            esc
-          </kbd>
-        </div>
-        <div className="max-h-[min(50vh,360px)] overflow-auto p-1.5">
-          {filtered.length === 0 && (
-            <p className="px-3 py-5 text-[var(--color-dim)] font-mono text-[0.8rem]">
-              No results for “{query}”
-            </p>
-          )}
-          {filtered.map((item, i) => (
-            <button
-              key={item.id}
-              type="button"
-              className={`w-full flex items-center justify-between gap-3 text-left px-3 py-2.5 rounded-[var(--radius-sm)] transition-colors ${
-                i === active
-                  ? 'bg-[var(--color-ink)] text-[var(--color-bg)]'
-                  : 'hover:bg-[var(--color-ink)] hover:text-[var(--color-bg)]'
-              }`}
-              onMouseEnter={() => setActive(i)}
-              onClick={() => item.action()}
-            >
-              <span className="flex flex-col gap-0.5 min-w-0">
-                <span className="text-[0.88rem] font-medium truncate">
-                  {item.label}
-                </span>
-                <span
-                  className={`font-mono text-[0.62rem] tracking-wider uppercase ${
-                    i === active
-                      ? 'text-[color-mix(in_srgb,var(--color-bg)_65%,transparent)]'
-                      : 'text-[var(--color-dim)]'
-                  }`}
-                >
-                  {item.group}
-                </span>
-              </span>
-              {item.hint && (
-                <span
-                  className={`font-mono text-[0.68rem] shrink-0 ${
-                    i === active
-                      ? 'text-[color-mix(in_srgb,var(--color-bg)_65%,transparent)]'
-                      : 'text-[var(--color-dim)]'
-                  }`}
-                >
-                  {item.hint}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
+        )}
+
+        {/* Results only after typing */}
+        {query.trim() && (
+          <div className="w-full mt-8 max-h-[40vh] overflow-auto">
+            {filtered.length === 0 ? (
+              <p className="font-mono text-[0.85rem] text-[var(--color-dim)]">
+                No results for “{query}”
+              </p>
+            ) : (
+              <ul className="flex flex-col gap-0.5">
+                {filtered.map((item, i) => (
+                  <li key={item.id}>
+                    <button
+                      type="button"
+                      onMouseEnter={() => setActive(i)}
+                      onClick={() => item.action()}
+                      className={`w-full flex items-center justify-between gap-3 text-left px-3 py-2.5 rounded-lg font-mono transition-colors ${
+                        i === active
+                          ? 'bg-[var(--color-surface-soft)] text-[var(--color-ink)]'
+                          : 'text-[var(--color-muted)] hover:bg-[var(--color-surface-soft)] hover:text-[var(--color-ink)]'
+                      }`}
+                    >
+                      <span className="truncate text-[0.9rem]">{item.label}</span>
+                      <span className="text-[0.65rem] tracking-wider uppercase text-[var(--color-dim)] shrink-0">
+                        {item.group}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
       </div>
-      <style>{`
-        @keyframes cmd-in {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
-        }
-      `}</style>
     </div>
   )
 }

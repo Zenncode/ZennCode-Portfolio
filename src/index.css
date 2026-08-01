@@ -16,6 +16,7 @@
 @theme {
   --font-sans: 'Geist Variable', 'Geist', system-ui, -apple-system, sans-serif;
   --font-mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace, monospace;
+  --font-pixel: 'Geist Pixel', 'Geist Mono', ui-monospace, monospace;
   --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
 
   --color-bg: #ffffff;
@@ -84,6 +85,223 @@
   --shadow-modal: 0 40px 90px -20px rgb(0 0 0 / 0.65);
 }
 
+/* Home projects 3-card deck (bryllim.com) */
+.project-deck {
+  position: relative;
+  height: 19rem;
+  margin-inline: calc(50% - 50vw);
+  overflow-x: clip;
+  overflow-y: visible;
+}
+@supports not (overflow-x: clip) {
+  .project-deck {
+    overflow-x: hidden;
+  }
+}
+@media (min-width: 640px) {
+  .project-deck {
+    height: 17rem;
+  }
+}
+@media (min-width: 768px) {
+  .project-deck {
+    margin-inline: 0;
+    overflow: visible;
+  }
+}
+
+.deck-card {
+  position: absolute;
+  top: 0.75rem;
+  left: 50%;
+  width: 18rem;
+  margin-left: -9rem;
+  transform-origin: center bottom;
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease;
+  will-change: transform;
+  outline: none;
+}
+@media (min-width: 640px) {
+  .deck-card {
+    width: 20.5rem;
+    margin-left: -10.25rem;
+  }
+}
+
+.deck-card.is-center {
+  transform: translateY(0) rotate(0deg) scale(1);
+  z-index: 30;
+  box-shadow: 0 26px 55px -22px rgb(0 0 0 / 0.3);
+}
+.deck-card.is-left {
+  transform: translateX(-40%) translateY(14px) rotate(-16deg) scale(0.88);
+  z-index: 10;
+  box-shadow: 0 16px 32px -18px rgb(0 0 0 / 0.25);
+  cursor: pointer;
+}
+.deck-card.is-right {
+  transform: translateX(40%) translateY(14px) rotate(16deg) scale(0.88);
+  z-index: 20;
+  box-shadow: 0 16px 32px -18px rgb(0 0 0 / 0.25);
+  cursor: pointer;
+}
+
+.deck-card.is-left::after,
+.deck-card.is-right::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--color-bg) 40%, transparent);
+  transition: background 0.35s ease;
+  pointer-events: none;
+}
+.deck-card.is-left:hover::after,
+.deck-card.is-right:hover::after {
+  background: transparent;
+}
+
+.deck-card.is-center:hover {
+  transform: translateY(-7px) scale(1.015);
+  box-shadow: 0 34px 65px -22px rgb(0 0 0 / 0.34);
+}
+.deck-card.is-left:hover {
+  transform: translateX(-45%) translateY(2px) rotate(-12deg) scale(0.92);
+  z-index: 25;
+}
+.deck-card.is-right:hover {
+  transform: translateX(45%) translateY(2px) rotate(12deg) scale(0.92);
+  z-index: 25;
+}
+
+/* Only center card links are clickable */
+.deck-card:not(.is-center) a {
+  pointer-events: none;
+}
+
+/* Blog article prose — matches bryllim post body */
+.prose {
+  font-family: var(--font-serif);
+  max-width: none;
+  color: var(--color-gray-600);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+.prose p {
+  margin: 1.15em 0;
+}
+.prose strong {
+  font-weight: 600;
+  color: var(--color-ink);
+}
+.prose a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--color-ink) 25%, transparent);
+  text-underline-offset: 2px;
+}
+.prose a:hover {
+  text-decoration-color: currentColor;
+}
+[data-theme='dark'] .prose {
+  color: var(--color-muted);
+}
+
+/* Certifications polaroid cards (bryllim.com/certifications) */
+.cert-card {
+  transform: rotate(var(--rot, 0deg)) translateY(var(--ty, 0px));
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s ease;
+  box-shadow:
+    0 8px 22px -14px rgb(0 0 0 / 0.28),
+    0 1px 0 rgb(0 0 0 / 0.04);
+  will-change: transform;
+  min-height: 168px;
+}
+.cert-card:hover {
+  transform: rotate(0deg) translateY(-8px) scale(1.05);
+  z-index: 30;
+  box-shadow: 0 26px 46px -22px rgb(0 0 0 / 0.4);
+}
+[data-theme='dark'] .cert-card {
+  box-shadow:
+    0 8px 22px -14px rgb(0 0 0 / 0.55),
+    0 0 0 1px rgb(255 255 255 / 0.04);
+}
+[data-theme='dark'] .cert-card:hover {
+  box-shadow: 0 26px 46px -18px rgb(0 0 0 / 0.7);
+}
+
+/* Collabs world map — soft edge fade */
+.map-fade {
+  -webkit-mask-image: radial-gradient(
+    ellipse 88% 88% at 50% 50%,
+    #000 40%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    ellipse 88% 88% at 50% 50%,
+    #000 40%,
+    transparent 78%
+  );
+}
+
+/* Community chat message list — hide scrollbar (bryllim-style) */
+.chat-msg-list {
+  scrollbar-width: none;
+}
+.chat-msg-list::-webkit-scrollbar {
+  display: none;
+}
+.chat-msg-list {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 24px,
+    #000 calc(100% - 8px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 24px,
+    #000 calc(100% - 8px),
+    transparent 100%
+  );
+}
+
+/*
+ * Circular theme wave (View Transitions):
+ * Old page stays; new theme is revealed only where the circle expands.
+ * Matches bryllim.com — wave covers → then that area shows new colors.
+ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Fallback when View Transitions / reduced motion aren't available */
+html.theme-anim,
+html.theme-anim body,
+html.theme-anim #root {
+  transition:
+    background-color 480ms cubic-bezier(0.32, 0.08, 0.24, 1),
+    color 480ms cubic-bezier(0.32, 0.08, 0.24, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-anim,
+  html.theme-anim *,
+  html.theme-anim *::before,
+  html.theme-anim *::after {
+    transition: none !important;
+  }
+}
+
 @layer base {
   html {
     font-family: var(--font-sans);
@@ -95,9 +313,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
-    transition:
-      background-color 500ms ease,
-      color 500ms ease;
   }
 
   body {
@@ -163,6 +378,12 @@
   h2,
   h3 {
     font-family: 'Geist Mono Variable', 'Geist Mono', ui-monospace, monospace;
+  }
+
+  /* Pixel wordmark — sidebar brand + home name (beats h1 mono rule) */
+  .font-pixel,
+  h1.font-pixel {
+    font-family: var(--font-pixel); /* 'Geist Pixel', 'Geist Mono', ui-monospace, monospace */
   }
 
   /* Slim scrollbar for left tab menu — matches screenshot (gray track + thumb) */

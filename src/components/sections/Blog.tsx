@@ -11,18 +11,18 @@ export default function Blog() {
           <SectionHeader
             title="01 — blog"
             href="/blog"
-            linkLabel="ALL POSTS →"
+            linkLabel="all posts →"
           />
         </FadeIn>
 
         <div className="flex flex-col">
-          {blogPosts.map((post, i) => (
+          {blogPosts.slice(0, 3).map((post, i, arr) => (
             <FadeIn key={post.slug} delay={Math.min(i * 0.07, 0.33)}>
               <Link
                 to={`/blog/${post.slug}`}
                 className={[
                   'block py-5 no-underline border-t border-[var(--color-border)] group',
-                  i === blogPosts.length - 1 ? 'border-b' : '',
+                  i === arr.length - 1 ? 'border-b' : '',
                 ].join(' ')}
               >
                 <h3 className="text-[1.05rem] font-semibold tracking-tight mb-2 leading-snug text-[var(--color-ink)] group-hover:underline group-hover:underline-offset-[3px] group-hover:decoration-[color-mix(in_srgb,currentColor_35%,transparent)]">
