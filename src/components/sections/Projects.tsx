@@ -10,7 +10,7 @@ export default function Projects() {
           <SectionHeader
             title="02 — projects"
             href="/projects"
-            linkLabel="all projects →"
+            linkLabel="ALL PROJECTS →"
           />
         </FadeIn>
 

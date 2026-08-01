@@ -11,7 +11,7 @@ export default function Blog() {
           <SectionHeader
             title="01 — blog"
             href="/blog"
-            linkLabel="all posts →"
+            linkLabel="ALL POSTS →"
           />
         </FadeIn>
 

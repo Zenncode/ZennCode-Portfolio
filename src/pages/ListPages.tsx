@@ -14,7 +14,7 @@ export function BlogPage() {
   return (
     <div className="w-full pt-8">
       <div className="container-read">
-        <h1 className="font-pixel text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide leading-none lowercase mb-3">
+        <h1 className="font-mono text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide leading-none lowercase mb-3">
           blog
         </h1>
         <p className="text-[var(--color-muted)] mb-8 max-w-xl text-[0.95rem] leading-relaxed">
@@ -67,7 +67,7 @@ export function BlogPostPage() {
     return (
       <div className="w-full pt-8">
         <div className="container-read">
-          <h1 className="font-pixel text-[clamp(2rem,5vw,2.75rem)] lowercase mb-3">
+          <h1 className="font-mono text-[clamp(2rem,5vw,2.75rem)] lowercase mb-3">
             not found
           </h1>
           <Link to="/blog" className="section-link">
@@ -84,7 +84,7 @@ export function BlogPostPage() {
         <Link to="/blog" className="section-link">
           ← all posts
         </Link>
-        <h1 className="font-pixel text-[clamp(1.75rem,4vw,2.5rem)] font-normal tracking-wide leading-none lowercase mt-5 mb-3">
+        <h1 className="font-mono text-[clamp(1.75rem,4vw,2.5rem)] font-normal tracking-wide leading-none lowercase mt-5 mb-3">
           {post.title}
         </h1>
         <time className="font-mono text-[0.68rem] tracking-wider uppercase text-[var(--color-dim)]">
@@ -117,7 +117,7 @@ export function ProjectsPage() {
   return (
     <div className="w-full pt-8">
       <div className="container-read">
-        <h1 className="font-pixel text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide leading-none lowercase mb-3">
+        <h1 className="font-mono text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide leading-none lowercase mb-3">
           projects
         </h1>
         <p className="text-[var(--color-muted)] mb-8 max-w-xl text-[0.95rem] leading-relaxed">
@@ -197,7 +197,7 @@ export function ExperiencePage() {
   return (
     <div className="w-full pt-8">
       <div className="container-read">
-        <h1 className="font-pixel text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide leading-none lowercase mb-3">
+        <h1 className="font-mono text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide leading-none lowercase mb-3">
           experience
         </h1>
         <p className="text-[var(--color-muted)] mb-8 max-w-xl text-[0.95rem] leading-relaxed">
@@ -262,7 +262,7 @@ export function StackPage() {
   return (
     <div className="w-full pt-8">
       <div className="container-read">
-        <h1 className="font-pixel text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide leading-none lowercase mb-3">
+        <h1 className="font-mono text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide leading-none lowercase mb-3">
           stack
         </h1>
         <p className="text-[var(--color-muted)] mb-8 max-w-xl text-[0.95rem] leading-relaxed">
@@ -271,7 +271,7 @@ export function StackPage() {
         </p>
         {stackGroups.map((g) => (
           <div key={g.title} className="mb-8">
-            <h2 className="font-pixel text-[0.85rem] tracking-wide lowercase text-[var(--color-dim)] mb-3.5">
+            <h2 className="font-mono text-[0.85rem] tracking-wide lowercase text-[var(--color-dim)] mb-3.5">
               {g.title}
             </h2>
             <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-[0.9rem] text-[var(--color-muted)]">
@@ -294,7 +294,7 @@ export function CertificationsPage() {
   return (
     <div className="w-full pt-8">
       <div className="container-read">
-        <h1 className="font-pixel text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide leading-none lowercase mb-3">
+        <h1 className="font-mono text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide leading-none lowercase mb-3">
           certifications
         </h1>
         <p className="text-[var(--color-muted)] mb-8 max-w-xl text-[0.95rem] leading-relaxed">
@@ -303,7 +303,7 @@ export function CertificationsPage() {
         </p>
         {groups.map((group) => (
           <div key={group} className="mb-8">
-            <h2 className="font-pixel text-[0.85rem] tracking-wide lowercase text-[var(--color-dim)] mb-3.5">
+            <h2 className="font-mono text-[0.85rem] tracking-wide lowercase text-[var(--color-dim)] mb-3.5">
               {group}
             </h2>
             <div className="flex flex-col sm:grid sm:grid-cols-3 gap-3">
@@ -348,7 +348,7 @@ export function RecommendationsPage() {
   return (
     <div className="w-full pt-8">
       <div className="container-read">
-        <h1 className="font-pixel text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide leading-none lowercase mb-3">
+        <h1 className="font-mono text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide leading-none lowercase mb-3">
           recommendations
         </h1>
         <p className="text-[var(--color-muted)] mb-8 max-w-xl text-[0.95rem] leading-relaxed">
@@ -385,7 +385,7 @@ export function AffiliationsPage() {
   return (
     <div className="w-full pt-8">
       <div className="container-read">
-        <h1 className="font-pixel text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide leading-none lowercase mb-3">
+        <h1 className="font-mono text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide leading-none lowercase mb-3">
           affiliations
         </h1>
         <p className="text-[var(--color-muted)] mb-8 max-w-xl text-[0.95rem] leading-relaxed">

@@ -11,7 +11,7 @@ export default function Experience() {
           <SectionHeader
             title="03 — experience"
             href="/experience"
-            linkLabel="full history →"
+            linkLabel="FULL HISTORY →"
           />
         </FadeIn>
 

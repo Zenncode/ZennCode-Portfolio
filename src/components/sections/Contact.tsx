@@ -31,7 +31,7 @@ export default function Contact() {
             <p className="font-mono text-[0.68rem] tracking-wider uppercase text-[var(--color-dim)] mb-1.5">
               Get in touch
             </p>
-            <h2 className="font-pixel text-[clamp(1.6rem,4vw,2.1rem)] font-normal tracking-wide lowercase leading-tight mb-2">
+            <h2 className="font-mono text-[clamp(1.6rem,4vw,2.1rem)] font-normal tracking-wide lowercase leading-tight mb-2">
               say hello
             </h2>
             <p className="text-[0.92rem] text-[var(--color-muted)] mb-5 max-w-lg leading-relaxed">
@@ -65,7 +65,7 @@ export default function Contact() {
             <p className="font-mono text-[0.68rem] tracking-wider uppercase text-[var(--color-dim)] mb-1.5">
               Community
             </p>
-            <h2 className="font-pixel text-[clamp(1.6rem,4vw,2.1rem)] font-normal tracking-wide lowercase leading-tight mb-2">
+            <h2 className="font-mono text-[clamp(1.6rem,4vw,2.1rem)] font-normal tracking-wide lowercase leading-tight mb-2">
               builders welcome
             </h2>
             <p className="text-[0.92rem] text-[var(--color-muted)] mb-5 max-w-lg leading-relaxed">
@@ -118,7 +118,7 @@ export default function Contact() {
             <p className="font-mono text-[0.68rem] tracking-wider uppercase text-[var(--color-dim)] mb-1.5">
               Hackathons
             </p>
-            <h2 className="font-pixel text-[clamp(1.6rem,4vw,2.1rem)] font-normal tracking-wide lowercase leading-tight mb-2">
+            <h2 className="font-mono text-[clamp(1.6rem,4vw,2.1rem)] font-normal tracking-wide lowercase leading-tight mb-2">
               5x champion energy
             </h2>
             <p className="text-[0.92rem] text-[var(--color-muted)] mb-5 max-w-lg leading-relaxed">

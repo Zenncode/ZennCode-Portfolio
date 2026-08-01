@@ -3,6 +3,8 @@
 /* Self-hosted fonts — same stack as bryllim.com */
 @import '@fontsource-variable/geist/wght.css';
 @import '@fontsource-variable/geist-mono/wght.css';
+@import '@fontsource/geist-mono/400.css';
+@import '@fontsource/geist-mono/500.css';
 @import '@fontsource/geist-pixel/400.css';
 @import '@fontsource/source-serif-4/400.css';
 @import '@fontsource/source-serif-4/600.css';
@@ -14,7 +16,6 @@
 @theme {
   --font-sans: 'Geist Variable', 'Geist', system-ui, -apple-system, sans-serif;
   --font-mono: 'Geist Mono Variable', 'Geist Mono', ui-monospace, monospace;
-  --font-pixel: 'Geist Pixel', 'Geist Mono Variable', ui-monospace, monospace;
   --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
 
   --color-bg: #ffffff;
@@ -150,55 +151,145 @@
 }
 
 @layer utilities {
-  /* Slim scrollbar for left tab menu (bryllim-style: 6px, transparent track) */
-  .sidebar-scroll {
+  /* Titles + mono UI — exact stack */
+  .font-mono,
+  .font-title {
+    font-family: 'Geist Mono Variable', 'Geist Mono', ui-monospace, monospace;
+  }
+
+  /* Page / section titles */
+  .title,
+  h1,
+  h2,
+  h3 {
+    font-family: 'Geist Mono Variable', 'Geist Mono', ui-monospace, monospace;
+  }
+
+  /* Slim scrollbar for left tab menu — matches screenshot (gray track + thumb) */
+  .sidebar-tabs {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-gray-300) transparent;
+    scrollbar-color: #9ca3af transparent;
   }
 
-  .sidebar-scroll::-webkit-scrollbar {
-    width: 6px;
+  .sidebar-tabs::-webkit-scrollbar {
+    width: 8px;
   }
 
-  .sidebar-scroll::-webkit-scrollbar-track {
+  .sidebar-tabs::-webkit-scrollbar-track {
     background: transparent;
+    margin-block: 4px;
   }
 
-  .sidebar-scroll::-webkit-scrollbar-thumb {
-    background: var(--color-gray-300);
+  .sidebar-tabs::-webkit-scrollbar-thumb {
+    background: #9ca3af;
     border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
   }
 
-  .sidebar-scroll::-webkit-scrollbar-thumb:hover {
-    background: var(--color-gray-400);
+  .sidebar-tabs::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+    background-clip: padding-box;
+    border: 2px solid transparent;
   }
 
+  .sidebar-tabs::-webkit-scrollbar-button {
+    display: none;
+    height: 0;
+    width: 0;
+  }
+
+  [data-theme='dark'] .sidebar-tabs {
+    scrollbar-color: #6b7280 transparent;
+  }
+
+  [data-theme='dark'] .sidebar-tabs::-webkit-scrollbar-thumb {
+    background: #6b7280;
+    background-clip: padding-box;
+  }
+
+  /*
+   * Main content column — HORIZONTALLY CENTERED in the area beside the sidebar
+   * (not stuck flush-left against the nav).
+   */
   .container-read {
-    width: min(100% - 2rem, var(--container-read));
-    margin-inline: auto;
+    width: min(100% - 2rem, 42rem);
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (min-width: 640px) {
+    .container-read {
+      width: min(100% - 3rem, 44rem);
+      max-width: 44rem;
+    }
   }
 
   @media (min-width: 1024px) {
     .container-read {
-      /* Slightly wider for side-by-side hero (photo + text) */
-      width: min(100% - 3rem, 48rem);
+      width: min(100% - 4rem, 48rem);
+      max-width: 48rem;
+      margin-left: auto;
+      margin-right: auto;
     }
+  }
+
+  .page-shell {
+    position: relative;
+    width: 100%;
+    min-height: 60vh;
+    padding-top: 2.5rem;
+    padding-bottom: 4rem;
+  }
+
+  /* Soft dots top-right of content pages */
+  .page-shell::before {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(50vw, 28rem);
+    height: 16rem;
+    opacity: 0.35;
+    background-image: radial-gradient(
+      circle,
+      var(--color-ink) 0.65px,
+      transparent 0.7px
+    );
+    background-size: 10px 10px;
+    mask-image: radial-gradient(
+      ellipse 80% 80% at 100% 0%,
+      black 0%,
+      transparent 70%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 80% at 100% 0%,
+      black 0%,
+      transparent 70%
+    );
+  }
+
+  [data-theme='dark'] .page-shell::before {
+    opacity: 0.2;
   }
 
   /* Section headers like “01 — blog” on bryllim.com */
   .section-label {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    font-weight: 500;
-    letter-spacing: -0.01em;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
     text-transform: none;
-    color: var(--color-ink);
+    color: var(--color-dim);
   }
 
   .section-link {
-    font-size: 0.875rem;
-    letter-spacing: 0;
-    text-transform: none;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--color-dim);
     text-decoration: none;
     transition: color 0.2s ease;

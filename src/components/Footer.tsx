@@ -2,9 +2,9 @@ import { site } from '../data/portfolio'
 
 export default function Footer() {
   return (
-    <div className="w-full flex justify-center lg:ml-[var(--spacing-sidebar)] lg:w-[calc(100%-var(--spacing-sidebar))]">
-      <footer className="w-full border-t border-[var(--color-border)] pt-5 pb-22 sm:pb-8 flex justify-center">
-        <div className="container-read flex flex-wrap items-center justify-between gap-3">
+    <div className="w-full lg:ml-[var(--spacing-sidebar)] lg:w-[calc(100%-var(--spacing-sidebar))]">
+      <footer className="w-full border-t border-[var(--color-border)] pt-5 pb-22 sm:pb-8">
+        <div className="container-read mx-auto flex flex-wrap items-center justify-between gap-3">
           <p className="font-mono text-[0.68rem] tracking-wider uppercase text-[var(--color-dim)]">
             © {new Date().getFullYear()} {site.name}
           </p>

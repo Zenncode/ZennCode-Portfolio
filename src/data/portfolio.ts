@@ -2,13 +2,13 @@ export const site = {
   name: 'Zenn',
   brand: 'ZennCode',
   title: 'Full-Stack Developer',
-  email: 'hello@zenncode.dev',
+  email: 'zenjanarce8@gmail.com',
   tagline: 'Full-stack developer building modern web apps & digital products.',
   socials: {
-    github: 'https://github.com/zenncode',
-    githubUser: 'zenncode',
-    linkedin: 'https://linkedin.com/in/zenncode',
-    instagram: 'https://instagram.com/zenncode',
+    github: 'https://github.com/Zenncode',
+    githubUser: 'Zenncode',
+    linkedin: 'https://www.linkedin.com/in/zenjan-arce-7ab06a427/',
+    instagram: 'https://www.instagram.com/zenncode/',
     youtube: 'https://youtube.com/@zenncode',
     tiktok: 'https://tiktok.com/@zenncode',
     twitter: 'https://x.com/zenncode',
@@ -20,12 +20,12 @@ export const hero = {
   p2: "Right now I'm building cool new stuff every day. I love turning rough ideas into things people actually use.",
 }
 
-/** Stats under hero — same shape as bryllim: big value + small label */
+/** Stats under hero — value + single uppercase label (bryllim style) */
 export const stats = [
-  { value: '3+', label: 'years', sub: 'shipping', href: '#projects' },
-  { value: '20+', label: 'projects', sub: 'shipped', href: '#projects' },
-  { value: '5x', label: 'hackathons', sub: 'entered', href: '#hackathons' },
-  { value: '∞', label: 'curiosity', sub: 'always on', href: '#stack' },
+  { value: '3+', label: 'SHIPPING', href: '#projects' },
+  { value: '20+', label: 'PROJECTS', href: '#projects' },
+  { value: '5x', label: 'HACKATHONS', href: '#hackathons' },
+  { value: '∞', label: 'CURIOSITY', href: '#stack' },
 ]
 
 export type BlogPost = {
