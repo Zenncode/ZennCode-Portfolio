@@ -1,0 +1,78 @@
+{
+  "communities": [
+    {
+      "name": "YouTube",
+      "handle": "@zenncode",
+      "href": "https://youtube.com/@zenncode"
+    },
+    {
+      "name": "TikTok",
+      "handle": "@zenncode",
+      "href": "https://tiktok.com/@zenncode"
+    }
+  ],
+  "founded": [
+    {
+      "name": "DEVS100",
+      "href": "https://www.devs100.com",
+      "detail": "devs100.com"
+    },
+    {
+      "name": "AppBuildersPH",
+      "href": "https://www.facebook.com/",
+      "detail": "facebook group"
+    }
+  ],
+  "communityHeadline": "builders welcome",
+  "communitySub": "Where I create, and the communities I've founded.",
+  "hackathons": [
+    {
+      "name": "DICT OpenGov Hackathon",
+      "result": "Champion · 2025",
+      "org": "Featured",
+      "featured": true
+    },
+    {
+      "name": "Google I/O Gemini Hackathon",
+      "result": "Finalist",
+      "org": "Google"
+    },
+    {
+      "name": "packetHACKS x HackTheClimate",
+      "result": "Finalist",
+      "org": "packetHACKS"
+    },
+    {
+      "name": "National AI Prompt Design Challenge",
+      "result": "Finalist",
+      "org": "AAP"
+    },
+    {
+      "name": "CodeBreak 2.0 Hackathon",
+      "result": "Champion",
+      "org": "Tenext.ai"
+    },
+    {
+      "name": "Hack the Future Hackathon",
+      "result": "Champion",
+      "org": "Kaya Founders"
+    },
+    {
+      "name": "Xurpas Hackathon",
+      "result": "Finalist",
+      "org": "Xurpas"
+    },
+    {
+      "name": "International Blockchain Olympiad",
+      "result": "Participant",
+      "org": "IBCOL Foundation"
+    },
+    {
+      "name": "AIA Philam Life Hackathon",
+      "result": "Finalist",
+      "org": "Philam Life"
+    }
+  ],
+  "hackathonHeadline": "10x champion",
+  "hackathonSub": "9 entered"
+}

@@ -1,0 +1,209 @@
+[
+  {
+    "name": "Generative AI Leader",
+    "issuer": "Google",
+    "logo": "/certs/google.png",
+    "verify": "https://www.credly.com/badges/d4ea07f0-f7f1-4889-8b15-2a0ec22850ff/public_url",
+    "group": "AI",
+    "rot": -2,
+    "ty": 2
+  },
+  {
+    "name": "Gemini Certified Educator",
+    "issuer": "Google",
+    "logo": "/certs/google.png",
+    "verify": "https://edu.google.accredible.com/54fb5640-5c6d-4286-b9bb-6be014188c16#acc.V83iLFOE",
+    "group": "AI",
+    "rot": 3,
+    "ty": -4
+  },
+  {
+    "name": "Generative AI Certified Professional",
+    "issuer": "Oracle",
+    "logo": "/certs/oracle.png",
+    "verify": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=F0EB18EE68E7EB1AD69624684FB5B8ABB18AC8852C247882BE5DF4E51D7AAB07",
+    "group": "AI",
+    "rot": -1.5,
+    "ty": 3
+  },
+  {
+    "name": "Neo4j & Generative AI Certification",
+    "issuer": "Neo4j",
+    "logo": "/certs/neo4j.png",
+    "verify": "https://graphacademy.neo4j.com/c/2be650d5-0038-4c7d-b27f-f96a75f2b843",
+    "group": "AI",
+    "rot": 2,
+    "ty": -2
+  },
+  {
+    "name": "Building RAG Apps Using MongoDB",
+    "issuer": "MongoDB",
+    "logo": "/certs/mongodb.png",
+    "verify": "https://www.credly.com/badges/918da15f-0a50-4b07-a642-a89b689fb1b0/linked_in_profile",
+    "group": "AI",
+    "rot": -3,
+    "ty": 1
+  },
+  {
+    "name": "Neo4j Certified Professional",
+    "issuer": "Neo4j",
+    "logo": "/certs/neo4j.png",
+    "verify": "https://graphacademy.neo4j.com/c/a2f83b73-2e2f-4417-89f1-52eb4edeb4bc/",
+    "group": "Engineering",
+    "rot": 1.5,
+    "ty": -3
+  },
+  {
+    "name": "Huawei Developer Expert",
+    "issuer": "Huawei",
+    "logo": "/certs/huawei.png",
+    "verify": "https://web.facebook.com/photo/?fbid=4320544268000607",
+    "group": "Engineering",
+    "rot": -2.5,
+    "ty": 2
+  },
+  {
+    "name": "Software Engineering",
+    "issuer": "TestDome",
+    "logo": "/certs/testdome.png",
+    "verify": "https://app.testdome.com/cert/e802401d0f874e78b3e4bceff900c52f",
+    "group": "Engineering",
+    "rot": 2,
+    "ty": -1
+  },
+  {
+    "name": "JavaScript",
+    "issuer": "TestDome",
+    "logo": "/certs/testdome.png",
+    "verify": "https://app.testdome.com/cert/b83170ca5a9d4315903fcb87885065e5",
+    "group": "Engineering",
+    "rot": -1,
+    "ty": 3
+  },
+  {
+    "name": "PHP",
+    "issuer": "TestDome",
+    "logo": "/certs/testdome.png",
+    "verify": "https://app.testdome.com/cert/a2bce755a249410b994a1c483ee1cb9a",
+    "group": "Engineering",
+    "rot": 2.5,
+    "ty": -2
+  },
+  {
+    "name": "Python",
+    "issuer": "TestDome",
+    "logo": "/certs/testdome.png",
+    "verify": "https://app.testdome.com/cert/1176bc33122f4e44847235ce0dac8e37",
+    "group": "Engineering",
+    "rot": -2,
+    "ty": 1
+  },
+  {
+    "name": "SQL",
+    "issuer": "TestDome",
+    "logo": "/certs/testdome.png",
+    "verify": "https://app.testdome.com/cert/3519cc9c3e194ff7903f597a39b817a8",
+    "group": "Engineering",
+    "rot": 1,
+    "ty": -3
+  },
+  {
+    "name": "Certified Cloud Practitioner",
+    "issuer": "Amazon Web Services",
+    "logo": "/certs/aws.png",
+    "verify": "https://aws.amazon.com/certification/certified-cloud-practitioner/",
+    "group": "Cloud & DevOps",
+    "rot": -2,
+    "ty": 2
+  },
+  {
+    "name": "Monitoring Kubernetes",
+    "issuer": "Datadog",
+    "logo": "/certs/datadog.png",
+    "verify": "https://learn.datadoghq.com/certificates/931ulsnp5m",
+    "group": "Cloud & DevOps",
+    "rot": 3,
+    "ty": -2
+  },
+  {
+    "name": "Cybersecurity Certificate",
+    "issuer": "Trend Micro",
+    "logo": "/certs/trendmicro.png",
+    "verify": "https://pdfhost.io/v/3IkWG5Vua_CyberCert_Completion_Bryl_Kezter_A_Limpdf.pdf",
+    "group": "Security",
+    "rot": -1.5,
+    "ty": 1
+  },
+  {
+    "name": "Scrum Master",
+    "issuer": "TestDome",
+    "logo": "/certs/testdome.png",
+    "verify": "https://app.testdome.com/cert/abf47a31a4a94bd4b92572e82078e1c4",
+    "group": "Project Management",
+    "rot": 2,
+    "ty": -2
+  },
+  {
+    "name": "Certified Kanban Associate",
+    "issuer": "International Scrum Institute",
+    "logo": "/certs/scrum-institute.png",
+    "verify": "https://www.scrum-institute.org/certifications/Scrum-Institute.org-KANASCe020005",
+    "group": "Project Management",
+    "rot": -2.5,
+    "ty": 2
+  },
+  {
+    "name": "Scrum Associate",
+    "issuer": "International Scrum Institute",
+    "logo": "/certs/scrum-institute.png",
+    "verify": "https://www.scrum-institute.org/certifications/Scrum-Institute.org-SAACed8c57e6d",
+    "group": "Project Management",
+    "rot": 1.5,
+    "ty": -1
+  },
+  {
+    "name": "Lean Six Sigma White Belt",
+    "issuer": "Management & Strategy Institute",
+    "logo": "/certs/msi.png",
+    "verify": "https://drive.google.com/file/d/1ZhvhYSnWGJfpM-SQ75XT5dwAH-imCODW/view",
+    "group": "Project Management",
+    "rot": -1,
+    "ty": 3
+  },
+  {
+    "name": "Project Management Certified",
+    "issuer": "Management & Strategy Institute",
+    "logo": "/certs/msi.png",
+    "verify": "https://tinyurl.com/yxnkvp76",
+    "group": "Project Management",
+    "rot": 2.5,
+    "ty": -3
+  },
+  {
+    "name": "Diploma in Project Management",
+    "issuer": "Alison",
+    "logo": "/certs/alison.png",
+    "verify": "http://shorturl.at/lmuJX",
+    "group": "Project Management",
+    "rot": -3,
+    "ty": 1
+  },
+  {
+    "name": "Google Analytics",
+    "issuer": "Google",
+    "logo": "/certs/google.png",
+    "verify": "https://analytics.google.com/analytics/academy/certificate/uM_PQwkTTqCjtRLTDOejbQ",
+    "group": "Marketing & Analytics",
+    "rot": 1,
+    "ty": -2
+  },
+  {
+    "name": "Digital Marketing",
+    "issuer": "Google",
+    "logo": "/certs/google.png",
+    "verify": "https://bit.ly/2QBhAex",
+    "group": "Marketing & Analytics",
+    "rot": -2,
+    "ty": 2
+  }
+]

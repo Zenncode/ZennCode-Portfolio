@@ -1,0 +1,68 @@
+[
+  {
+    "id": "coaching",
+    "title": "Private Coaching",
+    "price": "from ₱10k/hr",
+    "description": "1:1 mentoring and guidance — career, code, AI, and building products, tailored to where you are.",
+    "bullets": [
+      "1:1 sessions",
+      "Career & technical",
+      "Flexible scheduling"
+    ]
+  },
+  {
+    "id": "trainings",
+    "title": "AI & Software Trainings",
+    "price": "₱20k/hr",
+    "description": "Hands-on, practical workshops for teams — generative AI, modern web & mobile, and shipping faster with AI-native tooling.",
+    "bullets": [
+      "Team workshops",
+      "Custom curriculum",
+      "On-site or remote"
+    ]
+  },
+  {
+    "id": "fractional-cto",
+    "title": "Fractional CTO",
+    "price": "Custom",
+    "description": "Technical leadership without a full-time hire — architecture, roadmap, hiring, and hands-on execution for founders and teams.",
+    "bullets": [
+      "Architecture & strategy",
+      "Team & hiring",
+      "Hands-on delivery"
+    ]
+  },
+  {
+    "id": "software",
+    "title": "Software Development",
+    "price": "Custom",
+    "description": "End-to-end product builds — web apps, mobile apps, and AI products, from prototype to production.",
+    "bullets": [
+      "Web & mobile",
+      "AI products",
+      "MVP → scale"
+    ]
+  },
+  {
+    "id": "automation",
+    "title": "Automation & AI Agents",
+    "price": "Custom",
+    "description": "Cut manual work with custom automations, integrations, and AI agents wired directly into your stack.",
+    "bullets": [
+      "Workflow automation",
+      "AI agents",
+      "Integrations"
+    ]
+  },
+  {
+    "id": "advisory",
+    "title": "AI Advisory",
+    "price": "Custom",
+    "description": "Strategy sessions and technical audits to find where AI actually moves the needle for your product or org.",
+    "bullets": [
+      "Opportunity audits",
+      "Roadmapping",
+      "Technical due diligence"
+    ]
+  }
+]

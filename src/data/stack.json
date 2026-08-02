@@ -1,0 +1,141 @@
+{
+  "stack": [
+    "TypeScript",
+    "React",
+    "Next.js",
+    "Node.js",
+    "Python",
+    "Laravel",
+    "PostgreSQL",
+    "AWS",
+    "Docker",
+    "Kubernetes",
+    "PyTorch",
+    "Claude Code"
+  ],
+  "stackGroups": [
+    {
+      "title": "Frontend",
+      "items": [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Next.js",
+        "Vue.js",
+        "Tailwind CSS",
+        "SCSS",
+        "Styled Components",
+        "Vite",
+        "Webpack",
+        "ESLint",
+        "Prettier"
+      ]
+    },
+    {
+      "title": "Backend",
+      "items": [
+        "Node.js",
+        "Python",
+        "Java",
+        "PHP",
+        "Express.js",
+        "NestJS",
+        "FastAPI",
+        "Spring Boot",
+        "Laravel",
+        "PostgreSQL",
+        "MySQL",
+        "MongoDB",
+        "DynamoDB",
+        "OAuth",
+        "JWT",
+        "LDAP",
+        "REST",
+        "GraphQL",
+        "gRPC",
+        "AWS Lambda"
+      ]
+    },
+    {
+      "title": "DevOps & Cloud",
+      "items": [
+        "AWS",
+        "GCP",
+        "Azure",
+        "GitHub Actions",
+        "Jenkins",
+        "GitLab CI",
+        "Terraform",
+        "AWS CloudFormation",
+        "Docker",
+        "Kubernetes",
+        "Prometheus",
+        "Grafana",
+        "Datadog"
+      ]
+    },
+    {
+      "title": "AI & Machine Learning",
+      "items": [
+        "TensorFlow",
+        "PyTorch",
+        "LangChain",
+        "Transformers",
+        "OpenAI",
+        "Anthropic",
+        "Mistral",
+        "Hugging Face",
+        "LlamaIndex",
+        "AutoGPT",
+        "Claude Code",
+        "Codex"
+      ]
+    },
+    {
+      "title": "Security & Identity",
+      "items": [
+        "AWS IAM",
+        "Azure AD",
+        "Okta",
+        "SAP CDC",
+        "Auth0",
+        "Cognito",
+        "AES",
+        "RSA",
+        "SHA",
+        "GDPR",
+        "SOC 2",
+        "ISO 27001"
+      ]
+    },
+    {
+      "title": "CMS & No-Code",
+      "items": [
+        "WordPress",
+        "Strapi",
+        "Bubble",
+        "Webflow",
+        "Microsoft Power Platform",
+        "n8n"
+      ]
+    },
+    {
+      "title": "Developer Tools",
+      "items": [
+        "Git",
+        "GitHub",
+        "GitLab",
+        "Bitbucket",
+        "VS Code",
+        "JetBrains IntelliJ",
+        "PyCharm",
+        "Slack",
+        "Discord",
+        "Teams",
+        "JIRA",
+        "Trello",
+        "ClickUp"
+      ]
+    }
+  ]
+}

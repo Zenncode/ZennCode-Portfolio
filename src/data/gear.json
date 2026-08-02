@@ -1,0 +1,86 @@
+[
+  {
+    "id": "desk",
+    "title": "Desk Setup",
+    "items": [
+      {
+        "name": "MacBook Pro",
+        "detail": "M5 Max · 128GB memory · 4TB.",
+        "image": "/gear/macbook-pro.webp",
+        "href": "https://www.apple.com/macbook-pro/"
+      },
+      {
+        "name": "Apple Studio Display",
+        "detail": "5K display for the desk.",
+        "image": "/gear/studio-display.webp",
+        "href": "https://www.apple.com/studio-display/"
+      },
+      {
+        "name": "Magic Keyboard",
+        "detail": "Compact, white — with Touch ID.",
+        "image": "/gear/magic-keyboard.webp",
+        "href": "https://www.apple.com/shop/product/MK2A3LL/A/magic-keyboard-with-touch-id-for-mac-models-with-apple-silicon-us-english"
+      },
+      {
+        "name": "Magic Mouse",
+        "detail": "White wireless mouse.",
+        "image": "/gear/magic-mouse.webp",
+        "href": "https://www.apple.com/shop/product/MK2E3AM/A/magic-mouse-white-multi-touch-surface"
+      },
+      {
+        "name": "Xiaomi Monitor Light Bar",
+        "detail": "Glare-free desk lighting.",
+        "image": "/gear/xiaomi-light-bar.webp",
+        "href": "https://www.mi.com/"
+      },
+      {
+        "name": "Desky Sit-Stand Desk",
+        "detail": "Single-motor sit/stand desk.",
+        "image": "/gear/desky-desk.webp",
+        "href": "https://desky.com/"
+      }
+    ]
+  },
+  {
+    "id": "edc",
+    "title": "Everyday Carry",
+    "items": [
+      {
+        "name": "iPhone 15 Pro Max",
+        "detail": "1TB · phone & B-roll camera.",
+        "image": "/gear/iphone-15-pro-max.webp",
+        "href": "https://www.apple.com/iphone/"
+      },
+      {
+        "name": "AirPods Pro",
+        "detail": "Daily audio & calls.",
+        "image": "/gear/airpods-pro.webp",
+        "href": "https://www.apple.com/airpods-pro/"
+      },
+      {
+        "name": "WHOOP 5.0",
+        "detail": "Recovery & strain tracking.",
+        "image": "/gear/whoop-5.webp",
+        "href": "https://www.whoop.com/"
+      },
+      {
+        "name": "Anker 165W Power Bank",
+        "detail": "25,000mAh, retractable cables.",
+        "image": "/gear/anker-powerbank.webp",
+        "href": "https://www.anker.com/"
+      }
+    ]
+  },
+  {
+    "id": "creator",
+    "title": "Creator",
+    "items": [
+      {
+        "name": "DJI Osmo Pocket 3",
+        "detail": "Creator Combo — pocket gimbal camera.",
+        "image": "/gear/osmo-pocket-3.webp",
+        "href": "https://www.dji.com/osmo-pocket-3"
+      }
+    ]
+  }
+]

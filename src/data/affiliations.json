@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Analytics & AI Association of the Philippines",
+    "role": "Member",
+    "emoji": "AAP",
+    "initials": "AAP",
+    "logo": "/affiliations/aap.png",
+    "description": "The national association advancing analytics and AI adoption across the Philippines.",
+    "href": "https://aap.ph",
+    "hrefLabel": "aap.ph"
+  },
+  {
+    "name": "Philippine Software Industry Association",
+    "role": "Member",
+    "emoji": "PSIA",
+    "initials": "PSIA",
+    "logo": "/affiliations/psia.png",
+    "description": "The industry body representing the Philippine software and IT services sector.",
+    "href": "https://psia.org.ph",
+    "hrefLabel": "psia.org.ph"
+  },
+  {
+    "name": "AppBuildersPH",
+    "role": "Founder",
+    "emoji": "PH",
+    "initials": "PH",
+    "description": "A developer community I founded for Filipino app builders and indie hackers.",
+    "href": "https://www.facebook.com/",
+    "hrefLabel": "Facebook group"
+  }
+]

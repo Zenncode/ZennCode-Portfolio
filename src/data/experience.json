@@ -1,0 +1,208 @@
+{
+  "experience": [
+    {
+      "year": "2025",
+      "role": "Lead AI Engineer",
+      "company": "Standard Chartered"
+    },
+    {
+      "year": "2025",
+      "role": "AI Ops Engineer",
+      "company": "Cambridge University Press & Assessment"
+    },
+    {
+      "year": "2024",
+      "role": "Senior Full Stack Developer",
+      "company": "Cambridge University Press & Assessment"
+    },
+    {
+      "year": "2022",
+      "role": "Software Engineering Lead",
+      "company": "PocketDevs"
+    }
+  ],
+  "experienceFull": [
+    {
+      "company": "Standard Chartered",
+      "initials": "SC",
+      "type": "Full-time",
+      "duration": "Aug 2025 – Present · 11 mos",
+      "roles": [
+        {
+          "title": "Lead AI Engineer",
+          "range": "Aug 2025 – Present · 11 mos",
+          "bullets": [
+            "Driving AI initiatives and system-level solutions across key areas of the business. Focused on scalable, secure, and responsible innovation."
+          ],
+          "skills": [
+            "Artificial Intelligence (AI)",
+            "Generative AI",
+            "System Design",
+            "Responsible AI"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Cambridge University Press & Assessment",
+      "initials": "CU",
+      "type": "Full-time · 1 yr 2 mos",
+      "location": "Makati, National Capital Region, Philippines · Hybrid",
+      "duration": "Jul 2024 – Aug 2025",
+      "roles": [
+        {
+          "title": "AI Ops Engineer",
+          "range": "Feb 2025 – Aug 2025 · 7 mos",
+          "bullets": [
+            "Pioneered the GenAI Centre of Excellence to deliver scalable AI solutions that support the organization's global education and publishing initiatives.",
+            "Led GenAI model deployments across Azure Foundry and AWS Bedrock, leveraging Dockerized workflows orchestrated through ECS with Fargate, App Runner, and Amplify. Standardized DevOps practices with CI/CD pipelines, IAM policy hardening, automated EC2/Lambda provisioning, and secure secret management via AWS Secrets Manager and Parameter Store. Integrated centralized observability using CloudWatch for logs, metrics, and alerting.",
+            "Architected and deployed a WhatsApp-based lesson planner for South African Foundation Phase educators. The solution utilized Turn.io for conversational UX, n8n for orchestration, and Qdrant for vector search, enabling context-aware, CAPS-aligned lesson plans via a Retrieval-Augmented Generation (RAG) pipeline. Automated document ingestion from structured PDFs into vector stores using LangChain, cutting lesson preparation time by over 70%.",
+            "Built an OpenAI-powered shipment status tracker embedded in Zendesk, allowing customer support agents to retrieve real-time updates through natural language prompts. This reduced ticket backlog and improved first-contact resolution rates significantly. Employed agentic workflows to enhance dynamic task execution.",
+            "Built and launched a company-wide GenAI Bootcamp initiative to upskill employees globally. Designed modular training paths and developed internal LLM use cases that accelerated adoption of generative AI across departments.",
+            "Served as the team's go-to GenAI advisor — collaborating closely with stakeholders on solution design, roadmap planning, and technical feasibility. Regularly delivered architecture reviews, demos, and hands-on consultations to align AI capabilities with business goals."
+          ],
+          "skills": [
+            "n8n",
+            "Retrieval-Augmented Generation (RAG)",
+            "LangChain",
+            "AWS Bedrock",
+            "Azure"
+          ]
+        },
+        {
+          "title": "Senior Full Stack Developer",
+          "range": "Jul 2024 – Feb 2025 · 8 mos",
+          "bullets": [
+            "Led development of high-impact platforms including MyCambridge, Cambridge Login, and Core Identity, used by over 500,000 global users. Integrated multi-tenancy into the MyCambridge portal and implemented role-based access control, enabling granular user permissions across organizations. Contributed to a full UI/UX redesign in React.js to enhance user experience and accessibility.",
+            "Audited and optimized AWS infrastructure (EC2, RDS, CloudWatch), reducing monthly cloud costs by 25%. Improved test coverage across core modules, boosting deployment reliability and reducing production issues. Built and deployed an AI assistant tool leveraging the team’s internal knowledge base, enabling instant answers to technical and policy-related queries.",
+            "Maintained CI/CD pipelines via Azure DevOps Server, enforced code quality with SonarQube and structured reviews, and implemented observability for system uptime and performance monitoring. Mentored junior developers through pair programming, architecture sessions, and feedback cycles — accelerating onboarding and raising team-wide code quality."
+          ],
+          "skills": [
+            "Azure DevOps Server",
+            "Amazon Web Services (AWS)",
+            "React.js",
+            "SonarQube",
+            "CI/CD"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "PocketDevs",
+      "initials": "PD",
+      "type": "Full-time · 2 yrs 7 mos",
+      "location": "Mandaluyong, National Capital Region, Philippines · Hybrid",
+      "duration": "Jan 2022 – Jul 2024",
+      "roles": [
+        {
+          "title": "Software Engineering Lead",
+          "range": "Jan 2022 – Jul 2024 · 2 yrs 7 mos",
+          "bullets": [
+            "Led the design, development, and deployment of 60+ web and mobile applications across industries including fintech, e-commerce, and healthcare.",
+            "Architected full-stack solutions using React, React Native, Laravel, and Node.js, with MongoDB for document-based storage. Built rapid MVPs using Webflow, Bubble, and Figma, cutting client validation timelines by 50%.",
+            "Managed DevOps pipelines using AWS, GitHub Actions, and Docker, setting up CI/CD workflows, automated testing, environment provisioning, and uptime monitoring.",
+            "Oversaw code quality, version control, and agile sprint cycles across a team of 10+ engineers. Delivered production-grade systems with <200ms API latency and 99.9% uptime."
+          ],
+          "skills": [
+            "Solution Architecture",
+            "Amazon Web Services (AWS)",
+            "React Native",
+            "Laravel",
+            "Docker"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Bluewind Asia Corporation",
+      "initials": "BA",
+      "type": "Full-time · 1 yr 11 mos",
+      "location": "Cebu, Central Visayas, Philippines · On-site",
+      "duration": "Mar 2020 – Jan 2022",
+      "roles": [
+        {
+          "title": "Lead Application Developer",
+          "range": "Sep 2021 – Jan 2022 · 5 mos",
+          "bullets": [
+            "Led the system architecture and scaling of client-facing and internal platforms across CRM, smart home, and data engineering projects.",
+            "Designed and built a KYC (Know Your Customer) platform with document upload, OCR, and identity verification modules, reducing manual validation time by 70%.",
+            "Refactored the legacy CRM into a modular service-based design using PHP, improving response times by 40% and cutting bug reports by over 60%.",
+            "Directed the development of the MEC smart home platform, implementing secure authentication (JWT), OTA firmware support, and device telemetry pipelines.",
+            "Spearheaded the company's web scraping infrastructure to support high-frequency crawling of real estate listings (500k+ records/month) with proxy rotation and Databricks integration.",
+            "Managed a team of 12 developers, enforced Git workflows, introduced CI/CD with GitHub Actions, and standardized code quality practices through peer reviews and automated linting."
+          ],
+          "skills": [
+            "Software Architecture",
+            "Full-Stack Development",
+            "JWT",
+            "Databricks",
+            "GitHub Actions"
+          ]
+        },
+        {
+          "title": "Application Developer",
+          "range": "Mar 2020 – Oct 2021 · 1 yr 8 mos",
+          "bullets": [
+            "Developed a smart home web and mobile app for MEC using React, Node.js, and Swift, enabling real-time IoT control via MQTT and push notifications.",
+            "Built internal automation tools with Microsoft Power Apps to digitize manual workflows. Designed and deployed interactive Power BI dashboards for reporting and business insights.",
+            "Created a large-scale real estate aggregator that scraped Tokyo rental listings using rotating proxies and Puppeteer, processing over 100,000 listings per month and storing data in Databricks for analytics.",
+            "Also developed a modular CRM system for multiple B2B clients using a proprietary PHP framework, reducing client onboarding time by 30%."
+          ],
+          "skills": [
+            "Microsoft Power Platform",
+            "Python (Programming Language)",
+            "React",
+            "Node.js",
+            "MQTT"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Gullas College of Medicine",
+      "initials": "GC",
+      "type": "Full-time · 4 mos",
+      "location": "Cebu City, Cebu, Philippines · On-site",
+      "duration": "Jan 2020 – Apr 2020",
+      "roles": [
+        {
+          "title": "Software Engineer",
+          "range": "Jan 2020 – Apr 2020 · 4 mos",
+          "bullets": [
+            "Led the development of internal systems including the student information system, website, and service request portal using AngularJS, Spring Boot, and PostgreSQL.",
+            "Managed the VPS hosting environment and deployments, while mentoring 5 interns. Improved admin efficiency by automating key workflows across departments."
+          ],
+          "skills": [
+            "AngularJS",
+            "Spring Boot",
+            "PostgreSQL",
+            "VPS"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "GOMO",
+      "initials": "GO",
+      "type": "Internship · 6 mos",
+      "location": "Lapu-Lapu, Central Visayas, Philippines · On-site",
+      "duration": "Jul 2019 – Dec 2019",
+      "roles": [
+        {
+          "title": "Software Development Intern",
+          "range": "Jul 2019 – Dec 2019 · 6 mos",
+          "bullets": [
+            "Developed a procurement system for a local government unit using Laravel, Vue.js, and MySQL. Contributed to front-end UI, RESTful APIs, and database design.",
+            "Delivered production-ready features that helped streamline manual procurement processes by over 40%."
+          ],
+          "skills": [
+            "Laravel",
+            "Vue.js",
+            "MySQL",
+            "REST"
+          ]
+        }
+      ]
+    }
+  ]
+}

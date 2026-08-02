@@ -1,0 +1,168 @@
+{
+  "projects": [
+    {
+      "id": "tarsi",
+      "name": "Tarsi — Budget Tracker",
+      "description": "An offline-first budget & expense tracker powered by on-device AI.",
+      "highlights": [
+        "#1 Finance App",
+        "App Store Hidden Gems",
+        "Apps Made in the Philippines"
+      ],
+      "accent": "#0f766e",
+      "icon": "₱",
+      "iconImage": "/apps/tarsi.jpg",
+      "featured": true,
+      "links": [
+        {
+          "label": "App Store",
+          "href": "https://apps.apple.com/"
+        },
+        {
+          "label": "Google Play",
+          "href": "https://play.google.com/"
+        }
+      ],
+      "press": [
+        {
+          "label": "Tap & Swipe — Case Study",
+          "href": "#"
+        },
+        {
+          "label": "Fintech News PH",
+          "href": "#"
+        },
+        {
+          "label": "NextGen Tools",
+          "href": "#"
+        }
+      ]
+    },
+    {
+      "id": "kabi",
+      "name": "Kabi — Gym Bro",
+      "description": "A gym companion for tracking workouts and staying consistent.",
+      "highlights": [
+        "#1 Paid Fitness App"
+      ],
+      "accent": "#b45309",
+      "icon": "🏋",
+      "iconImage": "/apps/kabi.jpg",
+      "featured": true,
+      "links": [
+        {
+          "label": "App Store",
+          "href": "https://apps.apple.com/"
+        },
+        {
+          "label": "Google Play",
+          "href": "https://play.google.com/"
+        }
+      ]
+    },
+    {
+      "id": "mayi",
+      "name": "Mayi — Travel Buddy",
+      "description": "A travel buddy for planning trips and exploring on the go.",
+      "highlights": [
+        "#1 Paid Travel App"
+      ],
+      "accent": "#1d4ed8",
+      "icon": "✈",
+      "iconImage": "/apps/mayi.jpg",
+      "featured": true,
+      "links": [
+        {
+          "label": "App Store",
+          "href": "https://apps.apple.com/"
+        }
+      ]
+    }
+  ],
+  "otherProjects": [
+    {
+      "name": "Seam",
+      "category": "Generative AI",
+      "description": "An AI-native platform for spiritual exploration and learning.",
+      "href": "#"
+    },
+    {
+      "name": "Tunai",
+      "category": "Generative AI",
+      "description": "An AI-powered social media fact-checker.",
+      "href": "#"
+    },
+    {
+      "name": "BOOQED",
+      "category": "Platform",
+      "description": "A leading workspace booking platform based in Singapore.",
+      "href": "#"
+    },
+    {
+      "name": "CodeCred",
+      "category": "Platform",
+      "description": "Online certifications for programmers — verifiable, skills-based credentials.",
+      "href": "#"
+    },
+    {
+      "name": "Capstone Generator",
+      "category": "Generative AI",
+      "description": "An online capstone project generator for IT & CS students.",
+      "href": "#"
+    },
+    {
+      "name": "Resume Builder",
+      "category": "Web App",
+      "description": "A Harvard-style, ATS-friendly resume builder.",
+      "href": "#"
+    },
+    {
+      "name": "PackBack",
+      "category": "EdTech · AI",
+      "description": "Student instructional AI.",
+      "href": "#"
+    },
+    {
+      "name": "Cambridge South Africa",
+      "category": "EdTech · AI",
+      "description": "An AI teacher assistant for Foundation Phase classrooms.",
+      "href": "#"
+    },
+    {
+      "name": "Maldives International Education",
+      "category": "EdTech · AI",
+      "description": "AI-powered lesson planning for educators.",
+      "href": "#"
+    },
+    {
+      "name": "SEANOGY",
+      "category": "Platform",
+      "description": "An energy management and sustainability platform.",
+      "href": "#"
+    },
+    {
+      "name": "Petrogreen Energy",
+      "category": "Enterprise",
+      "description": "A central power-plant monitoring system.",
+      "href": "#"
+    },
+    {
+      "name": "DOST-FNRI",
+      "category": "Government",
+      "description": "A nutritional database and calorie counter.",
+      "href": "#"
+    },
+    {
+      "name": "Interlace",
+      "category": "Web App",
+      "description": "A site for an architecture & design studio.",
+      "href": "#"
+    },
+    {
+      "name": "UAPSA",
+      "category": "Web App",
+      "description": "Event management platform and landing page.",
+      "href": "#"
+    }
+  ]
+}

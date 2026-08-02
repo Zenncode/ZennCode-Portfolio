@@ -1,0 +1,28 @@
+{
+  "hero": {
+    "p1": "I'm a full-stack engineer. I build modern web & mobile apps, and these days I'm focused on shipping polished products.",
+    "p2": "Right now I'm building cool new stuff every day. I love turning rough ideas into things people actually use."
+  },
+  "stats": [
+    {
+      "value": "15+",
+      "label": "PROJECTS",
+      "href": "#projects"
+    },
+    {
+      "value": "2+ yrs",
+      "label": "SHIPPING",
+      "href": "#experience"
+    },
+    {
+      "value": "TS · React",
+      "label": "STACK",
+      "href": "/stack"
+    },
+    {
+      "value": "Web apps",
+      "label": "FOCUS",
+      "href": "#projects"
+    }
+  ]
+}

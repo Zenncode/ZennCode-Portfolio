@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Apple",
+    "src": "/brands/apple.svg"
+  },
+  {
+    "name": "Cisco",
+    "src": "/brands/cisco.svg"
+  },
+  {
+    "name": "AWS",
+    "src": "/brands/aws.png"
+  },
+  {
+    "name": "Cursor",
+    "src": "/brands/cursor.svg"
+  },
+  {
+    "name": "Replit",
+    "src": "/brands/replit.svg"
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "slug": "stop-focusing-only-on-the-ai-model-start-building-ai-harnesses",
+    "title": "Stop Focusing Only on the AI Model. Start Building AI Harnesses.",
+    "excerpt": "An AI harness is the system surrounding an AI model that makes it reliable, safe, and dependable. Learn why harness engineering is the next big shift in AI development.",
+    "date": "Jul 2026",
+    "readMinutes": 2,
+    "cover": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&h=300&fit=crop&q=80",
+    "body": "Models get the headlines. Harnesses make them shippable. The system around the model — evals, tools, permissions, memory, recovery — is what turns a demo into something you can trust."
+  },
+  {
+    "slug": "my-setup-poke-mcps-and-a-local-mac-bridge",
+    "title": "My Setup: Poke, MCPs, and a Local Mac Bridge",
+    "excerpt": "I finally got my automation stack to a place where it actually works for me instead of the other way around...",
+    "date": "Jun 2026",
+    "readMinutes": 1,
+    "cover": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop&q=80",
+    "body": "A practical note on wiring MCPs, local bridges, and the small automation habits that keep tools useful instead of noisy."
+  },
+  {
+    "slug": "ai-products-need-more-than-a-good-demo",
+    "title": "AI Products Need More Than a Good Demo",
+    "excerpt": "What I think about when turning AI demos into products people can trust and use.",
+    "date": "Jun 2026",
+    "readMinutes": 3,
+    "cover": "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=300&fit=crop&q=80",
+    "body": "A good demo optimizes for wow. A good product optimizes for trust — empty states, recovery paths, and the boring middle that makes people stay."
+  },
+  {
+    "slug": "what-small-mobile-apps-taught-me-about-taste",
+    "title": "What Small Mobile Apps Taught Me About Taste",
+    "excerpt": "What focused apps like budget, fitness, and travel tools taught me about product taste.",
+    "date": "Jun 2026",
+    "readMinutes": 2,
+    "cover": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=300&fit=crop&q=80",
+    "body": "Small apps force taste. When the surface area is tiny, every label, default, and empty state has to earn its place."
+  },
+  {
+    "slug": "boring-guardrails-make-ai-features-better",
+    "title": "Boring Guardrails Make AI Features Better",
+    "excerpt": "Why practical AI guardrails are product decisions, not just technical controls.",
+    "date": "Jun 2026",
+    "readMinutes": 3,
+    "cover": "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400&h=300&fit=crop&q=80",
+    "body": "Rate limits, confirmations, and scoped tools are not anti-magic — they are how AI features survive contact with real users."
+  },
+  {
+    "slug": "a-practical-stack-for-shipping-fast",
+    "title": "A Practical Stack for Shipping Fast",
+    "excerpt": "How I think about choosing a stack that supports speed without creating painful maintenance.",
+    "date": "Jun 2026",
+    "readMinutes": 2,
+    "cover": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop&q=80",
+    "body": "Pick tools you can still love after the third rewrite. Speed matters — so does not hating the codebase in six months."
+  },
+  {
+    "slug": "the-quiet-work-behind-rag-systems",
+    "title": "The Quiet Work Behind RAG Systems",
+    "excerpt": "A practical look at the less glamorous work that makes retrieval augmented generation useful.",
+    "date": "Jun 2026",
+    "readMinutes": 2,
+    "cover": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop&q=80",
+    "body": "Chunking, freshness, evals, and failure modes — the quiet work that decides whether RAG feels smart or random."
+  },
+  {
+    "slug": "observability-is-product-work",
+    "title": "Observability Is Product Work",
+    "excerpt": "Why logs, metrics, traces, and AI behavior tracking belong in product thinking from the start.",
+    "date": "May 2026",
+    "readMinutes": 3,
+    "cover": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop&q=80",
+    "body": "If you cannot see how a feature fails, you cannot improve it. Observability is how product and engineering stay honest."
+  },
+  {
+    "slug": "building-in-public-without-performing",
+    "title": "Building in Public Without Performing",
+    "excerpt": "A personal note on sharing work online while keeping the actual craft at the center.",
+    "date": "May 2026",
+    "readMinutes": 2,
+    "cover": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=400&h=300&fit=crop&q=80",
+    "body": "Share the work. Skip the performance. Building in public works best when the craft stays louder than the feed."
+  },
+  {
+    "slug": "what-hackathons-taught-me-about-scope",
+    "title": "What Hackathons Taught Me About Scope",
+    "excerpt": "What short build cycles taught me about choosing the smallest complete version of an idea.",
+    "date": "May 2026",
+    "readMinutes": 3,
+    "cover": "https://images.unsplash.com/photo-1504384764586-bb4cdc1707b0?w=400&h=300&fit=crop&q=80",
+    "body": "Hackathons punish vague scope. The winning move is almost always the smallest version that still feels complete."
+  }
+]
