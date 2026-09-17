@@ -516,7 +516,7 @@ export function StackPage() {
               {g.items.map((item) => (
                 <span
                   key={item}
-                  className="font-mono text-[0.8rem] px-2.5 py-1 rounded-md border border-[var(--color-border)] bg-[var(--color-surface-soft)] text-[var(--color-muted)]"
+                  className="rounded-md bg-[var(--color-surface-soft)] border border-[var(--color-border)] px-2.5 py-0.5 text-[0.75rem] text-[var(--color-muted)] hover:border-[var(--color-ink)] hover:text-[var(--color-ink)] transition-colors"
                 >
                   {item}
                 </span>

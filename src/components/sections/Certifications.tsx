@@ -22,7 +22,7 @@ export default function Certifications() {
             <FadeIn key={`${c.name}-${c.issuer}`} delay={Math.min(i * 0.07, 0.33)}>
               <a
                 href={c.verify || '#'}
-                className="flex sm:flex-col gap-3.5 items-start p-4 border border-[var(--color-border)] rounded-[var(--radius-lg)] bg-[var(--color-bg)] no-underline hover:-translate-y-0.5 hover:border-[var(--color-border-strong)] hover:shadow-[var(--shadow-card)] transition-all h-full"
+                className="cert-card flex sm:flex-col gap-3.5 items-start p-4 border border-[var(--color-border)] rounded-[var(--radius-lg)] bg-[var(--color-bg)] no-underline hover:-translate-y-0.5 hover:border-[var(--color-border-strong)] hover:shadow-[var(--shadow-card)] transition-all h-full"
                 target="_blank"
                 rel="noreferrer"
               >

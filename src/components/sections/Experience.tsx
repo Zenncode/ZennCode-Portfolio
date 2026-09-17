@@ -51,13 +51,13 @@ export default function Experience() {
             <p className="text-[0.92rem] text-[var(--color-muted)] leading-[1.9]">
               {stack.map((s, i) => (
                 <span key={s}>
-                  {i > 0 ? ' ' : ''}
-                  <span className="whitespace-nowrap">{s}</span>
+                  {i > 0 ? ' | ' : ''}
+                  <span className="whitespace-nowrap text-[var(--color-dim)] hover:text-[var(--color-ink)] transition-colors">{s}</span>
                 </span>
               ))}{' '}
               <Link
                 to="/stack"
-                className="text-[var(--color-dim)] hover:text-[var(--color-ink)] no-underline"
+                className="text-[var(--color-dim)] hover:text-[var(--color-ink)] no-underline transition-colors"
               >
                 + more
               </Link>

@@ -61,6 +61,25 @@
       ]
     },
     {
+      "id": "newproject",
+      "name": "New Project",
+      "description": "A newly built web application showcasing modern full-stack development.",
+      "highlights": ["Featured on Product Hunt"],
+      "accent": "#a855f7",
+      "icon": "⚡",
+      "featured": true,
+      "links": [
+        {
+          "label": "View Demo",
+          "href": "#"
+        },
+        {
+          "label": "Source Code",
+          "href": "#"
+        }
+      ]
+    },
+    {
       "id": "mayi",
       "name": "Mayi — Travel Buddy",
       "description": "A travel buddy for planning trips and exploring on the go.",
@@ -80,6 +99,18 @@
     }
   ],
   "otherProjects": [
+    {
+      "name": "Seam",
+      "category": "Generative AI",
+      "description": "An AI-native platform for spiritual exploration and learning.",
+      "href": "#"
+    },
+    {
+      "name": "Tunai",
+      "category": "Generative AI",
+      "description": "An AI-powered social media fact-checker.",
+      "href": "#"
+    },
     {
       "name": "Seam",
       "category": "Generative AI",

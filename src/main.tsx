@@ -10,21 +10,13 @@ import './index.css'
 ;(() => {
   let pref = localStorage.getItem('theme-pref')
 
-  // One-time: old builds defaulted to "system" (often dark). Force light once.
-  if (localStorage.getItem('theme-light-default-v1') !== '1') {
-    if (!pref || pref === 'system') {
-      pref = 'light'
-      localStorage.setItem('theme-pref', 'light')
-    }
-    localStorage.setItem('theme-light-default-v1', '1')
-  }
-
-  if (pref !== 'light' && pref !== 'dark' && pref !== 'system') {
+  // Default to light if not set (system prefers dark but we default to light)
+  if (!pref) {
     pref = 'light'
     localStorage.setItem('theme-pref', 'light')
   }
 
-  applyTheme((pref ?? 'light') as 'light' | 'dark' | 'system')
+  applyTheme(pref as 'light' | 'dark' | 'system')
 })()
 
 createRoot(document.getElementById('root')!).render(

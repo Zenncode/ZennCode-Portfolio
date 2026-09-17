@@ -7,6 +7,10 @@ export default function Footer() {
         <div className="container-read mx-auto flex flex-wrap items-center justify-between gap-3">
           <p className="font-mono text-[0.68rem] tracking-wider uppercase text-[var(--color-dim)]">
             © {new Date().getFullYear()} {site.name}
+            <span className="mx-2 opacity-60">·</span>
+            <span className="text-[var(--color-dim)] hover:text-[var(--color-ink)] transition-colors">
+              made with ✦
+            </span>
           </p>
           <div className="flex gap-4">
             <a

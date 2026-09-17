@@ -121,7 +121,7 @@ function DeckCard({
           onActivate()
         }
       }}
-      className={`deck-card ${slot} rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] p-5`}
+      className={`deck-card ${slot} rounded-2xl bg-[var(--color-bg)] p-5`}
     >
       {/* Badges */}
       {p.highlights && p.highlights.length > 0 && (
