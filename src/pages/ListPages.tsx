@@ -9,6 +9,7 @@ import {
   projects,
   recommendations,
   stackGroups,
+  stackIconUrl,
 } from '../data/portfolio'
 
 /** Match bryllim: ~5 posts per page → 1 / 2 for ten posts */
@@ -252,6 +253,21 @@ export function BlogPostPage() {
 export function ProjectsPage() {
   const featured = projects.filter((p) => p.featured !== false)
 
+  if (featured.length === 0 && otherProjects.length === 0) {
+    return (
+      <div className="page-shell">
+        <div className="container-read relative z-10 max-w-[42rem]!">
+          <h1 className="font-mono text-[clamp(1.85rem,4vw,2.5rem)] font-normal tracking-wide leading-none lowercase mb-4 text-[var(--color-ink)]">
+            projects
+          </h1>
+          <p className="font-mono text-[0.85rem] text-[var(--color-dim)] border border-dashed border-[var(--color-border)] rounded-xl px-4 py-8 text-center">
+            No projects listed yet.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="page-shell">
       <div className="container-read relative z-10 max-w-[42rem]!">
@@ -270,6 +286,14 @@ export function ProjectsPage() {
               key={p.id}
               className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] p-5 sm:p-6 shadow-[var(--shadow-card)]"
             >
+              <div
+                className={
+                  p.previewImage
+                    ? 'grid grid-cols-1 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] gap-5 items-center'
+                    : ''
+                }
+              >
+              <div className="min-w-0">
               <div className="flex flex-wrap items-start gap-3 mb-3">
                 <div className="size-14 sm:size-16 rounded-[16px] overflow-hidden border border-[var(--color-border)] shrink-0 bg-[var(--color-surface-soft)] grid place-items-center">
                   {p.iconImage ? (
@@ -367,6 +391,29 @@ export function ProjectsPage() {
                   ))}
                 </div>
               )}
+              </div>
+              {p.previewImage && (
+                <div className="relative rounded-xl overflow-hidden border border-[var(--color-border)] bg-[var(--color-surface-soft)] aspect-[16/10] min-h-0">
+                  <div
+                    className="absolute inset-0 grid place-items-center text-4xl text-white"
+                    style={{ background: p.accent }}
+                    aria-hidden
+                  >
+                    {p.icon}
+                  </div>
+                  <img
+                    src={p.previewImage}
+                    alt={`${p.name} preview`}
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                    className="absolute inset-0 w-full h-full object-cover object-top"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none'
+                    }}
+                  />
+                </div>
+              )}
+              </div>
             </article>
           ))}
         </div>
@@ -422,9 +469,9 @@ export function ExperiencePage() {
           experience
         </h1>
         <p className="text-[var(--color-muted)] mb-10 max-w-xl text-[0.95rem] leading-relaxed">
-          Full-stack work at Uzaro Solutions Tech Inc., plus independent
-          products under Zenn / ZennTech — flood systems, AI tools, and web
-          platforms.
+          Diploma in Information Technology student at PUP Lopez — NCII
+          passer and former iBITS coordinator, open to internships and
+          entry-level opportunities.
         </p>
         {/* Timeline — ss/image copy 6.png */}
         <div className="relative pl-0">
@@ -504,8 +551,9 @@ export function StackPage() {
           tech stack
         </h1>
         <p className="text-[var(--color-muted)] mb-10 max-w-lg text-[0.95rem] leading-relaxed">
-          The tools, frameworks, and platforms I reach for — across the front
-          end, back end, infrastructure, and AI.
+          The languages, frameworks, and tools I use — matching my GitHub
+          profile: programming languages, frontend, backend, mobile,
+          databases, tools, design, editors, and AI.
         </p>
         {stackGroups.map((g) => (
           <div key={g.title} className="mb-9">
@@ -516,8 +564,19 @@ export function StackPage() {
               {g.items.map((item) => (
                 <span
                   key={item}
-                  className="rounded-md bg-[var(--color-surface-soft)] border border-[var(--color-border)] px-2.5 py-0.5 text-[0.75rem] text-[var(--color-muted)] hover:border-[var(--color-ink)] hover:text-[var(--color-ink)] transition-colors"
+                  className="inline-flex items-center gap-1.5 rounded-md bg-[var(--color-surface-soft)] border border-[var(--color-border)] px-2 py-0.5 text-[0.75rem] text-[var(--color-muted)] hover:border-[var(--color-ink)] hover:text-[var(--color-ink)] transition-colors"
                 >
+                  {stackIconUrl(item) && (
+                    <img
+                      src={stackIconUrl(item)!}
+                      alt=""
+                      loading="lazy"
+                      className="size-4 shrink-0"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'
+                      }}
+                    />
+                  )}
                   {item}
                 </span>
               ))}
@@ -701,7 +760,11 @@ export function AffiliationsPage() {
           Associations and communities I&apos;m part of — and the ones I&apos;ve
           helped build.
         </p>
-        {/* Large cards with role badge — ss/image copy 10.png */}
+        {affiliations.length === 0 ? (
+          <p className="font-mono text-[0.85rem] text-[var(--color-dim)] border border-dashed border-[var(--color-border)] rounded-xl px-4 py-8 text-center">
+            No affiliations listed yet.
+          </p>
+        ) : (
         <div className="flex flex-col gap-4">
           {affiliations.map((a) => (
             <div
@@ -762,6 +825,7 @@ export function AffiliationsPage() {
             </div>
           ))}
         </div>
+        )}
       </div>
     </div>
   )

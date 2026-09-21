@@ -3,7 +3,13 @@ import { WebsocketProvider } from 'y-websocket'
 
 /** Shared room — all visitors on this portfolio see the same live feed */
 const ROOM = 'zenncode-portfolio-community-chat-v1'
-const WS_URL = 'wss://demos.yjs.dev'
+/**
+ * Configurable Yjs relay. Defaults to the public demo (unreliable, no
+ * persistence, shared with everyone). For production set
+ * VITE_YJS_WS_URL to your own y-websocket server.
+ */
+const WS_URL =
+  import.meta.env.VITE_YJS_WS_URL ?? 'wss://demos.yjs.dev'
 const USER_KEY = 'community-chat-user'
 const MAX_MESSAGES = 200
 const MAX_TEXT = 200
@@ -73,20 +79,43 @@ export function startCommunityChat(): void {
   if (started || typeof window === 'undefined') return
   started = true
 
-  doc = new Y.Doc()
-  yMessages = doc.getArray('messages')
+  try {
+    doc = new Y.Doc()
+    yMessages = doc.getArray('messages')
 
-  provider = new WebsocketProvider(WS_URL, ROOM, doc, {
-    connect: true,
-  })
+    provider = new WebsocketProvider(WS_URL, ROOM, doc, {
+      connect: true,
+    })
 
-  yMessages.observe(() => emit())
-  provider.on('sync', () => emit())
+    yMessages.observe(() => emit())
+    provider.on('sync', () => emit())
+    provider.on('connection-close', () => emit())
+    provider.on('connection-error', () => emit())
+  } catch {
+    // Offline / blocked websocket — chat stays local-only, UI still works
+    doc = null
+    yMessages = null
+    provider = null
+  }
   emit()
 }
 
 export function stopCommunityChat(): void {
-  // Keep connection for the session — only disconnect on full page unload
+  try {
+    provider?.disconnect()
+  } catch {
+    /* ignore */
+  }
+  try {
+    doc?.destroy()
+  } catch {
+    /* ignore */
+  }
+  provider = null
+  doc = null
+  yMessages = null
+  started = false
+  cached = []
 }
 
 export function subscribeMessages(fn: Listener): () => void {
@@ -113,7 +142,6 @@ export function postMessage(input: {
   text: string
 }): ChatMessage | null {
   startCommunityChat()
-  if (!yMessages || !doc) return null
 
   const text = input.text.trim().slice(0, MAX_TEXT)
   const name = input.name.trim().slice(0, 40)
@@ -138,6 +166,13 @@ export function postMessage(input: {
     text,
     createdAt: Date.now(),
     seed: name,
+  }
+
+  // Offline / relay unavailable — keep local-only so UI still works
+  if (!yMessages || !doc) {
+    cached = [...cached, msg].slice(-MAX_MESSAGES)
+    listeners.forEach((fn) => fn(cached))
+    return msg
   }
 
   const map = new Y.Map<unknown>()

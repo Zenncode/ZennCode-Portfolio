@@ -47,6 +47,8 @@ export type Project = {
   icon: string
   /** App icon image path */
   iconImage?: string
+  /** Right-side preview screenshot (login page SS) */
+  previewImage?: string
   links?: { label: string; href: string }[]
   featured?: boolean
   press?: { label: string; href: string }[]
@@ -125,6 +127,18 @@ export type Hackathon = {
   featured?: boolean
 }
 
+export type CommunityLink = {
+  name: string
+  handle: string
+  href: string
+}
+
+export type FoundedLink = {
+  name: string
+  href: string
+  detail: string
+}
+
 export type GearItem = {
   name: string
   detail: string
@@ -167,6 +181,11 @@ export type ShopProduct = {
   footerNote: string
 }
 
+export type CollabBrand = {
+  name: string
+  src: string
+}
+
 /* ─── Data (one JSON file per feature) ──────────────────────────────────── */
 
 export const site = siteData
@@ -175,7 +194,7 @@ export const stats = heroData.stats
 export const blogPosts = blogPostsData as BlogPost[]
 export const projects = projectsData.projects as Project[]
 export const otherProjects = projectsData.otherProjects as OtherProject[]
-export const collabBrands = collabBrandsData
+export const collabBrands = collabBrandsData as CollabBrand[]
 export const consultingOffers = consultingOffersData as ConsultingOffer[]
 export const experience = experienceData.experience as Experience[]
 export const experienceFull = experienceData.experienceFull as ExperienceCompany[]
@@ -185,8 +204,8 @@ export const certifications = certificationsData as Certification[]
 export const recommendations = recommendationsData as Recommendation[]
 export const affiliations = affiliationsData as Affiliation[]
 export const hackathons = communityData.hackathons as Hackathon[]
-export const communities = communityData.communities
-export const founded = communityData.founded
+export const communities = communityData.communities as CommunityLink[]
+export const founded = communityData.founded as FoundedLink[]
 export const communityHeadline = communityData.communityHeadline
 export const communitySub = communityData.communitySub
 export const hackathonHeadline = communityData.hackathonHeadline
@@ -197,6 +216,66 @@ export const shopProducts = shopProductsData as ShopProduct[]
 export const contributionCount = githubData.contributionCount
 
 /* ─── Helpers (not content) ─────────────────────────────────────────────── */
+
+/**
+ * SVG icon for every stack item — same icon sets as the GitHub profile
+ * README (skillicons.dev for languages, go-skill-icons for the rest).
+ * Each URL serves a single SVG. <img onError> hides any slug that 404s,
+ * so the text label always remains.
+ */
+const STACK_ICONS: Record<string, string> = {
+  HTML: 'https://skillicons.dev/icons?i=html',
+  CSS: 'https://skillicons.dev/icons?i=css',
+  JavaScript: 'https://skillicons.dev/icons?i=js',
+  TypeScript: 'https://skillicons.dev/icons?i=ts',
+  Python: 'https://skillicons.dev/icons?i=py',
+  Java: 'https://skillicons.dev/icons?i=java',
+  'C++': 'https://skillicons.dev/icons?i=cpp',
+  'C#': 'https://skillicons.dev/icons?i=cs',
+  PHP: 'https://skillicons.dev/icons?i=php',
+  React: 'https://go-skill-icons.vercel.app/api/icons?i=react',
+  'Next.js': 'https://go-skill-icons.vercel.app/api/icons?i=nextjs',
+  Vue: 'https://go-skill-icons.vercel.app/api/icons?i=vue',
+  Angular: 'https://go-skill-icons.vercel.app/api/icons?i=angular',
+  'Tailwind CSS':
+    'https://go-skill-icons.vercel.app/api/icons?i=tailwind',
+  Laravel: 'https://go-skill-icons.vercel.app/api/icons?i=laravel',
+  'Node.js': 'https://go-skill-icons.vercel.app/api/icons?i=nodejs',
+  Express: 'https://go-skill-icons.vercel.app/api/icons?i=express',
+  '.NET': 'https://go-skill-icons.vercel.app/api/icons?i=dotnet',
+  Flutter: 'https://go-skill-icons.vercel.app/api/icons?i=flutter',
+  'React Native': 'https://go-skill-icons.vercel.app/api/icons?i=react',
+  Expo: 'https://go-skill-icons.vercel.app/api/icons?i=expo',
+  MySQL: 'https://go-skill-icons.vercel.app/api/icons?i=mysql',
+  PostgreSQL: 'https://go-skill-icons.vercel.app/api/icons?i=postgres',
+  MongoDB: 'https://go-skill-icons.vercel.app/api/icons?i=mongodb',
+  Firebase: 'https://go-skill-icons.vercel.app/api/icons?i=firebase',
+  Git: 'https://go-skill-icons.vercel.app/api/icons?i=git',
+  GitHub: 'https://go-skill-icons.vercel.app/api/icons?i=github',
+  Docker: 'https://go-skill-icons.vercel.app/api/icons?i=docker',
+  Railway: 'https://go-skill-icons.vercel.app/api/icons?i=railway',
+  Unity: 'https://go-skill-icons.vercel.app/api/icons?i=unity',
+  Figma: 'https://go-skill-icons.vercel.app/api/icons?i=figma',
+  Canva: 'https://go-skill-icons.vercel.app/api/icons?i=canva',
+  Photoshop: 'https://go-skill-icons.vercel.app/api/icons?i=photoshop',
+  Illustrator:
+    'https://go-skill-icons.vercel.app/api/icons?i=illustrator',
+  Blender: 'https://go-skill-icons.vercel.app/api/icons?i=blender',
+  'VS Code': 'https://go-skill-icons.vercel.app/api/icons?i=vscode',
+  Cursor: 'https://go-skill-icons.vercel.app/api/icons?i=cursor',
+  Antigravity:
+    'https://go-skill-icons.vercel.app/api/icons?i=googleantigravity',
+  ChatGPT: 'https://go-skill-icons.vercel.app/api/icons?i=chatgpt',
+  Copilot: 'https://go-skill-icons.vercel.app/api/icons?i=githubcopilot',
+  Gemini: 'https://go-skill-icons.vercel.app/api/icons?i=gemini',
+  Claude: 'https://go-skill-icons.vercel.app/api/icons?i=claude',
+  Grok: 'https://go-skill-icons.vercel.app/api/icons?i=grok',
+  Codex: 'https://go-skill-icons.vercel.app/api/icons?i=codex',
+}
+
+export function stackIconUrl(name: string): string | null {
+  return STACK_ICONS[name] ?? null
+}
 
 /** Fake contribution levels 0-4 for a year-ish grid (52 weeks x 7) */
 export function buildContributionGrid(seed = 42): number[][] {

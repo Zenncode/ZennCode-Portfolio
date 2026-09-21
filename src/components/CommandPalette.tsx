@@ -51,13 +51,6 @@ export default function CommandPalette({ open, onClose }: Props) {
         group: 'Pages',
         action: go('/resources'),
       },
-      { id: 'collabs', label: 'Collabs', group: 'Pages', action: go('/collabs') },
-      {
-        id: 'consulting',
-        label: 'Consulting',
-        group: 'Pages',
-        action: go('/consulting'),
-      },
       {
         id: 'projects',
         label: 'Projects',

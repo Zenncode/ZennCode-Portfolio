@@ -1,31 +1,16 @@
 [
   {
-    "name": "Analytics & AI Association of the Philippines",
+    "name": "Philippine Institute of Cyber Security Professionals",
     "role": "Member",
-    "emoji": "AAP",
-    "initials": "AAP",
-    "logo": "/affiliations/aap.png",
-    "description": "The national association advancing analytics and AI adoption across the Philippines.",
-    "href": "https://aap.ph",
-    "hrefLabel": "aap.ph"
+    "emoji": "PICS",
+    "initials": "PICS",
+    "description": "Member of the organization for cyber security professionals in the Philippines."
   },
   {
-    "name": "Philippine Software Industry Association",
-    "role": "Member",
-    "emoji": "PSIA",
-    "initials": "PSIA",
-    "logo": "/affiliations/psia.png",
-    "description": "The industry body representing the Philippine software and IT services sector.",
-    "href": "https://psia.org.ph",
-    "hrefLabel": "psia.org.ph"
-  },
-  {
-    "name": "AppBuildersPH",
-    "role": "Founder",
-    "emoji": "PH",
-    "initials": "PH",
-    "description": "A developer community I founded for Filipino app builders and indie hackers.",
-    "href": "https://www.facebook.com/",
-    "hrefLabel": "Facebook group"
+    "name": "iBITS Organization",
+    "role": "Coordinator",
+    "emoji": "iB",
+    "initials": "IB",
+    "description": "Student organization at PUP Lopez — served as Coordinator, 2024–2025."
   }
 ]

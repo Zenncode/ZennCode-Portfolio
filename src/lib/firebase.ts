@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getAnalytics, type Analytics } from 'firebase/analytics'
+import { getAnalytics, isSupported, type Analytics } from 'firebase/analytics'
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -16,6 +16,23 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig)
 
-/** Analytics only runs in the browser (not during SSR / tooling). */
-export const analytics: Analytics | null =
-  typeof window !== 'undefined' ? getAnalytics(app) : null
+/**
+ * Analytics only runs in the browser (not during SSR / tooling).
+ * Guarded: ad-blockers / unsupported browsers must not crash startup.
+ */
+export let analytics: Analytics | null = null
+
+if (typeof window !== 'undefined') {
+  isSupported()
+    .then((supported) => {
+      if (!supported) return
+      try {
+        analytics = getAnalytics(app)
+      } catch {
+        analytics = null
+      }
+    })
+    .catch(() => {
+      analytics = null
+    })
+}

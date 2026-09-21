@@ -1,28 +1,28 @@
 {
   "hero": {
-    "p1": "I'm a full-stack engineer. I build modern web & mobile apps, and these days I'm focused on shipping polished products.",
-    "p2": "Right now I'm building cool new stuff every day. I love turning rough ideas into things people actually use."
+    "p1": "I'm Zenjan Kiervin B. Arce, a Software Engineer working across modern web, mobile, and IoT systems.",
+    "p2": "I do IoT integration end to end — hardware and sensor setup plus the software side: firmware, APIs, and dashboards. Open to internships and entry-level opportunities."
   },
   "stats": [
     {
-      "value": "15+",
-      "label": "PROJECTS",
-      "href": "#projects"
-    },
-    {
-      "value": "2+ yrs",
-      "label": "SHIPPING",
-      "href": "#experience"
-    },
-    {
-      "value": "TS · React",
-      "label": "STACK",
+      "value": "IoT",
+      "label": "SOFTWARE + HARDWARE",
       "href": "/stack"
     },
     {
-      "value": "Web apps",
-      "label": "FOCUS",
-      "href": "#projects"
+      "value": "NCII",
+      "label": "PASSER",
+      "href": "/experience"
+    },
+    {
+      "value": "iBITS",
+      "label": "COORDINATOR 24–25",
+      "href": "/affiliations"
+    },
+    {
+      "value": "MERN · RN",
+      "label": "STACK",
+      "href": "/stack"
     }
   ]
 }

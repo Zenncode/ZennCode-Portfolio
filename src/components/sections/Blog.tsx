@@ -4,6 +4,7 @@ import SectionHeader from '../SectionHeader'
 import { blogPosts } from '../../data/portfolio'
 
 export default function Blog() {
+  if (blogPosts.length === 0) return null
   return (
     <section id="blog" className="w-full pt-14">
       <div className="container-read">

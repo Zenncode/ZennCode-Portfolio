@@ -252,6 +252,11 @@ export default function CommunityChat({ open, onClose }: Props) {
                       <img
                         src={avatarUrl(m.seed)}
                         alt=""
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none'
+                        }}
                         className="size-7 rounded-full shrink-0 ml-1 bg-[var(--color-gray-100)] shadow-[0_0_0_1px_color-mix(in_srgb,var(--color-ink)_8%,transparent)]"
                       />
                       <div className="flex flex-col gap-0.5 min-w-0">

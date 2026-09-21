@@ -6,6 +6,8 @@ export default function Certifications() {
   // Home preview — first few only
   const preview = certifications.slice(0, 3)
 
+  if (preview.length === 0) return null
+
   return (
     <section id="certifications" className="w-full pt-14">
       <div className="container-read">

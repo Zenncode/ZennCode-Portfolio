@@ -36,6 +36,8 @@ type Slot = 'is-left' | 'is-center' | 'is-right'
 export default function Projects() {
   const featured = projects.filter((p) => p.featured !== false).slice(0, 3)
 
+  if (featured.length === 0) return null
+
   // indices mapped to slots: [left, center, right]
   const [order, setOrder] = useState(() => {
     // center = first project

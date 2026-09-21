@@ -3,6 +3,7 @@ import SectionHeader from '../SectionHeader'
 import { affiliations } from '../../data/portfolio'
 
 export default function Affiliations() {
+  if (affiliations.length === 0) return null
   return (
     <section id="affiliations" className="w-full pt-14">
       <div className="container-read">

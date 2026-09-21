@@ -1,199 +1,192 @@
 {
   "projects": [
     {
-      "id": "tarsi",
-      "name": "Tarsi — Budget Tracker",
-      "description": "An offline-first budget & expense tracker powered by on-device AI.",
-      "highlights": [
-        "#1 Finance App",
-        "App Store Hidden Gems",
-        "Apps Made in the Philippines"
-      ],
-      "accent": "#0f766e",
-      "icon": "₱",
-      "iconImage": "/apps/tarsi.jpg",
+      "id": "admin-flood-sense",
+      "name": "Admin Flood Sense",
+      "description": "FloodSense Console — admin dashboard for the Barangay DRRM Flood Sense system.",
+      "accent": "#0e7490",
+      "icon": "F",
       "featured": true,
+      "previewImage": "https://admin-flood-sense.web.app/images/admin_preview.png",
       "links": [
         {
-          "label": "App Store",
-          "href": "https://apps.apple.com/"
-        },
-        {
-          "label": "Google Play",
-          "href": "https://play.google.com/"
-        }
-      ],
-      "press": [
-        {
-          "label": "Tap & Swipe — Case Study",
-          "href": "#"
-        },
-        {
-          "label": "Fintech News PH",
-          "href": "#"
-        },
-        {
-          "label": "NextGen Tools",
-          "href": "#"
+          "label": "Live Demo",
+          "href": "https://admin-flood-sense.web.app/login"
         }
       ]
     },
     {
-      "id": "kabi",
-      "name": "Kabi — Gym Bro",
-      "description": "A gym companion for tracking workouts and staying consistent.",
-      "highlights": [
-        "#1 Paid Fitness App"
-      ],
+      "id": "electricuzarotech",
+      "name": "Electric Uzaro Tech",
+      "description": "Super Admin & Operations Portal — manages Electric Uzaro EV operations and charging networks.",
       "accent": "#b45309",
-      "icon": "🏋",
-      "iconImage": "/apps/kabi.jpg",
+      "icon": "E",
       "featured": true,
+      "previewImage": "https://electricuzaro.online/images/uzaro_admin_preview.png",
       "links": [
         {
-          "label": "App Store",
-          "href": "https://apps.apple.com/"
-        },
-        {
-          "label": "Google Play",
-          "href": "https://play.google.com/"
+          "label": "Live Demo",
+          "href": "https://electricuzarotech.web.app/login"
         }
       ]
     },
     {
-      "id": "newproject",
-      "name": "New Project",
-      "description": "A newly built web application showcasing modern full-stack development.",
-      "highlights": ["Featured on Product Hunt"],
-      "accent": "#a855f7",
-      "icon": "⚡",
+      "id": "onefilemanagement",
+      "name": "OneFileManagement",
+      "description": "File management web application.",
+      "accent": "#4d7c0f",
+      "icon": "O",
       "featured": true,
       "links": [
         {
-          "label": "View Demo",
-          "href": "#"
-        },
-        {
-          "label": "Source Code",
-          "href": "#"
+          "label": "Live Demo",
+          "href": "https://onefilemanagement.web.app/"
         }
       ]
     },
     {
-      "id": "mayi",
-      "name": "Mayi — Travel Buddy",
-      "description": "A travel buddy for planning trips and exploring on the go.",
-      "highlights": [
-        "#1 Paid Travel App"
-      ],
-      "accent": "#1d4ed8",
-      "icon": "✈",
-      "iconImage": "/apps/mayi.jpg",
+      "id": "pms",
+      "name": "Project Management System",
+      "description": "Project management system (PMS).",
+      "accent": "#6d28d9",
+      "icon": "P",
+      "featured": true
+    },
+    {
+      "id": "pos-system",
+      "name": "Point of Sales",
+      "description": "Point of Sales system — TypeScript repository on GitHub.",
+      "accent": "#0f766e",
+      "icon": "P",
       "featured": true,
       "links": [
         {
-          "label": "App Store",
-          "href": "https://apps.apple.com/"
+          "label": "GitHub",
+          "href": "https://github.com/Zenncode/pos-system"
         }
       ]
     }
   ],
   "otherProjects": [
     {
-      "name": "Seam",
-      "category": "Generative AI",
-      "description": "An AI-native platform for spiritual exploration and learning.",
-      "href": "#"
+      "name": "Electric Uzaro Website",
+      "category": "Website",
+      "description": "Company website for Electric Uzaro.",
+      "href": "https://electricuzaro.web.app/"
     },
     {
-      "name": "Tunai",
-      "category": "Generative AI",
-      "description": "An AI-powered social media fact-checker.",
-      "href": "#"
+      "name": "Electric Uzaro PWA",
+      "category": "PWA",
+      "description": "Progressive web app for Electric Uzaro.",
+      "href": "https://electricuzaro-pwa.web.app/"
     },
     {
-      "name": "Seam",
-      "category": "Generative AI",
-      "description": "An AI-native platform for spiritual exploration and learning.",
-      "href": "#"
+      "name": "Flood Sense App",
+      "category": "PWA",
+      "description": "Flood Sense mobile web app.",
+      "href": "https://floodsenseapp.online/"
     },
     {
-      "name": "Tunai",
-      "category": "Generative AI",
-      "description": "An AI-powered social media fact-checker.",
-      "href": "#"
+      "name": "Impostor Game",
+      "category": "Game",
+      "description": "Web game.",
+      "href": "https://impostor-game-1625323148.web.app/"
     },
     {
-      "name": "BOOQED",
-      "category": "Platform",
-      "description": "A leading workspace booking platform based in Singapore.",
-      "href": "#"
+      "name": "CodeClash",
+      "category": "Game",
+      "description": "Web game hosted on Render.",
+      "href": "https://codeclash-fqke.onrender.com/"
     },
     {
-      "name": "CodeCred",
-      "category": "Platform",
-      "description": "Online certifications for programmers — verifiable, skills-based credentials.",
-      "href": "#"
+      "name": "zenncode",
+      "category": "NPM Package",
+      "description": "Frontend template package on npm.",
+      "href": "https://www.npmjs.com/package/zenncode"
     },
     {
-      "name": "Capstone Generator",
-      "category": "Generative AI",
-      "description": "An online capstone project generator for IT & CS students.",
-      "href": "#"
+      "name": "zenntechinc-cli",
+      "category": "NPM Package",
+      "description": "Backend CLI package on npm.",
+      "href": "https://www.npmjs.com/package/zenntechinc-cli"
     },
     {
-      "name": "Resume Builder",
-      "category": "Web App",
-      "description": "A Harvard-style, ATS-friendly resume builder.",
-      "href": "#"
+      "name": "Impostor-Game",
+      "category": "TypeScript",
+      "description": "Impostor-Game — TypeScript repository on GitHub.",
+      "href": "https://github.com/Zenncode/Impostor-Game"
     },
     {
-      "name": "PackBack",
-      "category": "EdTech · AI",
-      "description": "Student instructional AI.",
-      "href": "#"
+      "name": "frontendstructure",
+      "category": "JavaScript",
+      "description": "frontendstructure — JavaScript repository on GitHub.",
+      "href": "https://github.com/Zenncode/frontendstructure"
     },
     {
-      "name": "Cambridge South Africa",
-      "category": "EdTech · AI",
-      "description": "An AI teacher assistant for Foundation Phase classrooms.",
-      "href": "#"
+      "name": "ftccmain",
+      "category": "TypeScript",
+      "description": "FTCC main website trial.",
+      "href": "https://github.com/Zenncode/ftccmain"
     },
     {
-      "name": "Maldives International Education",
-      "category": "EdTech · AI",
-      "description": "AI-powered lesson planning for educators.",
-      "href": "#"
+      "name": "Hospital-Chatbot",
+      "category": "TypeScript",
+      "description": "Hospital-Chatbot — TypeScript repository on GitHub.",
+      "href": "https://github.com/Zenncode/Hospital-Chatbot"
     },
     {
-      "name": "SEANOGY",
-      "category": "Platform",
-      "description": "An energy management and sustainability platform.",
-      "href": "#"
+      "name": "LogIn-SignUp",
+      "category": "TypeScript",
+      "description": "LogIn-SignUp — TypeScript repository on GitHub.",
+      "href": "https://github.com/Zenncode/LogIn-SignUp"
     },
     {
-      "name": "Petrogreen Energy",
-      "category": "Enterprise",
-      "description": "A central power-plant monitoring system.",
-      "href": "#"
+      "name": "Venom-Vanguard-Web",
+      "category": "TypeScript",
+      "description": "Venom-Vanguard-Web — TypeScript repository on GitHub.",
+      "href": "https://github.com/Zenncode/Venom-Vanguard-Web"
     },
     {
-      "name": "DOST-FNRI",
-      "category": "Government",
-      "description": "A nutritional database and calorie counter.",
-      "href": "#"
+      "name": "Tesla-web-pro",
+      "category": "TypeScript",
+      "description": "Tesla-web-pro — TypeScript repository on GitHub.",
+      "href": "https://github.com/Zenncode/Tesla-web-pro"
     },
     {
-      "name": "Interlace",
-      "category": "Web App",
-      "description": "A site for an architecture & design studio.",
-      "href": "#"
+      "name": "AION",
+      "category": "Python",
+      "description": "AION — Python repository on GitHub.",
+      "href": "https://github.com/Zenncode/AION"
     },
     {
-      "name": "UAPSA",
-      "category": "Web App",
-      "description": "Event management platform and landing page.",
-      "href": "#"
+      "name": "Flower",
+      "category": "JavaScript",
+      "description": "Flower — JavaScript repository on GitHub.",
+      "href": "https://github.com/Zenncode/Flower"
+    },
+    {
+      "name": "gitzenn",
+      "category": "HTML",
+      "description": "MY PERSONAL PORTPOLIO USING HTML CSS AND JAVASCRIPT.",
+      "href": "https://github.com/Zenncode/gitzenn"
+    },
+    {
+      "name": "DRAFTING",
+      "category": "JavaScript",
+      "description": "MLBB DRAFTING.",
+      "href": "https://github.com/Zenncode/DRAFTING"
+    },
+    {
+      "name": "Draft-Pick-Web-version-V2-Ban6",
+      "category": "Project",
+      "description": "Draft-Pick-Web-version-V2-Ban6 — repository on GitHub.",
+      "href": "https://github.com/Zenncode/Draft-Pick-Web-version-V2-Ban6"
+    },
+    {
+      "name": "Venn",
+      "category": "CSS",
+      "description": "Venom BDay.",
+      "href": "https://github.com/Zenncode/Venn"
     }
   ]
 }

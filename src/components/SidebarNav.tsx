@@ -6,7 +6,6 @@ import NavActiveArrow from './NavActiveArrow'
 import {
   IconBag,
   IconBooks,
-  IconBriefcase,
   IconChat,
   IconDesktop,
   IconDoc,
@@ -14,7 +13,6 @@ import {
   IconMail,
   IconMoon,
   IconMute,
-  IconPeople,
   IconSpeaker,
   IconSun,
 } from './navIcons'
@@ -32,10 +30,6 @@ const NAV_GROUPS: NavItem[][] = [
     { to: '/blog', label: 'Blog', icon: <IconDoc /> },
     { to: '/gear', label: 'Gear', icon: <IconLaptop /> },
     { to: '/resources', label: 'Resources', icon: <IconBooks /> },
-  ],
-  [
-    { to: '/collabs', label: 'Collabs', icon: <IconPeople /> },
-    { to: '/consulting', label: 'Consulting', icon: <IconBriefcase /> },
   ],
   [
     { to: '/projects', label: 'Projects' },
@@ -121,8 +115,6 @@ export default function SidebarNav({
   onOpenChat,
 }: Props) {
   const [open, setOpen] = useState(false)
-  const [viewers, setViewers] = useState(32)
-  const [delta, setDelta] = useState(29)
   const { preference, setPreference } = useTheme()
   const { enabled: soundOn, toggle: toggleSound } = useSiteSound()
   const location = useLocation()
@@ -138,20 +130,6 @@ export default function SidebarNav({
       document.body.style.overflow = ''
     }
   }, [open])
-
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setViewers((v) =>
-        Math.max(8, Math.min(48, v + (Math.random() > 0.5 ? 1 : -1))),
-      )
-      setDelta((d) =>
-        Math.max(5, Math.min(40, d + (Math.random() > 0.5 ? 1 : -1))),
-      )
-    }, 7000)
-    return () => window.clearInterval(id)
-  }, [])
-
-  const avatars = ['Marcus', 'Alex', 'Sam']
 
   /**
    * Horizontal layout (bryllim):
@@ -262,24 +240,9 @@ export default function SidebarNav({
         </div>
 
         <div className="pt-2 border-t border-[var(--color-border)]">
-          <div className="flex items-center gap-2 mb-1.5">
-            <div className="flex">
-              {avatars.map((seed, i) => (
-                <img
-                  key={seed}
-                  src={`https://api.dicebear.com/9.x/notionists/svg?seed=${seed}&radius=50&backgroundColor=f1f1f1`}
-                  alt=""
-                  className={`size-6 rounded-full border-2 border-[var(--color-bg)] ${i > 0 ? '-ml-2' : ''}`}
-                />
-              ))}
-            </div>
-            <span className="text-[0.7rem] font-medium text-[var(--color-muted)] bg-[var(--color-surface-soft)] border border-[var(--color-border)] rounded-full px-1.5 py-0.5">
-              +{delta}
-            </span>
-          </div>
-          <p className="text-[0.8rem] text-[var(--color-ink)]">
-            <strong className="font-semibold tabular-nums">{viewers}</strong>{' '}
-            people viewing now
+          <p className="text-[0.8rem] text-[var(--color-ink)]">community</p>
+          <p className="text-[0.75rem] text-[var(--color-dim)] leading-relaxed mb-1">
+            Live chat with visitors.
           </p>
           <button
             type="button"

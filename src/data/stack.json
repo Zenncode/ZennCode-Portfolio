@@ -1,140 +1,114 @@
 {
   "stack": [
     "TypeScript",
+    "JavaScript",
     "React",
-    "Next.js",
     "Node.js",
-    "Python",
-    "Laravel",
-    "PostgreSQL",
-    "AWS",
-    "Docker",
-    "Kubernetes",
-    "PyTorch",
-    "Claude Code"
+    "Express",
+    "MongoDB",
+    "Tailwind CSS",
+    "Flutter",
+    "Arduino"
   ],
   "stackGroups": [
     {
-      "title": "Frontend",
+      "title": "Programming Languages",
       "items": [
+        "HTML",
+        "CSS",
         "JavaScript",
         "TypeScript",
-        "React",
-        "Next.js",
-        "Vue.js",
-        "Tailwind CSS",
-        "SCSS",
-        "Styled Components",
-        "Vite",
-        "Webpack",
-        "ESLint",
-        "Prettier"
-      ]
-    },
-    {
-      "title": "Backend",
-      "items": [
-        "Node.js",
         "Python",
         "Java",
-        "PHP",
-        "Express.js",
-        "NestJS",
-        "FastAPI",
-        "Spring Boot",
-        "Laravel",
-        "PostgreSQL",
+        "C++",
+        "C#",
+        "PHP"
+      ]
+    },
+    {
+      "title": "Frontend & Frameworks",
+      "items": [
+        "React",
+        "Next.js",
+        "Vue",
+        "Angular",
+        "Tailwind CSS",
+        "Laravel"
+      ]
+    },
+    {
+      "title": "Backend & Runtime",
+      "items": [
+        "Node.js",
+        "Express",
+        ".NET"
+      ]
+    },
+    {
+      "title": "Mobile Development",
+      "items": [
+        "Flutter",
+        "React Native",
+        "Expo"
+      ]
+    },
+    {
+      "title": "IoT & Embedded Systems",
+      "items": [
+        "Arduino",
+        "IoT Integration",
+        "Hardware Integration",
+        "Basic Electronics",
+        "PCB Assembly",
+        "Soldering"
+      ]
+    },
+    {
+      "title": "Databases",
+      "items": [
         "MySQL",
+        "PostgreSQL",
         "MongoDB",
-        "DynamoDB",
-        "OAuth",
-        "JWT",
-        "LDAP",
-        "REST",
-        "GraphQL",
-        "gRPC",
-        "AWS Lambda"
+        "Firebase"
       ]
     },
     {
-      "title": "DevOps & Cloud",
-      "items": [
-        "AWS",
-        "GCP",
-        "Azure",
-        "GitHub Actions",
-        "Jenkins",
-        "GitLab CI",
-        "Terraform",
-        "AWS CloudFormation",
-        "Docker",
-        "Kubernetes",
-        "Prometheus",
-        "Grafana",
-        "Datadog"
-      ]
-    },
-    {
-      "title": "AI & Machine Learning",
-      "items": [
-        "TensorFlow",
-        "PyTorch",
-        "LangChain",
-        "Transformers",
-        "OpenAI",
-        "Anthropic",
-        "Mistral",
-        "Hugging Face",
-        "LlamaIndex",
-        "AutoGPT",
-        "Claude Code",
-        "Codex"
-      ]
-    },
-    {
-      "title": "Security & Identity",
-      "items": [
-        "AWS IAM",
-        "Azure AD",
-        "Okta",
-        "SAP CDC",
-        "Auth0",
-        "Cognito",
-        "AES",
-        "RSA",
-        "SHA",
-        "GDPR",
-        "SOC 2",
-        "ISO 27001"
-      ]
-    },
-    {
-      "title": "CMS & No-Code",
-      "items": [
-        "WordPress",
-        "Strapi",
-        "Bubble",
-        "Webflow",
-        "Microsoft Power Platform",
-        "n8n"
-      ]
-    },
-    {
-      "title": "Developer Tools",
+      "title": "Tools & Platforms",
       "items": [
         "Git",
         "GitHub",
-        "GitLab",
-        "Bitbucket",
+        "Docker",
+        "Railway",
+        "Unity"
+      ]
+    },
+    {
+      "title": "Design & Editing",
+      "items": [
+        "Figma",
+        "Canva",
+        "Photoshop",
+        "Illustrator",
+        "Blender"
+      ]
+    },
+    {
+      "title": "Code Editors & IDEs",
+      "items": [
         "VS Code",
-        "JetBrains IntelliJ",
-        "PyCharm",
-        "Slack",
-        "Discord",
-        "Teams",
-        "JIRA",
-        "Trello",
-        "ClickUp"
+        "Cursor",
+        "Antigravity"
+      ]
+    },
+    {
+      "title": "AI",
+      "items": [
+        "ChatGPT",
+        "Copilot",
+        "Gemini",
+        "Claude",
+        "Grok",
+        "Codex"
       ]
     }
   ]

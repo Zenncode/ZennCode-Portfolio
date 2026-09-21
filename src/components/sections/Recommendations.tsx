@@ -3,6 +3,7 @@ import SectionHeader from '../SectionHeader'
 import { recommendations } from '../../data/portfolio'
 
 export default function Recommendations() {
+  if (recommendations.length === 0) return null
   return (
     <section id="recommendations" className="w-full pt-14">
       <div className="container-read">
