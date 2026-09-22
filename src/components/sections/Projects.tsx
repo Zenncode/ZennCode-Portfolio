@@ -152,7 +152,7 @@ function DeckCard({
         </div>
       )}
 
-      {/* Category label — e.g. Web Application, Website, PWA App, Web App Game, NPM Package */}
+      {/* Category label — e.g. Web Application, Website, Progressive Web App (PWA), Web App Game, Node Package Manager (NPM) */}
       {p.category && (
         <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--color-dim)]">
           {p.category}

@@ -41,7 +41,7 @@ export type Project = {
   id: string
   name: string
   description: string
-  /** Group label: Web Application, Website, PWA App, Web App Game, NPM Package */
+  /** Group label: Web Application, Website, Progressive Web App (PWA), Web App Game, Node Package Manager (NPM) */
   category?: string
   /** Small award / ranking lines above the card (like “#1 Finance App”) */
   highlights?: string[]

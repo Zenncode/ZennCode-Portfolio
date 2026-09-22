@@ -84,14 +84,14 @@
     },
     {
       "name": "Electric Uzaro PWA",
-      "category": "PWA App",
-      "description": "Progressive web app for Electric Uzaro.",
+      "category": "Progressive Web App (PWA)",
+      "description": "Progressive Web App for Electric Uzaro.",
       "href": "https://electricuzaro-pwa.web.app/"
     },
     {
       "name": "Flood Sense App",
-      "category": "PWA App",
-      "description": "Flood Sense mobile web app.",
+      "category": "Progressive Web App (PWA)",
+      "description": "Flood Sense mobile Progressive Web App.",
       "href": "https://floodsenseapp.online/"
     },
     {
@@ -108,13 +108,13 @@
     },
     {
       "name": "zenncode",
-      "category": "NPM Package · Frontend",
+      "category": "Node Package Manager (NPM) · Frontend",
       "description": "Frontend template package on npm.",
       "href": "https://www.npmjs.com/package/zenncode"
     },
     {
       "name": "zenntechinc-cli",
-      "category": "NPM Package · Backend",
+      "category": "Node Package Manager (NPM) · Backend",
       "description": "Backend CLI package on npm.",
       "href": "https://www.npmjs.com/package/zenntechinc-cli"
     },

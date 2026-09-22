@@ -257,13 +257,13 @@ export function ProjectsPage() {
   const ALIGNED_ORDER = [
     'Web Application',
     'Website',
-    'PWA App',
+    'Progressive Web App (PWA)',
     'Web App Game',
-    'NPM Package',
+    'Node Package Manager (NPM)',
   ]
 
   function groupKeyFor(category: string): string {
-    if (category.startsWith('NPM Package')) return 'NPM Package'
+    if (category.startsWith('Node Package Manager')) return 'Node Package Manager (NPM)'
     return category
   }
 
