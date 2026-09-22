@@ -6,6 +6,7 @@
       "description": "FloodSense Console — admin dashboard for the Barangay DRRM Flood Sense system.",
       "accent": "#0e7490",
       "icon": "F",
+      "iconImage": "/apps/flood-sense.png",
       "featured": true,
       "previewImage": "https://admin-flood-sense.web.app/images/admin_preview.png",
       "links": [
@@ -21,6 +22,7 @@
       "description": "Super Admin & Operations Portal — manages Electric Uzaro EV operations and charging networks.",
       "accent": "#b45309",
       "icon": "E",
+      "iconImage": "/apps/electric-uzaro.png",
       "featured": true,
       "previewImage": "https://electricuzaro.online/images/uzaro_admin_preview.png",
       "links": [
