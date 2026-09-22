@@ -1,16 +1,22 @@
 [
   {
-    "name": "Philippine Institute of Cyber Security Professionals",
+    "name": "Philippine Institute of Cyber Security Professionals (PICSPro)",
     "role": "Member",
     "emoji": "PICS",
     "initials": "PICS",
-    "description": "Member of the organization for cyber security professionals in the Philippines."
+    "logo": "/affiliations/picspro.jpg",
+    "description": "Member of the organization for cyber security professionals in the Philippines.",
+    "href": "https://www.facebook.com/PICSProfessionals/",
+    "hrefLabel": "PICSPro on Facebook"
   },
   {
-    "name": "iBITS Organization",
+    "name": "Institute of Brilliant Information Technology Students (iBITS)",
     "role": "Coordinator",
     "emoji": "iB",
     "initials": "IB",
-    "description": "Student organization at PUP Lopez — served as Coordinator, 2024–2025."
+    "logo": "/affiliations/ibits.jpg",
+    "description": "Student organization at PUP Lopez — served as Coordinator, 2024–2025.",
+    "href": "https://www.facebook.com/Ibits16/",
+    "hrefLabel": "iBITS Lopez on Facebook"
   }
 ]
