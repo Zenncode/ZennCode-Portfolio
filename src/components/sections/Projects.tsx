@@ -161,7 +161,7 @@ function DeckCard({
 
       {/* Icon + title */}
       <div className="mt-3 flex items-center gap-3.5">
-        <div className="h-12 w-12 shrink-0 rounded-xl border border-[var(--color-border)] shadow-sm overflow-hidden bg-[var(--color-surface-soft)] grid place-items-center">
+        <div className="h-12 w-12 shrink-0 rounded-xl shadow-sm overflow-hidden bg-[var(--color-surface-soft)] grid place-items-center">
           {p.iconImage ? (
             <img
               src={p.iconImage}
