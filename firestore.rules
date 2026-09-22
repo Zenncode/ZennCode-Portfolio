@@ -1,0 +1,30 @@
+rules_version = '2';
+
+// Community chat guestbook — public read, validated public writes.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /communityMessages/{messageId} {
+      allow read: if true;
+      allow create: if request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 40
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 200
+        && request.resource.data.location is string
+        && request.resource.data.location.size() <= 60
+        && request.resource.data.countryCode is string
+        && request.resource.data.countryCode.size() <= 4
+        && request.resource.data.seed is string
+        && request.resource.data.seed.size() <= 40
+        && request.resource.data.createdAt is number;
+      // No edits, no deletes — append-only guestbook.
+      allow update, delete: if false;
+    }
+
+    // Everything else stays locked down.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

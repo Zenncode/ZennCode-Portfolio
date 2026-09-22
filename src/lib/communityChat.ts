@@ -1,15 +1,28 @@
-import * as Y from 'yjs'
-import { WebsocketProvider } from 'y-websocket'
+import {
+  collection,
+  doc,
+  limit,
+  onSnapshot,
+  orderBy,
+  query,
+  setDoc,
+  type Unsubscribe,
+} from 'firebase/firestore'
+import { db } from './firebase'
 
-/** Shared room — all visitors on this portfolio see the same live feed */
-const ROOM = 'zenncode-portfolio-community-chat-v1'
 /**
- * Configurable Yjs relay. Defaults to the public demo (unreliable, no
- * persistence, shared with everyone). For production set
- * VITE_YJS_WS_URL to your own y-websocket server.
+ * Community chat — realtime for everyone via Cloud Firestore.
+ *
+ * One shared collection (`communityMessages`). Every open client holds
+ * a live `onSnapshot` listener, so a message written by person A appears
+ * on person B's screen within a second or two — no page refresh, no
+ * third-party websocket relay.
+ *
+ * Requires: a Firestore database on the `zenncode-portfolio` project +
+ * the rules in `firestore.rules` deployed. Until then writes fail
+ * gracefully and the chat stays local-only (UI never crashes).
  */
-const WS_URL =
-  import.meta.env.VITE_YJS_WS_URL ?? 'wss://demos.yjs.dev'
+const COLLECTION = 'communityMessages'
 const USER_KEY = 'community-chat-user'
 const MAX_MESSAGES = 200
 const MAX_TEXT = 200
@@ -33,44 +46,37 @@ export type ChatMessage = {
 
 type Listener = (messages: ChatMessage[]) => void
 
-let doc: Y.Doc | null = null
-let provider: WebsocketProvider | null = null
-let yMessages: Y.Array<Y.Map<unknown>> | null = null
 const listeners = new Set<Listener>()
 let cached: ChatMessage[] = []
 let started = false
+let connected = false
+let unsubscribe: Unsubscribe | null = null
 
-function toMessage(map: Y.Map<unknown>): ChatMessage | null {
-  const id = String(map.get('id') ?? '')
-  const name = String(map.get('name') ?? '').trim()
-  const text = String(map.get('text') ?? '').trim()
+function toMessage(id: string, data: Record<string, unknown>): ChatMessage | null {
+  const name = String(data.name ?? '').trim()
+  const text = String(data.text ?? '').trim()
   if (!id || !name || !text) return null
   return {
     id,
     name,
-    location: String(map.get('location') ?? 'Somewhere'),
-    countryCode: String(map.get('countryCode') ?? ''),
+    location: String(data.location ?? 'Somewhere'),
+    countryCode: String(data.countryCode ?? ''),
     text: text.slice(0, MAX_TEXT),
-    createdAt: Number(map.get('createdAt') ?? Date.now()),
-    seed: String(map.get('seed') ?? name),
+    createdAt: Number(data.createdAt ?? Date.now()),
+    seed: String(data.seed ?? name),
   }
 }
 
-function readAll(): ChatMessage[] {
-  if (!yMessages) return []
-  const out: ChatMessage[] = []
-  yMessages.forEach((item) => {
-    if (item instanceof Y.Map) {
-      const m = toMessage(item)
-      if (m) out.push(m)
-    }
-  })
-  out.sort((a, b) => a.createdAt - b.createdAt)
-  return out.slice(-MAX_MESSAGES)
+/** Merge by id so optimistic local posts dedupe with the server echo. */
+function mergeById(list: ChatMessage[]): ChatMessage[] {
+  const seen = new Map<string, ChatMessage>()
+  for (const m of list) seen.set(m.id, m)
+  return [...seen.values()]
+    .sort((a, b) => a.createdAt - b.createdAt)
+    .slice(-MAX_MESSAGES)
 }
 
 function emit() {
-  cached = readAll()
   listeners.forEach((fn) => fn(cached))
 }
 
@@ -79,42 +85,52 @@ export function startCommunityChat(): void {
   if (started || typeof window === 'undefined') return
   started = true
 
+  if (!db) {
+    emit()
+    return
+  }
+
   try {
-    doc = new Y.Doc()
-    yMessages = doc.getArray('messages')
-
-    provider = new WebsocketProvider(WS_URL, ROOM, doc, {
-      connect: true,
-    })
-
-    yMessages.observe(() => emit())
-    provider.on('sync', () => emit())
-    provider.on('connection-close', () => emit())
-    provider.on('connection-error', () => emit())
+    const q = query(
+      collection(db, COLLECTION),
+      orderBy('createdAt', 'desc'),
+      limit(MAX_MESSAGES),
+    )
+    unsubscribe = onSnapshot(
+      q,
+      (snap) => {
+        const msgs: ChatMessage[] = []
+        snap.forEach((d) => {
+          const m = toMessage(d.id, d.data() as Record<string, unknown>)
+          if (m) msgs.push(m)
+        })
+        // Optimistic local posts not yet echoed stay visible
+        cached = mergeById([...msgs, ...cached])
+        connected = true
+        emit()
+      },
+      () => {
+        // Permission denied / offline / no database yet — stay local-only
+        connected = false
+        emit()
+      },
+    )
   } catch {
-    // Offline / blocked websocket — chat stays local-only, UI still works
-    doc = null
-    yMessages = null
-    provider = null
+    connected = false
+    unsubscribe = null
   }
   emit()
 }
 
 export function stopCommunityChat(): void {
   try {
-    provider?.disconnect()
+    unsubscribe?.()
   } catch {
     /* ignore */
   }
-  try {
-    doc?.destroy()
-  } catch {
-    /* ignore */
-  }
-  provider = null
-  doc = null
-  yMessages = null
+  unsubscribe = null
   started = false
+  connected = false
   cached = []
 }
 
@@ -132,7 +148,7 @@ export function getMessages(): ChatMessage[] {
 }
 
 export function isChatConnected(): boolean {
-  return Boolean(provider?.wsconnected)
+  return connected
 }
 
 export function postMessage(input: {
@@ -168,29 +184,17 @@ export function postMessage(input: {
     seed: name,
   }
 
-  // Offline / relay unavailable — keep local-only so UI still works
-  if (!yMessages || !doc) {
-    cached = [...cached, msg].slice(-MAX_MESSAGES)
-    listeners.forEach((fn) => fn(cached))
-    return msg
+  // Optimistic: show instantly, dedupe when the server echo arrives
+  cached = mergeById([...cached, msg])
+  emit()
+
+  // Fire-and-forget write — our own id is the doc id, so the echo
+  // carries the same id and mergeById dedupes it automatically.
+  if (db) {
+    void setDoc(doc(db, COLLECTION, msg.id), { ...msg }).catch(() => {
+      connected = false
+    })
   }
-
-  const map = new Y.Map<unknown>()
-  map.set('id', msg.id)
-  map.set('name', msg.name)
-  map.set('location', msg.location)
-  map.set('countryCode', msg.countryCode)
-  map.set('text', msg.text)
-  map.set('createdAt', msg.createdAt)
-  map.set('seed', msg.seed)
-
-  doc.transact(() => {
-    yMessages!.push([map])
-    // Cap size so the room doesn't grow forever
-    while (yMessages!.length > MAX_MESSAGES) {
-      yMessages!.delete(0, 1)
-    }
-  })
 
   return msg
 }

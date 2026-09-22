@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getAnalytics, isSupported, type Analytics } from 'firebase/analytics'
+import { getFirestore, type Firestore } from 'firebase/firestore'
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -15,6 +16,17 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig)
+
+/**
+ * Firestore — backs the community chat realtime feed.
+ * Null only if init throws (extremely rare); listeners handle the rest.
+ */
+export let db: Firestore | null = null
+try {
+  db = getFirestore(app)
+} catch {
+  db = null
+}
 
 /**
  * Analytics only runs in the browser (not during SSR / tooling).

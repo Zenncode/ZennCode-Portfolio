@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { blogPosts, projects, site } from '../data/portfolio'
+import { answerQuestion, SUGGESTIONS } from '../lib/assistant'
 import OverlayBackButton from './OverlayBackButton'
 
 /**
@@ -163,6 +164,22 @@ export default function CommandPalette({ open, onClose }: Props) {
     )
   }, [items, query])
 
+  /** Hardcoded knowledge-base answer for free-form questions. */
+  const answer = useMemo(() => answerQuestion(query), [query])
+
+  const followLink = (href: string) => {
+    if (href.startsWith('/')) {
+      navigate(href)
+      onClose()
+    } else if (href.startsWith('mailto:')) {
+      window.location.href = href
+      onClose()
+    } else {
+      window.open(href, '_blank')
+      onClose()
+    }
+  }
+
   useEffect(() => {
     if (!open) return
     setQuery('')
@@ -243,6 +260,49 @@ export default function CommandPalette({ open, onClose }: Props) {
         {/* Results only after typing */}
         {query.trim() && (
           <div className="w-full mt-8 max-h-[40vh] overflow-auto">
+            {/* Knowledge-base answer card */}
+            {answer ? (
+              <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-soft)] px-4 py-3.5 mb-3">
+                <p className="font-mono text-[0.95rem] font-semibold text-[var(--color-ink)] mb-1.5">
+                  {answer.title}
+                </p>
+                <p className="text-[0.88rem] text-[var(--color-muted)] leading-relaxed whitespace-pre-line mb-1">
+                  {answer.body}
+                </p>
+                {answer.links && answer.links.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mt-2.5">
+                    {answer.links.map((l) => (
+                      <button
+                        key={l.label}
+                        type="button"
+                        onClick={() => followLink(l.href)}
+                        className="rounded-full border border-[var(--color-border-strong)] px-3 py-1 font-mono text-[0.7rem] text-[var(--color-ink)] hover:bg-[var(--color-ink)] hover:text-[var(--color-bg)] transition-colors"
+                      >
+                        {l.label} ↗
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="rounded-xl border border-dashed border-[var(--color-border)] px-4 py-3.5 mb-3">
+                <p className="font-mono text-[0.85rem] text-[var(--color-dim)] mb-2.5">
+                  I don't know that one yet — try asking:
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {SUGGESTIONS.map((s) => (
+                    <button
+                      key={s}
+                      type="button"
+                      onClick={() => setQuery(s)}
+                      className="rounded-full bg-[var(--color-surface-soft)] border border-[var(--color-border)] px-3 py-1 font-mono text-[0.7rem] text-[var(--color-muted)] hover:text-[var(--color-ink)] hover:border-[var(--color-border-strong)] transition-colors"
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
             {filtered.length === 0 ? (
               <p className="font-mono text-[0.85rem] text-[var(--color-dim)]">
                 No results for “{query}”

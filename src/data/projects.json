@@ -35,7 +35,7 @@
     {
       "id": "onefilemanagement",
       "name": "OneFileManagement",
-      "description": "File management web application.",
+      "description": "Project ONE — all-in-one file management web app for documents, media, PDFs, and more in a single workspace.",
       "accent": "#4d7c0f",
       "icon": "O",
       "iconImage": "/apps/onefilemanagement.png",
