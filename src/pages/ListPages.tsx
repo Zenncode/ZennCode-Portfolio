@@ -827,12 +827,12 @@ export function AffiliationsPage() {
               className="relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] p-5 sm:p-6 shadow-[var(--shadow-card)]"
             >
               <div className="flex gap-4 items-start relative z-10">
-                <span className="size-14 grid place-items-center bg-[var(--color-surface-soft)] rounded-xl border border-[var(--color-border)] shrink-0 overflow-hidden">
+                <span className="size-14 grid place-items-center bg-[var(--color-surface-soft)] rounded-xl border-0 shrink-0 overflow-hidden">
                   {a.logo ? (
                     <img
                       src={a.logo}
                       alt=""
-                      className="w-full h-full object-contain p-1.5"
+                      className="w-full h-full object-cover block"
                     />
                   ) : (
                     <span className="font-bold text-[0.85rem] text-[var(--color-ink)]">

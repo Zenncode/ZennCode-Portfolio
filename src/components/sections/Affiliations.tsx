@@ -19,12 +19,12 @@ export default function Affiliations() {
           {affiliations.map((a, i) => (
             <FadeIn key={a.name} delay={Math.min(i * 0.05, 0.33)}>
               <div className="flex items-center gap-3 p-3.5 border border-[var(--color-border)] rounded-[var(--radius-lg)] bg-[var(--color-bg)] h-full">
-                <span className="size-11 grid place-items-center bg-[var(--color-surface-soft)] rounded-[12px] border border-[var(--color-border)] shrink-0 overflow-hidden">
+                <span className="size-11 grid place-items-center bg-[var(--color-surface-soft)] rounded-[12px] border-0 shrink-0 overflow-hidden">
                   {a.logo ? (
                     <img
                       src={a.logo}
                       alt=""
-                      className="w-full h-full object-contain p-1"
+                      className="w-full h-full object-cover block"
                     />
                   ) : (
                     <span className="font-bold text-[0.8rem] text-[var(--color-ink)]">
