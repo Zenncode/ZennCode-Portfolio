@@ -253,6 +253,44 @@ export function BlogPostPage() {
 export function ProjectsPage() {
   const featured = projects.filter((p) => p.featured !== false)
 
+  // Aligned group order for "More work": Web App lineup first, then the rest.
+  const ALIGNED_ORDER = [
+    'Web Application',
+    'Website',
+    'PWA App',
+    'Web App Game',
+    'NPM Package',
+  ]
+
+  function groupKeyFor(category: string): string {
+    if (category.startsWith('NPM Package')) return 'NPM Package'
+    return category
+  }
+
+  const groupedOther: { group: string; items: typeof otherProjects }[] = (() => {
+    const map = new Map<string, typeof otherProjects>()
+    for (const p of otherProjects) {
+      const g = groupKeyFor(p.category)
+      if (!map.has(g)) map.set(g, [])
+      map.get(g)!.push(p)
+    }
+    const entries = [...map.entries()].map(([group, items]) => ({
+      group,
+      items,
+    }))
+    entries.sort((a, b) => {
+      const ai = ALIGNED_ORDER.indexOf(a.group)
+      const bi = ALIGNED_ORDER.indexOf(b.group)
+      if (ai !== -1 || bi !== -1) {
+        if (ai === -1) return 1
+        if (bi === -1) return -1
+        return ai - bi
+      }
+      return a.group.localeCompare(b.group)
+    })
+    return entries
+  })()
+
   if (featured.length === 0 && otherProjects.length === 0) {
     return (
       <div className="page-shell">
@@ -294,6 +332,11 @@ export function ProjectsPage() {
                 }
               >
               <div className="min-w-0">
+              {p.category && (
+                <p className="font-mono text-[0.62rem] tracking-[0.12em] uppercase text-[var(--color-dim)] mb-2">
+                  {p.category}
+                </p>
+              )}
               <div className="flex flex-wrap items-start gap-3 mb-3">
                 <div className="size-14 sm:size-16 rounded-[16px] overflow-hidden border border-[var(--color-border)] shrink-0 bg-[var(--color-surface-soft)] grid place-items-center">
                   {p.iconImage ? (
@@ -418,11 +461,20 @@ export function ProjectsPage() {
           ))}
         </div>
 
-        <p className="font-mono text-[0.68rem] tracking-wider uppercase font-medium mb-3 text-[var(--color-dim)]">
+        <p className="font-mono text-[0.68rem] tracking-wider uppercase font-medium mb-5 text-[var(--color-dim)]">
           More work
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {otherProjects.map((p) => {
+        <div className="flex flex-col gap-8">
+          {groupedOther.map(({ group, items }) => (
+            <section key={group} aria-label={group}>
+              <h2 className="font-mono text-[0.72rem] tracking-[0.12em] uppercase text-[var(--color-dim)] mb-3">
+                {group}
+                <span className="ml-2 normal-case tracking-normal opacity-70">
+                  ({items.length})
+                </span>
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {items.map((p) => {
             const cardClass =
               'block p-4.5 border border-[var(--color-border)] rounded-[var(--radius-md)] bg-[var(--color-bg)] no-underline hover:-translate-y-0.5 hover:border-[var(--color-border-strong)] hover:shadow-[var(--shadow-card)] transition-all'
             const body = (
@@ -454,7 +506,10 @@ export function ProjectsPage() {
                 {body}
               </div>
             )
-          })}
+                })}
+              </div>
+            </section>
+          ))}
         </div>
       </div>
     </div>

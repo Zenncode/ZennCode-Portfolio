@@ -152,8 +152,15 @@ function DeckCard({
         </div>
       )}
 
+      {/* Category label — e.g. Web Application, Website, PWA App, Web App Game, NPM Package */}
+      {p.category && (
+        <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--color-dim)]">
+          {p.category}
+        </p>
+      )}
+
       {/* Icon + title */}
-      <div className="mt-4 flex items-center gap-3.5">
+      <div className="mt-3 flex items-center gap-3.5">
         <div className="h-12 w-12 shrink-0 rounded-xl border border-[var(--color-border)] shadow-sm overflow-hidden bg-[var(--color-surface-soft)] grid place-items-center">
           {p.iconImage ? (
             <img

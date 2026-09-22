@@ -4,6 +4,7 @@
       "id": "admin-flood-sense",
       "name": "Admin Flood Sense",
       "description": "FloodSense Console — admin dashboard for the Barangay DRRM Flood Sense system.",
+      "category": "Web Application",
       "accent": "#0e7490",
       "icon": "F",
       "iconImage": "/apps/flood-sense.png",
@@ -20,6 +21,7 @@
       "id": "electricuzarotech",
       "name": "Electric Uzaro Tech",
       "description": "Super Admin & Operations Portal — manages Electric Uzaro EV operations and charging networks.",
+      "category": "Web Application",
       "accent": "#b45309",
       "icon": "E",
       "iconImage": "/apps/electric-uzaro.png",
@@ -36,6 +38,7 @@
       "id": "onefilemanagement",
       "name": "OneFileManagement",
       "description": "Project ONE — all-in-one file management web app for documents, media, PDFs, and more in a single workspace.",
+      "category": "Web Application",
       "accent": "#4d7c0f",
       "icon": "O",
       "iconImage": "/apps/onefilemanagement.png",
@@ -50,7 +53,8 @@
     {
       "id": "pms",
       "name": "Project Management System",
-      "description": "Project management system (PMS).",
+      "description": "Project management system (PMS) — plan, track, and manage projects and tasks in one workspace.",
+      "category": "Web Application",
       "accent": "#6d28d9",
       "icon": "P",
       "featured": true
@@ -58,7 +62,8 @@
     {
       "id": "pos-system",
       "name": "Point of Sales",
-      "description": "Point of Sales system — TypeScript repository on GitHub.",
+      "description": "Point of Sales (POS) system — TypeScript repository on GitHub.",
+      "category": "Web Application",
       "accent": "#0f766e",
       "icon": "P",
       "featured": true,
@@ -79,37 +84,37 @@
     },
     {
       "name": "Electric Uzaro PWA",
-      "category": "PWA",
+      "category": "PWA App",
       "description": "Progressive web app for Electric Uzaro.",
       "href": "https://electricuzaro-pwa.web.app/"
     },
     {
       "name": "Flood Sense App",
-      "category": "PWA",
+      "category": "PWA App",
       "description": "Flood Sense mobile web app.",
       "href": "https://floodsenseapp.online/"
     },
     {
       "name": "Impostor Game",
-      "category": "Game",
+      "category": "Web App Game",
       "description": "Web game.",
       "href": "https://impostor-game-1625323148.web.app/"
     },
     {
       "name": "CodeClash",
-      "category": "Game",
+      "category": "Web App Game",
       "description": "Web game hosted on Render.",
       "href": "https://codeclash-fqke.onrender.com/"
     },
     {
       "name": "zenncode",
-      "category": "NPM Package",
+      "category": "NPM Package · Frontend",
       "description": "Frontend template package on npm.",
       "href": "https://www.npmjs.com/package/zenncode"
     },
     {
       "name": "zenntechinc-cli",
-      "category": "NPM Package",
+      "category": "NPM Package · Backend",
       "description": "Backend CLI package on npm.",
       "href": "https://www.npmjs.com/package/zenntechinc-cli"
     },
