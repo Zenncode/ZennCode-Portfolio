@@ -84,6 +84,18 @@ export default function CommandPalette({ open, onClose }: Props) {
         action: go('/affiliations'),
       },
       {
+        id: 'consulting',
+        label: 'Consulting',
+        group: 'Pages',
+        action: go('/consulting'),
+      },
+      {
+        id: 'collabs',
+        label: 'Collabs',
+        group: 'Pages',
+        action: go('/collabs'),
+      },
+      {
         id: 'email',
         label: `Email ${site.email}`,
         group: 'Actions',

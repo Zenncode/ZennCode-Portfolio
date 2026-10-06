@@ -332,40 +332,44 @@ export function ResourcesPage() {
       title="resources"
       description="A hand-picked list of the resources I keep coming back to — for learning to build software, getting into AI engineering, and staying current. Free or freemium, and genuinely worth your time."
     >
-      {resourceSections.length === 0 ? (
-        <EmptyNote text="Resources list coming soon." />
-      ) : (
       <div className="flex flex-col gap-12">
-        {resourceSections.map((section) => (
-          <section key={section.id} id={section.id}>
-            <h2 className="font-mono text-[0.72rem] tracking-[0.12em] uppercase text-[var(--color-dim)] mb-5">
-              {section.title}
-            </h2>
-            {/* 2-col grid — ss/image copy 2.png */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6">
-              {section.items.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block no-underline"
-                >
-                  <p className="text-[0.95rem] font-semibold tracking-tight text-[var(--color-ink)] group-hover:underline underline-offset-2 mb-1 inline-flex items-center gap-1.5">
-                    {item.name}
-                    <span className="opacity-40 group-hover:opacity-100 transition-opacity">
-                      <ExternalArrow />
-                    </span>
-                  </p>
-                  <p className="text-[0.88rem] text-[var(--color-muted)] leading-relaxed">
-                    {item.detail}
-                  </p>
-                </a>
-              ))}
-            </div>
-          </section>
-        ))}
+        {resourceSections.length === 0 ? (
+          <EmptyNote text="Resources list coming soon." />
+        ) : (
+          <>
+            {resourceSections.map((section) => (
+              <section key={section.id} id={section.id}>
+                <h2 className="font-mono text-[0.72rem] tracking-[0.12em] uppercase text-[var(--color-dim)] mb-5">
+                  {section.title}
+                </h2>
+                {/* 2-col grid — ss/image copy 2.png */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6">
+                  {section.items.map((item) => (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group block no-underline"
+                    >
+                      <p className="text-[0.95rem] font-semibold tracking-tight text-[var(--color-ink)] group-hover:underline underline-offset-2 mb-1 inline-flex items-center gap-1.5">
+                        {item.name}
+                        <span className="opacity-40 group-hover:opacity-100 transition-opacity">
+                          <ExternalArrow />
+                        </span>
+                      </p>
+                      <p className="text-[0.88rem] text-[var(--color-muted)] leading-relaxed">
+                        {item.detail}
+                      </p>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </>
+        )}
 
+        {/* Unconditional: the CTA should show even when the list is empty */}
         <p className="text-[0.9rem] text-[var(--color-muted)] pt-2 border-t border-[var(--color-border)]">
           Missing something great?{' '}
           <a
@@ -376,7 +380,6 @@ export function ResourcesPage() {
           </a>
         </p>
       </div>
-      )}
     </Shell>
   )
 }

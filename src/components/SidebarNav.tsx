@@ -38,6 +38,8 @@ const NAV_GROUPS: NavItem[][] = [
     { to: '/certifications', label: 'Certifications' },
     { to: '/recommendations', label: 'Recommendations' },
     { to: '/affiliations', label: 'Affiliations' },
+    { to: '/consulting', label: 'Consulting' },
+    { to: '/collabs', label: 'Collabs' },
   ],
 ]
 
@@ -359,6 +361,10 @@ export default function SidebarNav({
       </header>
 
       <div
+        // `inert` (not just opacity/pointer-events) so the closed drawer is
+        // out of the tab order and hidden from assistive tech.
+        inert={!open}
+        aria-hidden={!open}
         className={`fixed inset-x-0 bottom-0 top-[var(--spacing-nav)] z-[45] bg-[var(--color-bg)] transition-opacity duration-200 lg:hidden ${
           open
             ? 'opacity-100 pointer-events-auto'

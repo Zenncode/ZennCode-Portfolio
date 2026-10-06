@@ -98,23 +98,28 @@ export default function TypingTest({ open, onClose }: Props) {
         return
       }
 
+      // IME composition keystrokes arrive as printable keydowns; consuming them
+      // breaks the composition popup and appends wrong characters.
+      if (e.isComposing || e.keyCode === 229) return
+
       if (e.key.length === 1) {
         e.preventDefault()
-        setTyped((t) => {
-          if (!startedAt) setStartedAt(Date.now())
-          const next = t + e.key
-          if (next.length >= SAMPLE.length) {
-            setDone(true)
-            return SAMPLE
-          }
-          return next
-        })
+        // Keep the updater pure — StrictMode double-invokes it, so side
+        // effects here would fire twice and skew startedAt.
+        const next = typed + e.key
+        if (!startedAt) setStartedAt(Date.now())
+        if (next.length >= SAMPLE.length) {
+          setTyped(SAMPLE)
+          setDone(true)
+        } else {
+          setTyped(next)
+        }
       }
     }
 
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [open, onClose, restart, done, startedAt])
+  }, [open, onClose, restart, done, startedAt, typed])
 
   const stats = useMemo(() => {
     const correct = [...typed].filter((ch, i) => ch === SAMPLE[i]).length

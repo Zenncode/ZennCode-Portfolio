@@ -9,9 +9,11 @@ import OverlayBackButton from './OverlayBackButton'
 import ChatPlayground from './ChatPlayground'
 import {
   avatarUrl,
+  clearChatError,
   detectLocation,
   flagEmoji,
   formatAgo,
+  getChatError,
   loadChatUser,
   postMessage,
   saveChatUser,
@@ -44,6 +46,9 @@ export default function CommunityChat({ open, onClose }: Props) {
   const [draft, setDraft] = useState('')
   const [sending, setSending] = useState(false)
   const [now, setNow] = useState(Date.now())
+  const [sendError, setSendError] = useState<string | null>(null)
+  // IME composition: implicit form submit must not fire mid-composition
+  const composing = useRef(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
 
@@ -68,6 +73,8 @@ export default function CommunityChat({ open, onClose }: Props) {
 
   useEffect(() => {
     if (!open) return
+    // `now` was seeded at mount; re-sync on open so timestamps aren't stale.
+    setNow(Date.now())
     const id = window.setInterval(() => setNow(Date.now()), 30_000)
     return () => clearInterval(id)
   }, [open])
@@ -125,15 +132,19 @@ export default function CommunityChat({ open, onClose }: Props) {
       setStep('message')
       return
     }
-    void detectLocation().then((geo) => {
-      if (!geo) return
+    const ctrl = new AbortController()
+    void detectLocation(ctrl.signal).then((geo) => {
+      if (ctrl.signal.aborted || !geo) return
       setLocation((prev) => prev || geo.location)
       setCountryCode((prev) => prev || geo.countryCode)
     })
+    return () => ctrl.abort()
   }, [open])
 
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault()
+    // Never send a half-finished IME composition
+    if (composing.current) return
     // Unlock game audio while we still have a user gesture
     void unlockGameSfx()
 
@@ -158,15 +169,27 @@ export default function CommunityChat({ open, onClose }: Props) {
 
     const text = draft.trim()
     if (!text || sending) return
+
     setSending(true)
-    const ok = postMessage({
+    const ok = await postMessage({
       name,
       location: location || 'Somewhere',
       countryCode,
       text,
     })
-    if (ok) setDraft('')
     setSending(false)
+
+    if (!ok) {
+      // Rejected or the write failed — keep the draft so the text isn't
+      // silently lost, and say why.
+      setSendError(
+        getChatError() ?? 'That message was not sent — try again.',
+      )
+      return
+    }
+
+    setSendError(null)
+    setDraft('')
   }
 
   if (!shown) return null
@@ -339,9 +362,15 @@ export default function CommunityChat({ open, onClose }: Props) {
                       ? 'your name'
                       : 'City, Country'
                 }
-                maxLength={joined ? 200 : 40}
+                maxLength={joined ? 200 : step === 'location' ? 60 : 40}
                 autoComplete="off"
                 aria-label={joined ? 'Message' : 'Join chat'}
+                onCompositionStart={() => {
+                  composing.current = true
+                }}
+                onCompositionEnd={() => {
+                  composing.current = false
+                }}
                 className="flex-1 min-w-0 bg-transparent border-0 border-b border-transparent focus:border-[var(--color-border)] py-1 font-mono text-[15px] text-[var(--color-ink)] placeholder:text-[var(--color-dim)] outline-none"
               />
               <button
@@ -362,6 +391,24 @@ export default function CommunityChat({ open, onClose }: Props) {
                   : 'next ↵'}
               </button>
             </div>
+            {sendError && (
+              <p
+                role="status"
+                className="mt-2 font-mono text-[11px] text-[var(--color-muted)]"
+              >
+                {sendError}
+                <button
+                  type="button"
+                  onClick={() => {
+                    clearChatError()
+                    setSendError(null)
+                  }}
+                  className="ml-2 underline hover:text-[var(--color-ink)]"
+                >
+                  dismiss
+                </button>
+              </p>
+            )}
           </form>
         </div>
       </div>
