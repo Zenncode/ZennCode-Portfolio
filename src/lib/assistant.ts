@@ -40,7 +40,11 @@ type Entry = {
 function norm(s: string): string {
   return s
     .toLowerCase()
-    .replace(/[^a-z0-9ñ\s]/g, ' ')
+    // Strip diacritics so "cómo" → "como" rather than "c mo", and keep
+    // letters from other scripts so CJK queries aren't erased to ''.
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .replace(/[^\p{L}\p{N}\s]/gu, ' ')
     .replace(/\s+/g, ' ')
     .trim()
 }
@@ -53,6 +57,14 @@ function norm(s: string): string {
  * short hints ("hi", "yo") is exact-token only to avoid false hits
  * like "which" or "your".
  */
+/**
+ * Whole-token phrase match. `text.includes(hint)` is too loose — the
+ * 'one file' hint matched "someone filed taxes".
+ */
+function hasPhrase(text: string, phrase: string): boolean {
+  return ` ${text} `.includes(` ${phrase} `)
+}
+
 function scoreEntry(tokens: string[], text: string, hints: string[]): number {
   let score = 0
   for (const hint of hints) {
@@ -64,8 +76,10 @@ function scoreEntry(tokens: string[], text: string, hints: string[]): number {
       } else if (h.length >= 4 && tokens.some((t) => t.startsWith(h))) {
         score += 1
       }
-    } else if (text.includes(hint)) {
-      score += words.length
+    } else if (hasPhrase(text, hint)) {
+      // Extra point for an exact phrase so multi-word hints outrank
+      // single-word hits when both score the same on token count.
+      score += words.length + 1
     }
   }
   return score
@@ -512,7 +526,9 @@ export function answerQuestion(query: string): AssistantAnswer | null {
       text,
       entry.hints.map(norm).filter(Boolean),
     )
-    if (s > bestScore) {
+    // `>=` so the later (typically more specific) entry wins ties; with
+    // `>` an earlier entry answered a query it tied on.
+    if (s > 0 && s >= bestScore) {
       bestScore = s
       best = entry.answer
     }

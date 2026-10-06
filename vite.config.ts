@@ -15,8 +15,6 @@ export default defineConfig({
               return 'react'
             if (id.includes('/firebase/')) return 'firebase'
             if (id.includes('/framer-motion/')) return 'motion'
-            if (id.includes('/yjs/') || id.includes('/y-websocket/'))
-              return 'yjs'
             return 'vendor'
           }
           return undefined

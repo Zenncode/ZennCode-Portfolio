@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { hero, site, stats } from '../../data/portfolio'
 import profilePhoto from '../../assets/image/zenn.png'
 
@@ -137,9 +138,11 @@ export default function Hero() {
             variants={item}
           >
             {stats.map((s, i) => (
-              <a
+              // Client-side routing: <a href="/stack"> would do a full
+              // document reload instead of a route change.
+              <Link
                 key={s.label}
-                href={s.href}
+                to={s.href}
                 className={[
                   'group flex flex-col gap-2 px-3 sm:px-4 py-6 no-underline hover:bg-[var(--color-surface-soft)] transition-colors',
                   i < stats.length - 1
@@ -160,7 +163,7 @@ export default function Hero() {
                 <span className="font-mono text-[0.62rem] tracking-[0.12em] uppercase text-[var(--color-dim)]">
                   {s.label}
                 </span>
-              </a>
+              </Link>
             ))}
           </motion.div>
         </motion.div>

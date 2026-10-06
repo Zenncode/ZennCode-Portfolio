@@ -783,12 +783,46 @@ export default function ChatPlayground({
       return true
     }
 
-    setupCanvas()
-    raf = requestAnimationFrame(loop)
+    // The container is `hidden lg:flex`; below lg the canvas has no layout
+    // size, so skip the rAF loop entirely rather than burn CPU offscreen.
+    const lg = window.matchMedia('(min-width: 1024px)')
+    const canRender = () => lg.matches && setupCanvas()
+
+    const onLgChange = () => {
+      cancelAnimationFrame(raf)
+      raf = canRender() ? requestAnimationFrame(loop) : 0
+    }
+
+    if (canRender()) raf = requestAnimationFrame(loop)
+    lg.addEventListener('change', onLgChange)
+
+    const isTypingTarget = (t: EventTarget | null) => {
+      const el = t as HTMLElement | null
+      if (!el || !el.tagName) return false
+      return (
+        el.isContentEditable === true ||
+        el.tagName === 'INPUT' ||
+        el.tagName === 'TEXTAREA' ||
+        el.tagName === 'SELECT' ||
+        el.getAttribute?.('role') === 'textbox'
+      )
+    }
+
+    // Window can lose focus (alt-tab, app switch) without a keyup, which would
+    // leave a movement key stuck on and loop collision SFX forever.
+    const releaseKeys = () => {
+      keys.w = false
+      keys.a = false
+      keys.s = false
+      keys.d = false
+    }
+
+    const onVisibility = () => {
+      if (document.hidden) releaseKeys()
+    }
 
     const onKeyDown = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement)?.tagName
-      if (tag === 'INPUT' || tag === 'TEXTAREA') return
+      if (e.defaultPrevented || isTypingTarget(e.target)) return
       void unlockGameSfx()
 
       const k = e.key.toLowerCase()
@@ -828,9 +862,19 @@ export default function ChatPlayground({
 
     window.addEventListener('keydown', onKeyDown)
     window.addEventListener('keyup', onKeyUp)
+    window.addEventListener('blur', releaseKeys)
+    document.addEventListener('visibilitychange', onVisibility)
     window.addEventListener('resize', onResize)
     window.addEventListener('pointerdown', onPointer, { once: true })
     canvas.addEventListener('click', onClick)
+
+    // Opening the overlay hides the page scrollbar, which changes
+    // clientWidth without firing a window resize — observe the element.
+    const ro =
+      typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(() => setupCanvas())
+        : null
+    ro?.observe(canvas)
 
     // Unlock immediately if user already interacted with the page this session
     void unlockGameSfx()
@@ -843,9 +887,13 @@ export default function ChatPlayground({
       })
       window.removeEventListener('keydown', onKeyDown)
       window.removeEventListener('keyup', onKeyUp)
+      window.removeEventListener('blur', releaseKeys)
+      lg.removeEventListener('change', onLgChange)
+      document.removeEventListener('visibilitychange', onVisibility)
       window.removeEventListener('resize', onResize)
       window.removeEventListener('pointerdown', onPointer)
       canvas.removeEventListener('click', onClick)
+      ro?.disconnect()
     }
   }, [active])
 

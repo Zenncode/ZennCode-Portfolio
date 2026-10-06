@@ -51,6 +51,8 @@ let cached: ChatMessage[] = []
 let started = false
 let connected = false
 let unsubscribe: Unsubscribe | null = null
+/** Human-readable send/connection failure, consumed by the UI. */
+let lastError: string | null = null
 
 function toMessage(id: string, data: Record<string, unknown>): ChatMessage | null {
   const name = String(data.name ?? '').trim()
@@ -80,12 +82,22 @@ function emit() {
   listeners.forEach((fn) => fn(cached))
 }
 
-/** Start live sync once (shared across component mounts) */
-export function startCommunityChat(): void {
-  if (started || typeof window === 'undefined') return
-  started = true
+/** Retry backoff after a listener error, in ms. */
+const RETRY_STEPS = [1000, 4000, 10000, 30000]
+let retryTimer: number | null = null
+let retryStep = 0
 
+function clearRetry() {
+  if (retryTimer !== null) {
+    window.clearTimeout(retryTimer)
+    retryTimer = null
+  }
+}
+
+/** Attach the live listener. Safe to call repeatedly. */
+function attach(): void {
   if (!db) {
+    connected = false
     emit()
     return
   }
@@ -107,29 +119,60 @@ export function startCommunityChat(): void {
         // Optimistic local posts not yet echoed stay visible
         cached = mergeById([...msgs, ...cached])
         connected = true
+        retryStep = 0
         emit()
       },
       () => {
-        // Permission denied / offline / no database yet — stay local-only
+        // The listener stops permanently once this fires, so tear it down and
+        // resubscribe with backoff instead of staying dead until reload.
         connected = false
         emit()
+        scheduleRetry()
       },
     )
   } catch {
     connected = false
     unsubscribe = null
+    emit()
+    scheduleRetry()
   }
+}
+
+function scheduleRetry(): void {
+  if (retryTimer !== null) return
+  const delay = RETRY_STEPS[Math.min(retryStep, RETRY_STEPS.length - 1)]
+  retryStep += 1
+  retryTimer = window.setTimeout(() => {
+    retryTimer = null
+    if (!started) return
+    try {
+      unsubscribe?.()
+    } catch {
+      /* ignore */
+    }
+    unsubscribe = null
+    attach()
+  }, delay)
+}
+
+/** Start live sync once (shared across component mounts) */
+export function startCommunityChat(): void {
+  if (started || typeof window === 'undefined') return
+  started = true
+  attach()
   emit()
 }
 
 export function stopCommunityChat(): void {
+  started = false
+  clearRetry()
+  retryStep = 0
   try {
     unsubscribe?.()
   } catch {
     /* ignore */
   }
   unsubscribe = null
-  started = false
   connected = false
   cached = []
 }
@@ -151,17 +194,34 @@ export function isChatConnected(): boolean {
   return connected
 }
 
-export function postMessage(input: {
+/** Last send/connection error, or null. Cleared on the next successful send. */
+export function getChatError(): string | null {
+  return lastError
+}
+
+export function clearChatError(): void {
+  lastError = null
+}
+
+/**
+ * Post a message. Resolves true once the write is confirmed, false if it was
+ * rejected or the write failed — the caller should keep the draft on false.
+ * The message renders optimistically either way.
+ */
+export async function postMessage(input: {
   name: string
   location: string
   countryCode?: string
   text: string
-}): ChatMessage | null {
+}): Promise<boolean> {
   startCommunityChat()
 
   const text = input.text.trim().slice(0, MAX_TEXT)
   const name = input.name.trim().slice(0, 40)
-  if (!text || !name) return null
+  if (!text || !name) {
+    lastError = 'Message cannot be empty.'
+    return false
+  }
 
   // Simple client-side spam: same text within 2s
   const last = cached[cached.length - 1]
@@ -171,7 +231,8 @@ export function postMessage(input: {
     last.text === text &&
     Date.now() - last.createdAt < 2000
   ) {
-    return null
+    lastError = 'You just sent that — give it a second.'
+    return false
   }
 
   const msg: ChatMessage = {
@@ -184,19 +245,30 @@ export function postMessage(input: {
     seed: name,
   }
 
+  lastError = null
+
   // Optimistic: show instantly, dedupe when the server echo arrives
   cached = mergeById([...cached, msg])
   emit()
 
-  // Fire-and-forget write — our own id is the doc id, so the echo
-  // carries the same id and mergeById dedupes it automatically.
-  if (db) {
-    void setDoc(doc(db, COLLECTION, msg.id), { ...msg }).catch(() => {
-      connected = false
-    })
+  // Our own id is the doc id, so the echo carries the same id and mergeById
+  // dedupes it automatically. On failure the optimistic copy is dropped,
+  // otherwise the next snapshot would re-merge it and it would persist.
+  if (!db) {
+    return true // no backend configured; local-only mode, as before
   }
 
-  return msg
+  try {
+    await setDoc(doc(db, COLLECTION, msg.id), { ...msg })
+    connected = true
+    return true
+  } catch {
+    connected = false
+    cached = cached.filter((m) => m.id !== msg.id)
+    emit()
+    lastError = 'Message could not be sent — check your connection.'
+    return false
+  }
 }
 
 export function loadChatUser(): ChatUser | null {
@@ -220,35 +292,48 @@ export function saveChatUser(user: ChatUser): void {
 }
 
 /** Real geo from IP (same idea as bryllim) — optional auto-fill for location */
-export async function detectLocation(): Promise<{
+export async function detectLocation(
+  outerSignal?: AbortSignal,
+): Promise<{ location: string; countryCode: string } | null> {
+  const ctrl = new AbortController()
+  const onOuterAbort = () => ctrl.abort()
+  outerSignal?.addEventListener('abort', onOuterAbort, { once: true })
+
+  const to = window.setTimeout(() => ctrl.abort(), 4000)
+  try {
+    const res = await fetch('https://ipwho.is/', { signal: ctrl.signal })
+    if (!res.ok) return null
+    return parseGeo(await res.json())
+  } catch {
+    /* offline / blocked / aborted */
+    return null
+  } finally {
+    window.clearTimeout(to)
+    outerSignal?.removeEventListener('abort', onOuterAbort)
+  }
+}
+
+function parseGeo(raw: unknown): {
   location: string
   countryCode: string
-} | null> {
-  try {
-    const ctrl = new AbortController()
-    const to = window.setTimeout(() => ctrl.abort(), 4000)
-    const res = await fetch('https://ipwho.is/', { signal: ctrl.signal })
-    window.clearTimeout(to)
-    const j = (await res.json()) as {
-      success?: boolean
-      city?: string
-      region?: string
-      country_code?: string
-      country?: string
-    }
-    if (j && j.success !== false) {
-      const city = j.city || j.region || ''
-      const country = j.country_code || j.country || ''
-      const location = [city, country].filter(Boolean).join(', ') || 'Somewhere'
-      return {
-        location,
-        countryCode: (j.country_code || '').toUpperCase(),
-      }
-    }
-  } catch {
-    /* offline / blocked */
+} | null {
+  const j = raw as {
+    success?: boolean
+    city?: string
+    region?: string
+    country_code?: string
+    country?: string
+  } | null
+
+  if (!j || j.success === false) return null
+
+  const city = j.city || j.region || ''
+  const country = j.country_code || j.country || ''
+  const location = [city, country].filter(Boolean).join(', ') || 'Somewhere'
+  return {
+    location,
+    countryCode: (j.country_code || '').toUpperCase(),
   }
-  return null
 }
 
 export function formatAgo(createdAt: number, now = Date.now()): string {

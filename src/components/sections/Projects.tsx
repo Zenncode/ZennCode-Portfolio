@@ -36,16 +36,16 @@ type Slot = 'is-left' | 'is-center' | 'is-right'
 export default function Projects() {
   const featured = projects.filter((p) => p.featured !== false).slice(0, 3)
 
-  if (featured.length === 0) return null
-
   // indices mapped to slots: [left, center, right]
+  // Must be declared before any early return (rules of hooks).
   const [order, setOrder] = useState(() => {
-    // center = first project
     if (featured.length === 0) return [] as number[]
     if (featured.length === 1) return [0]
     if (featured.length === 2) return [1, 0]
     return [1, 0, 2] // left, center (featured[0]), right
   })
+
+  if (featured.length === 0) return null
 
   function slotFor(index: number): Slot {
     const pos = order.indexOf(index)
@@ -110,19 +110,15 @@ function DeckCard({
   onActivate: () => void
 }) {
   const isCenter = slot === 'is-center'
+  const isStoreBadge = (label: string) =>
+    label === 'App Store' || label === 'Google Play'
 
   return (
     <article
-      role="button"
-      tabIndex={0}
-      aria-label={`Show ${p.name}`}
+      // Not role="button": this element contains real links, and a button
+      // role would hide them from assistive tech. Mouse users can still
+      // click the card; keyboard users get the "Bring forward" button below.
       onClick={onActivate}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          onActivate()
-        }
-      }}
       className={`deck-card ${slot} rounded-2xl bg-[var(--color-bg)] p-5`}
     >
       {/* Badges */}
@@ -189,61 +185,85 @@ function DeckCard({
       {/* Store badges — only interactive on center card (CSS pointer-events) */}
       {p.links && p.links.length > 0 && (
         <div className="mt-4 flex flex-wrap gap-2">
+          {/* Off-center cards are inert (CSS pointer-events), so take the
+              links out of the tab order and the a11y tree to match. */}
           {p.links.map((l) => {
-            if (l.label === 'App Store') {
+            if (!isCenter) {
               return (
-                <a
+                <span
                   key={l.label}
-                  href={l.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-block h-9 no-underline"
-                  onClick={(e) => {
-                    if (!isCenter) e.preventDefault()
-                    e.stopPropagation()
-                  }}
+                  className={
+                    isStoreBadge(l.label)
+                      ? 'inline-block h-9'
+                      : 'font-mono text-[0.75rem] text-[var(--color-muted)]'
+                  }
                 >
+                  {l.label === 'App Store' ? (
+                    <img
+                      src="/apps/app-store.svg"
+                      alt=""
+                      className="h-9 w-auto"
+                    />
+                  ) : l.label === 'Google Play' ? (
+                    <img
+                      src="/apps/google-play.png"
+                      alt=""
+                      className="h-9 w-auto"
+                    />
+                  ) : (
+                    `${l.label} ↗`
+                  )}
+                </span>
+              )
+            }
+
+            return (
+              <a
+                key={l.label}
+                href={l.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={
+                  isStoreBadge(l.label)
+                    ? 'inline-block h-9 no-underline'
+                    : 'font-mono text-[0.75rem] text-[var(--color-muted)] no-underline'
+                }
+                onClick={(e) => e.stopPropagation()}
+              >
+                {l.label === 'App Store' ? (
                   <img
                     src="/apps/app-store.svg"
                     alt="Download on the App Store"
                     className="h-9 w-auto"
                   />
-                </a>
-              )
-            }
-            if (l.label === 'Google Play') {
-              return (
-                <a
-                  key={l.label}
-                  href={l.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-block h-9 no-underline"
-                  onClick={(e) => {
-                    if (!isCenter) e.preventDefault()
-                    e.stopPropagation()
-                  }}
-                >
+                ) : l.label === 'Google Play' ? (
                   <img
                     src="/apps/google-play.png"
                     alt="Get it on Google Play"
                     className="h-9 w-auto"
                   />
-                </a>
-              )
-            }
-            return (
-              <a
-                key={l.label}
-                href={l.href}
-                className="font-mono text-[0.75rem] text-[var(--color-muted)] no-underline"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {l.label} ↗
+                ) : (
+                  `${l.label} ↗`
+                )}
               </a>
             )
           })}
         </div>
+      )}
+
+      {/* Keyboard-reachable equivalent of clicking the card to advance it */}
+      {!isCenter && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation()
+            onActivate()
+          }}
+          onFocus={(e) => e.stopPropagation()}
+          className="mt-4 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-[var(--color-dim)] hover:text-[var(--color-ink)] transition-colors"
+        >
+          Bring forward →
+        </button>
       )}
     </article>
   )
