@@ -24,18 +24,17 @@ service cloud.firestore {
         && request.resource.data.countryCode.size() <= 4
         && request.resource.data.seed is string
         && request.resource.data.seed.size() <= 40
-        // Clamp createdAt to now. Without this, any anonymous client can write
-        // a far-future timestamp and, because the feed queries
-        // orderBy('createdAt','desc') + limit(200), those docs become the
-        // entire result set for every reader — and they can never be deleted
-        // (update/delete are denied below), so the chat stays blank.
-        // createdAt is client-supplied epoch MILLIS, so convert request.time
-        // (a timestamp) to millis before comparing: comparing a number to a
-        // timestamp is a type error in Rules.
-        //   timeValue() -> Duration, .value -> seconds since epoch
-        && request.resource.data.createdAt is number
-        && request.resource.data.createdAt <= request.time.timeValue().value * 1000 + 600000
-        && request.resource.data.createdAt >= request.time.timeValue().value * 1000 - 600000;
+        // createdAt MUST be a serverTimestamp() written by the client, so the
+        // value is resolved by the server and cannot be forged. Without this,
+        // an anonymous client could write a far-future timestamp and, because
+        // the feed queries orderBy('createdAt','desc') + limit(200), those
+        // docs would become the entire result set for every reader — and they
+        // can never be removed (update/delete are denied below), so the chat
+        // would stay blank permanently.
+        // The window is a sanity bound; it cannot be widened by the client.
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.createdAt <= request.time
+        && request.resource.data.createdAt > request.time - duration.value(10, 'm');
 
       // No edits, no deletes — append-only guestbook.
       allow update, delete: if false;
