@@ -9,7 +9,6 @@ let ctx: AudioContext | null = null
 let unlocked = false
 let lastStep = 0
 let lastColl = 0
-let lastCollKey = ''
 let masterGain: GainNode | null = null
 
 function getCtx(): AudioContext | null {
@@ -29,6 +28,7 @@ function getCtx(): AudioContext | null {
 
 /** Call from keydown / click so the browser allows audio */
 export async function unlockGameSfx(): Promise<void> {
+  if (unlocked) return
   const c = getCtx()
   if (!c) return
   try {
@@ -149,12 +149,13 @@ export function playGameStep() {
 }
 
 /** Bump into furniture / wall */
-export function playGameCollision(key = 'x') {
+export function playGameCollision(_key = 'x') {
   if (!unlocked) return
   const t = performance.now()
-  if (t - lastColl < 280 && key === lastCollKey) return
+  // Throttle on time only: keying on direction let alternating keys
+  // bypass the limit and fire up to 4 hits per window.
+  if (t - lastColl < 280) return
   lastColl = t
-  lastCollKey = key
   playCollisionSynth()
 }
 

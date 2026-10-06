@@ -28,8 +28,9 @@ export function BlogPage() {
 
   function goPage(next: number) {
     const p = Math.min(Math.max(1, next), totalPages)
-    if (p <= 1) setParams({})
-    else setParams({ page: String(p) })
+    // replace, not push: Back should leave /blog, not walk the page history
+    if (p <= 1) setParams({}, { replace: true })
+    else setParams({ page: String(p) }, { replace: true })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -239,9 +240,9 @@ export function BlogPostPage() {
           </div>
         )}
         <div className="prose mt-8">
-          {paragraphs.map((p) =>
+          {paragraphs.flatMap((p, pi) =>
             p.split(/\n\n+/).map((block, i) => (
-              <p key={`${post.slug}-${i}`}>{block}</p>
+              <p key={`${post.slug}-${pi}-${i}`}>{block}</p>
             )),
           )}
         </div>
@@ -547,6 +548,7 @@ export function ExperiencePage() {
                   {co.company}
                 </h2>
                 <p className="font-mono text-[0.72rem] text-[var(--color-dim)] mt-0.5">
+                  {co.duration ? `${co.duration} · ` : ''}
                   {co.type}
                 </p>
                 {co.location && (
@@ -643,6 +645,21 @@ export function StackPage() {
   )
 }
 
+/** “Verify ↗” footer shown only when the card links out */
+function CertFooter() {
+  return (
+    <div className="relative mt-auto flex items-center gap-1.5 pt-3 text-[var(--color-dim)] group-hover:text-[var(--color-ink)] transition-colors">
+      <CertVerifyMarks />
+      <span className="font-mono text-[9px] uppercase tracking-[0.16em]">
+        Verify
+      </span>
+      <span className="inline-flex -scale-x-100">
+        <CertVerifyMarks />
+      </span>
+    </div>
+  )
+}
+
 /** Decorative brackets beside “Verify” (bryllim style) */
 function CertVerifyMarks() {
   return (
@@ -695,20 +712,11 @@ export function CertificationsPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-4 sm:gap-x-3 sm:gap-y-5">
               {certifications
                 .filter((c) => c.group === group)
-                .map((c) => (
-                  <a
-                    key={`${c.group}-${c.name}-${c.issuer}`}
-                    href={c.verify || '#'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="cert-card group relative -m-1.5 flex flex-col items-center rounded-xl bg-gradient-to-b from-[var(--color-surface-soft)] to-[var(--color-bg)] px-3.5 py-5 text-center no-underline"
-                    style={
-                      {
-                        ['--rot' as string]: `${c.rot ?? 0}deg`,
-                        ['--ty' as string]: `${c.ty ?? 0}px`,
-                      } as CSSProperties
-                    }
-                  >
+                .map((c) => {
+                  // No verify URL: render a plain card. As an <a href="#">
+                  // it would open a blank tab, which looks broken.
+                  const inner = (
+                    <>
                     {/* Inner border frame */}
                     <span
                       aria-hidden
@@ -716,28 +724,47 @@ export function CertificationsPage() {
                     />
 
                     <img
-                      src={c.logo}
-                      alt=""
-                      className="relative h-9 w-9 rounded-md border border-[var(--color-border)] bg-white object-contain p-1"
-                    />
-                    <h3 className="relative mt-3 text-[13px] font-semibold leading-snug text-[var(--color-ink)] px-1">
-                      {c.name}
-                    </h3>
-                    <p className="relative mt-1 font-mono text-[9.5px] uppercase tracking-wider text-[var(--color-dim)]">
-                      {c.issuer}
-                    </p>
+                        src={c.logo}
+                        alt=""
+                        className="relative h-9 w-9 rounded-md border border-[var(--color-border)] bg-white object-contain p-1"
+                      />
+                      <h3 className="relative mt-3 text-[13px] font-semibold leading-snug text-[var(--color-ink)] px-1">
+                        {c.name}
+                      </h3>
+                      <p className="relative mt-1 font-mono text-[9.5px] uppercase tracking-wider text-[var(--color-dim)]">
+                        {c.issuer}
+                      </p>
+                    </>
+                  )
+                  const cardProps = {
+                    className:
+                      'cert-card group relative -m-1.5 flex flex-col items-center rounded-xl bg-gradient-to-b from-[var(--color-surface-soft)] to-[var(--color-bg)] px-3.5 py-5 text-center no-underline',
+                    style: {
+                      ['--rot' as string]: `${c.rot ?? 0}deg`,
+                      ['--ty' as string]: `${c.ty ?? 0}px`,
+                    } as CSSProperties,
+                  }
 
-                    <div className="relative mt-auto flex items-center gap-1.5 pt-3 text-[var(--color-dim)] group-hover:text-[var(--color-ink)] transition-colors">
-                      <CertVerifyMarks />
-                      <span className="font-mono text-[9px] uppercase tracking-[0.16em]">
-                        Verify
-                      </span>
-                      <span className="inline-flex -scale-x-100">
-                        <CertVerifyMarks />
-                      </span>
+                  return c.verify ? (
+                    <a
+                      key={`${c.group}-${c.name}-${c.issuer}`}
+                      href={c.verify}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      {...cardProps}
+                    >
+                      {inner}
+                      <CertFooter />
+                    </a>
+                  ) : (
+                    <div
+                      key={`${c.group}-${c.name}-${c.issuer}`}
+                      {...cardProps}
+                    >
+                      {inner}
                     </div>
-                  </a>
-                ))}
+                  )
+                })}
             </div>
           </div>
         ))}

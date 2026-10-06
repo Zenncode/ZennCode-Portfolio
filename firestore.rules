@@ -5,7 +5,14 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /communityMessages/{messageId} {
       allow read: if true;
-      allow create: if request.resource.data.name is string
+
+      // Only the fields we expect — otherwise a client can attach arbitrary
+      // extra keys/values (up to the 1 MiB doc limit) to every write.
+      allow create: if request.resource.data.keys().hasOnly([
+          'name', 'text', 'location', 'countryCode', 'seed', 'createdAt'
+        ])
+        // No auth in this app, so `name` is self-asserted. Keep it honest-ish.
+        && request.resource.data.name is string
         && request.resource.data.name.size() > 0
         && request.resource.data.name.size() <= 40
         && request.resource.data.text is string
@@ -17,7 +24,19 @@ service cloud.firestore {
         && request.resource.data.countryCode.size() <= 4
         && request.resource.data.seed is string
         && request.resource.data.seed.size() <= 40
-        && request.resource.data.createdAt is number;
+        // Clamp createdAt to now. Without this, any anonymous client can write
+        // a far-future timestamp and, because the feed queries
+        // orderBy('createdAt','desc') + limit(200), those docs become the
+        // entire result set for every reader — and they can never be deleted
+        // (update/delete are denied below), so the chat stays blank.
+        // createdAt is client-supplied epoch MILLIS, so convert request.time
+        // (a timestamp) to millis before comparing: comparing a number to a
+        // timestamp is a type error in Rules.
+        //   timeValue() -> Duration, .value -> seconds since epoch
+        && request.resource.data.createdAt is number
+        && request.resource.data.createdAt <= request.time.timeValue().value * 1000 + 600000
+        && request.resource.data.createdAt >= request.time.timeValue().value * 1000 - 600000;
+
       // No edits, no deletes — append-only guestbook.
       allow update, delete: if false;
     }

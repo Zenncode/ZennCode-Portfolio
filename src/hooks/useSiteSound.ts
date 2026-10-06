@@ -171,6 +171,14 @@ export function useSiteSound() {
     setEnabled(readEnabled())
   }, [])
 
+  // Returning visitor with sound persisted "on": start the engine so the
+  // button indicator isn't lying. startAmbient is a no-op until unlocked.
+  useEffect(() => {
+    if (enabled && readEnabled() && !engine) {
+      startAmbient()
+    }
+  }, [enabled])
+
   useEffect(() => {
     const onVis = () => {
       if (!engine || !readEnabled()) return
@@ -192,11 +200,17 @@ export function useSiteSound() {
 
     if (next) {
       startAmbient()
-      if (engine) {
-        if (engine.ctx.state === 'suspended') {
-          await engine.ctx.resume()
+      // Capture ctx: `engine` can be nulled by a second click mid-await.
+      const started = engine
+      if (started) {
+        if (started.ctx.state === 'suspended') {
+          try {
+            await started.ctx.resume()
+          } catch {
+            /* autoplay policy — the next click will retry */
+          }
         }
-        playEnableChime(engine.ctx)
+        if (engine?.ctx === started.ctx) playEnableChime(started.ctx)
       }
     } else {
       stopAmbient()

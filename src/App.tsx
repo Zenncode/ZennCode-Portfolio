@@ -1,5 +1,5 @@
-import { lazy, Suspense } from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
+import { lazy, Suspense, useEffect } from 'react'
+import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import Layout from './components/Layout'
 
 const Home = lazy(() => import('./pages/Home'))
@@ -39,6 +39,25 @@ const GearPage = lazy(() =>
 const ResourcesPage = lazy(() =>
   import('./pages/SimplePages').then((m) => ({ default: m.ResourcesPage })),
 )
+const CollabsPage = lazy(() =>
+  import('./pages/SimplePages').then((m) => ({ default: m.CollabsPage })),
+)
+const ConsultingPage = lazy(() =>
+  import('./pages/SimplePages').then((m) => ({ default: m.ConsultingPage })),
+)
+
+/** Fallback for lazy page chunks — sits inside Layout so chrome stays mounted. */
+function PageFallback() {
+  return (
+    <div className="page-shell min-h-[60vh]">
+      <div className="container-read relative z-10">
+        <p className="font-mono text-[0.8rem] text-[var(--color-dim)]">
+          loading…
+        </p>
+      </div>
+    </div>
+  )
+}
 
 function NotFound() {
   return (
@@ -61,37 +80,146 @@ function NotFound() {
   )
 }
 
+/** Reset scroll on navigation — BrowserRouter has no scroll restoration. */
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
+
 export default function App() {
   return (
-    <Suspense
-      fallback={
-        <div className="page-shell">
-          <div className="container-read relative z-10">
-            <p className="font-mono text-[0.8rem] text-[var(--color-dim)]">
-              loading…
-            </p>
-          </div>
-        </div>
-      }
-    >
+    <>
+      <ScrollToTop />
       <Routes>
         <Route element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="shop" element={<ShopPage />} />
-          <Route path="shop/:slug" element={<ShopProductPage />} />
-          <Route path="blog" element={<BlogPage />} />
-          <Route path="blog/:slug" element={<BlogPostPage />} />
-          <Route path="gear" element={<GearPage />} />
-          <Route path="resources" element={<ResourcesPage />} />
-          <Route path="projects" element={<ProjectsPage />} />
-          <Route path="experience" element={<ExperiencePage />} />
-          <Route path="stack" element={<StackPage />} />
-          <Route path="certifications" element={<CertificationsPage />} />
-          <Route path="recommendations" element={<RecommendationsPage />} />
-          <Route path="affiliations" element={<AffiliationsPage />} />
-          <Route path="*" element={<NotFound />} />
+        <Route
+          index
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <Home />
+            </Suspense>
+          }
+        />
+        <Route
+          path="shop"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <ShopPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="shop/:slug"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <ShopProductPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="blog"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <BlogPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="blog/:slug"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <BlogPostPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="gear"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <GearPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="resources"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <ResourcesPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="projects"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <ProjectsPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="experience"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <ExperiencePage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="stack"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <StackPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="certifications"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <CertificationsPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="recommendations"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <RecommendationsPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="affiliations"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <AffiliationsPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="collabs"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <CollabsPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="consulting"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <ConsultingPage />
+            </Suspense>
+          }
+        />
+        <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </Suspense>
+    </>
   )
 }

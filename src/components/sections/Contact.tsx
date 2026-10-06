@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import FadeIn from '../FadeIn'
 import {
   communities,
@@ -13,12 +13,26 @@ import {
 
 export default function Contact() {
   const [copied, setCopied] = useState(false)
+  const copyTimer = useRef<number | null>(null)
+
+  // Clear the timer on unmount so it can't setState after teardown, and
+  // reset it so rapid clicks don't stack timers and flicker "Copied".
+  useEffect(() => {
+    return () => {
+      if (copyTimer.current !== null) {
+        window.clearTimeout(copyTimer.current)
+      }
+    }
+  }, [])
 
   async function copyEmail() {
     try {
       await navigator.clipboard.writeText(site.email)
       setCopied(true)
-      window.setTimeout(() => setCopied(false), 1600)
+      if (copyTimer.current !== null) {
+        window.clearTimeout(copyTimer.current)
+      }
+      copyTimer.current = window.setTimeout(() => setCopied(false), 1600)
     } catch {
       /* ignore */
     }

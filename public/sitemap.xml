@@ -9,4 +9,6 @@
   <url><loc>https://zenncode-portfolio.web.app/shop</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://zenncode-portfolio.web.app/gear</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://zenncode-portfolio.web.app/resources</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://zenncode-portfolio.web.app/consulting</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://zenncode-portfolio.web.app/collabs</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
 </urlset>
