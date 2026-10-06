@@ -5,7 +5,9 @@ import {
   onSnapshot,
   orderBy,
   query,
+  serverTimestamp,
   setDoc,
+  Timestamp,
   type Unsubscribe,
 } from 'firebase/firestore'
 import { db } from './firebase'
@@ -54,6 +56,17 @@ let unsubscribe: Unsubscribe | null = null
 /** Human-readable send/connection failure, consumed by the UI. */
 let lastError: string | null = null
 
+/**
+ * `createdAt` is a Firestore Timestamp on new writes (serverTimestamp), but
+ * legacy documents stored epoch millis. Normalize both to a number so the
+ * rest of the app can keep treating it as one.
+ */
+function toMillis(value: unknown): number {
+  if (value instanceof Timestamp) return value.toMillis()
+  const n = Number(value)
+  return Number.isFinite(n) ? n : Date.now()
+}
+
 function toMessage(id: string, data: Record<string, unknown>): ChatMessage | null {
   const name = String(data.name ?? '').trim()
   const text = String(data.text ?? '').trim()
@@ -64,7 +77,7 @@ function toMessage(id: string, data: Record<string, unknown>): ChatMessage | nul
     location: String(data.location ?? 'Somewhere'),
     countryCode: String(data.countryCode ?? ''),
     text: text.slice(0, MAX_TEXT),
-    createdAt: Number(data.createdAt ?? Date.now()),
+    createdAt: toMillis(data.createdAt),
     seed: String(data.seed ?? name),
   }
 }
@@ -259,7 +272,15 @@ export async function postMessage(input: {
   }
 
   try {
-    await setDoc(doc(db, COLLECTION, msg.id), { ...msg })
+    // createdAt goes to the server, not the client. firestore.rules requires a
+    // recent timestamp, and serverTimestamp() is the only value a client can't
+    // forge — it stops anyone from future-dating a message to hijack the
+    // orderBy('createdAt') feed. Locally we still render with Date.now().
+    const { createdAt: _localOnly, ...rest } = msg
+    await setDoc(doc(db, COLLECTION, msg.id), {
+      ...rest,
+      createdAt: serverTimestamp(),
+    })
     connected = true
     return true
   } catch {
