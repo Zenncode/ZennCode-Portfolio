@@ -96,7 +96,7 @@ service cloud.firestore {
 
       allow create: if request.resource.data.keys().hasOnly([
           'createdAt', 'visitorId', 'visitCount', 'device', 'os', 'browser',
-          'viewport', 'lang', 'timezone', 'entry', 'referrer',
+          'viewport', 'lang', 'timezone', 'entry', 'referrer', 'source',
           'city', 'country', 'countryCode'
         ])
         && request.resource.data.createdAt == request.time
@@ -120,6 +120,8 @@ service cloud.firestore {
         && request.resource.data.entry.size() <= 120
         && request.resource.data.referrer is string
         && request.resource.data.referrer.size() <= 120
+        && request.resource.data.source is string
+        && request.resource.data.source.size() <= 60
         && request.resource.data.city is string
         && request.resource.data.city.size() <= 60
         && request.resource.data.country is string
@@ -132,14 +134,16 @@ service cloud.firestore {
 
     // ── Private link-click feed ────────────────────────────────────────────
     // One document per click, stamped with the visitor id so the dashboard can
-    // answer "who clicked what" by joining against `visits`. Deliberately no
-    // device/location here — those are looked up from the visit instead of
-    // being written twice.
+    // answer "who clicked what" by joining against `visits`, plus the session's
+    // traffic source so the FROM column can say Facebook/TikTok/Search instead
+    // of the page the click happened on. Deliberately no device/location here —
+    // those are looked up from the visit instead of being written twice.
     match /linkClicks/{clickId} {
       allow read: if isOwner();
 
       allow create: if request.resource.data.keys().hasOnly([
-          'createdAt', 'visitorId', 'visitCount', 'label', 'target', 'path'
+          'createdAt', 'visitorId', 'visitCount', 'label', 'target', 'path',
+          'source'
         ])
         && request.resource.data.createdAt == request.time
         && request.resource.data.visitorId is string
@@ -154,7 +158,9 @@ service cloud.firestore {
         && request.resource.data.target.size() > 0
         && request.resource.data.target.size() <= 120
         && request.resource.data.path is string
-        && request.resource.data.path.size() <= 120;
+        && request.resource.data.path.size() <= 120
+        && request.resource.data.source is string
+        && request.resource.data.source.size() <= 60;
 
       allow update, delete: if false;
     }

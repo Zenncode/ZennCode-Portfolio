@@ -14,6 +14,7 @@ import {
 } from 'firebase/firestore'
 import { db } from './firebase'
 import { auth } from './auth'
+import { currentSource, resolveSource } from './sources'
 
 /**
  * Visitor tracking for the /admin dashboard.
@@ -65,6 +66,8 @@ export type VisitRecord = {
   entry: string
   /** Referrer host, or `(direct)`. */
   referrer: string
+  /** How the visitor got here: `Facebook`, `Search`, `zenncode.dev`, … */
+  source: string
   city: string
   country: string
   /** ISO 3166-1 alpha-2, used for the flag. */
@@ -286,6 +289,7 @@ export async function recordVisit(): Promise<void> {
         timezone: detectTimezone(),
         entry: location.pathname,
         referrer,
+        source: currentSource(),
         city: geo.city,
         country: geo.country,
         countryCode: geo.countryCode,
@@ -325,6 +329,11 @@ export function subscribeVisits(
           timezone: String(data.timezone ?? ''),
           entry: String(data.entry ?? '/'),
           referrer: String(data.referrer ?? ''),
+          // Older rows were written before sources were attributed — fall
+          // back to the stored referrer so nothing shows up blank.
+          source: data.source
+            ? String(data.source)
+            : resolveSource(String(data.referrer ?? '')),
           city: String(data.city ?? ''),
           country: String(data.country ?? ''),
           countryCode: String(data.countryCode ?? ''),

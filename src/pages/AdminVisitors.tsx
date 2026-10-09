@@ -84,10 +84,37 @@ function deviceLine(v: VisitRecord | undefined): string {
   return [v.device, v.os, v.browser].filter(Boolean).join(' · ')
 }
 
+/** Where the visitor came from: from the click row, or the joined visit. */
+function sourceLabel(c: LinkClick, v?: VisitRecord): string {
+  if (c.source) return c.source
+  return v?.source || v?.referrer || '—'
+}
+
+const SOURCES = ['all', 'facebook', 'search', 'direct'] as const
+type SourceFilter = (typeof SOURCES)[number]
+
+function matchesSource(label: string, filter: SourceFilter): boolean {
+  const s = label.toLowerCase()
+  switch (filter) {
+    case 'facebook':
+      // Anything social-ish, including short labels like `X`.
+      return /facebook|instagram|tiktok|threads|twitter|linkedin|youtube|reddit|discord|telegram|social|^x$/.test(
+        s,
+      )
+    case 'search':
+      return s === 'search'
+    case 'direct':
+      return s === '(direct)'
+    default:
+      return true
+  }
+}
+
 export default function AdminVisitorsPage() {
   const [visits, setVisits] = useState<VisitRecord[]>([])
   const [clicks, setClicks] = useState<LinkClick[]>([])
   const [filter, setFilter] = useState<'all' | DeviceType>('all')
+  const [sourceFilter, setSourceFilter] = useState<SourceFilter>('all')
 
   useEffect(() => {
     const unsubVisits = subscribeVisits(setVisits)
@@ -113,6 +140,25 @@ export default function AdminVisitorsPage() {
   const shownVisits = useMemo(
     () => (filter === 'all' ? visits : visits.filter((v) => v.device === filter)),
     [visits, filter],
+  )
+
+  const sourceCounts = useMemo(() => {
+    const counts: Record<string, number> = {}
+    for (const c of clicks) {
+      const label = sourceLabel(c, byVisitor.get(c.visitorId))
+      counts[label] = (counts[label] ?? 0) + 1
+    }
+    return Object.entries(counts).sort((a, b) => b[1] - a[1])
+  }, [clicks, byVisitor])
+
+  const shownClicks = useMemo(
+    () =>
+      sourceFilter === 'all'
+        ? clicks
+        : clicks.filter((c) =>
+            matchesSource(sourceLabel(c, byVisitor.get(c.visitorId)), sourceFilter),
+          ),
+    [clicks, byVisitor, sourceFilter],
   )
 
   const counts = useMemo(() => {
@@ -174,8 +220,43 @@ export default function AdminVisitorsPage() {
           </ul>
         )}
 
-        {clicks.length === 0 ? (
-          <Empty text="No clicks recorded yet — they will appear here as they happen." />
+        {/* Where the traffic is coming from, per source. */}
+        {sourceCounts.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-6">
+            {(['all', 'facebook', 'search', 'direct'] as const).map((key) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setSourceFilter(key)}
+                className={`chip ${sourceFilter === key ? 'chip-invert' : ''}`}
+              >
+                {key === 'facebook' ? 'social' : key}
+                {key === 'all' ? ` ${clicks.length}` : ''}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="flex flex-wrap gap-x-4 gap-y-1 mb-8">
+          {sourceCounts.map(([label, count]) => (
+            <span
+              key={label}
+              className="font-mono text-[0.72rem] text-[var(--color-muted)]"
+            >
+              {label}
+              <span className="ml-1 text-[var(--color-dim)]">{count}×</span>
+            </span>
+          ))}
+        </div>
+
+        {shownClicks.length === 0 ? (
+          <Empty
+            text={
+              clicks.length === 0
+                ? 'No clicks recorded yet — they will appear here as they happen.'
+                : 'No clicks from that source yet.'
+            }
+          />
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
@@ -192,7 +273,7 @@ export default function AdminVisitorsPage() {
                 </tr>
               </thead>
               <tbody>
-                {clicks.map((c) => {
+                {shownClicks.map((c) => {
                   const v = byVisitor.get(c.visitorId)
                   return (
                     <tr
@@ -221,9 +302,14 @@ export default function AdminVisitorsPage() {
                           {c.target}
                         </span>
                       </td>
-                      <td className="py-2 font-mono text-[0.72rem] text-[var(--color-dim)] whitespace-nowrap">
-                        {c.path}
-                        <span className="block">
+                      <td className="py-2 pr-3 min-w-0 whitespace-nowrap">
+                        <span className="text-[0.82rem] text-[var(--color-ink)]">
+                          {sourceLabel(c, v)}
+                        </span>
+                        <span className="block font-mono text-[0.7rem] text-[var(--color-dim)]">
+                          {c.path}
+                        </span>
+                        <span className="block font-mono text-[0.68rem] text-[var(--color-dim)]">
                           {c.visitCount > 1
                             ? `visit #${c.visitCount}`
                             : 'new visitor'}
@@ -300,7 +386,12 @@ export default function AdminVisitorsPage() {
                     <td className="py-2 font-mono text-[0.75rem] text-[var(--color-ink)] whitespace-nowrap">
                       {v.entry}
                       <span className="block text-[0.68rem] text-[var(--color-dim)]">
-                        {v.referrer}
+                        {v.source || v.referrer}
+                      </span>
+                      <span className="block text-[0.68rem] text-[var(--color-dim)]">
+                        {v.referrer === '(direct)' || !v.referrer
+                          ? 'no referrer'
+                          : v.referrer}
                       </span>
                     </td>
                   </tr>

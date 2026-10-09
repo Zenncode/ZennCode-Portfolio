@@ -64,16 +64,27 @@ documents to create — the email allowlist in `firestore.rules` is the gate.
 **Visit tracking** (`src/lib/visitors.ts`) records one entry per browser
 session: total counter, a `day-YYYY-MM-DD` counter, and one coarse visit record
 — stable anonymous id, visit number, city/country, device type, OS, browser,
-viewport, language, timezone, landing path, referrer host. No IP addresses, no
-user agents, no fingerprints. Signed-in sessions and `Do Not Track: 1` are
-skipped so your own browsing never inflates the numbers.
+viewport, language, timezone, landing path, referrer host, and traffic **source**
+(see below). No IP addresses, no user agents, no fingerprints. Signed-in
+sessions and `Do Not Track: 1` are skipped so your own browsing never inflates
+the numbers.
+
+**Traffic source** (`src/lib/sources.ts`) answers *saan galing ang visitor* —
+Facebook, TikTok, Instagram, LinkedIn, Search, or `(direct)`. It reads, best
+first: campaign tags on the landing URL (`?utm_source=tiktok`, `?ref=facebook`,
+`?from=instagram`), then the referrer host, then falls back to `(direct)`.
+Campaign tags matter because in-app browsers (Facebook, Instagram, TikTok)
+strip `document.referrer`, so a pasted link would otherwise be filed as
+"direct". The value is resolved once per session and cached in sessionStorage,
+so a visitor who browses five pages keeps the attribution they arrived with.
 
 **Link clicks** (`src/lib/links.ts`) records every outbound, `mailto:`/`tel:`
-and internal-route click, stamped with the same `visitorId` as the visit — so
-`/admin/visitors` can show *who clicked what* by joining the two tables.
-Anchors are caught by one delegated listener on `document`; anything driven by
-JS instead (the ⌘K command palette) calls `trackClick()` explicitly. Label an
-anchor with `data-track="…"` to override its display text.
+and internal-route click, stamped with the same `visitorId` as the visit and the
+session's source — so `/admin/visitors` can show *who clicked what*, and the
+**FROM** column says where that visitor came from rather than which page they
+happened to be on. Anchors are caught by one delegated listener on `document`;
+anything driven by JS instead (the ⌘K command palette) calls `trackClick()`
+explicitly. Label an anchor with `data-track="…"` to override its display text.
 
 ## Design reference
 

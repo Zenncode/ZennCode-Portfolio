@@ -12,6 +12,7 @@ import {
 import { db } from './firebase'
 import { auth } from './auth'
 import { currentVisitCount, currentVisitorId } from './visitors'
+import { currentSource } from './sources'
 
 /**
  * Link click tracking — "who clicked what".
@@ -40,6 +41,8 @@ export type LinkClick = {
   target: string
   /** Page the click happened on. */
   path: string
+  /** How the visitor got to the site: `Facebook`, `Search`, `(direct)`, … */
+  source: string
 }
 
 function toMillis(value: unknown): number {
@@ -145,6 +148,9 @@ export async function trackClick(
       label: label.slice(0, 60) || 'link',
       target: target.slice(0, 120) || '—',
       path: path.slice(0, 120),
+      // Resolved once per session and cached by lib/sources, so every click
+      // in the session is attributed to where the visitor actually came from.
+      source: currentSource().slice(0, 60),
     })
   } catch {
     /* analytics must never break a click */
@@ -173,6 +179,7 @@ export function subscribeClicks(
           label: String(data.label ?? ''),
           target: String(data.target ?? ''),
           path: String(data.path ?? '/'),
+          source: String(data.source ?? ''),
         })
       })
       fn(rows)
