@@ -1,8 +1,32 @@
 rules_version = '2';
 
-// Community chat guestbook — public read, validated public writes.
+// ZennCode portfolio — Firestore rules.
+//
+//   communityMessages  public guestbook: public read, validated append-only
+//                      writes, owner-only delete (moderation).
+//   siteStats/{key}    private counters: `total` and `day-YYYY-MM-DD`.
+//                      Anyone may +1 their own session's counter, only the
+//                      owner may read.
+//   visits/{autoId}    private recent-visitor feed. Anyone may append one
+//                      coarse record per session, only the owner may read.
+//
+// `isOwner()` is the single gate behind every private read/write. It keys off
+// the signed-in account's email claim, which only Firebase Auth can mint — so
+// the check cannot be satisfied by anything in the client bundle.
+//
+// Adding another admin: add their email to the list below and redeploy rules.
+
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    function isOwner() {
+      return request.auth != null
+        && request.auth.token.email in [
+             'zenjanarce8@gmail.com'
+           ];
+    }
+
+    // ── Community chat guestbook ───────────────────────────────────────────
     match /communityMessages/{messageId} {
       allow read: if true;
 
@@ -36,7 +60,102 @@ service cloud.firestore {
         && request.resource.data.createdAt <= request.time
         && request.resource.data.createdAt > request.time - duration.value(10, 'm');
 
-      // No edits, no deletes — append-only guestbook.
+      // No edits. Deletes are owner-only moderation.
+      allow update: if false;
+      allow delete: if isOwner();
+    }
+
+    // ── Private visit counters ─────────────────────────────────────────────
+    // Shaped so the ONLY thing an anonymous client can do is +1 a counter:
+    // `count` must be exactly one more than what's stored, and the document id
+    // must be `total` or a real calendar day, so nobody can invent keys or
+    // jump the numbers.
+    match /siteStats/{key} {
+      allow read: if isOwner();
+
+      allow create: if (key == 'total'
+          || key.matches('day-[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'))
+        && request.resource.data.keys().hasOnly(['count', 'updatedAt'])
+        && request.resource.data.count is int
+        && request.resource.data.count == 1
+        && request.resource.data.updatedAt == request.time;
+
+      allow update: if request.resource.data.keys().hasOnly(['count', 'updatedAt'])
+        && request.resource.data.count == resource.data.count + 1
+        && request.resource.data.updatedAt == request.time;
+
+      allow delete: if isOwner();
+    }
+
+    // ── Private recent-visitor feed ────────────────────────────────────────
+    // Append-only, fixed shape, and deliberately coarse: language + viewport
+    // size + referrer host + landing path. No IP, no user agent, no
+    // fingerprint — see src/lib/adminData.ts.
+    match /visits/{visitId} {
+      allow read: if isOwner();
+
+      allow create: if request.resource.data.keys().hasOnly([
+          'createdAt', 'visitorId', 'visitCount', 'device', 'os', 'browser',
+          'viewport', 'lang', 'timezone', 'entry', 'referrer',
+          'city', 'country', 'countryCode'
+        ])
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.visitorId is string
+        && request.resource.data.visitorId.size() <= 16
+        && request.resource.data.visitCount is int
+        && request.resource.data.visitCount >= 1
+        && request.resource.data.visitCount <= 100
+        && request.resource.data.device in ['mobile', 'tablet', 'desktop']
+        && request.resource.data.os is string
+        && request.resource.data.os.size() <= 40
+        && request.resource.data.browser is string
+        && request.resource.data.browser.size() <= 40
+        && request.resource.data.viewport is string
+        && request.resource.data.viewport.size() <= 16
+        && request.resource.data.lang is string
+        && request.resource.data.lang.size() <= 20
+        && request.resource.data.timezone is string
+        && request.resource.data.timezone.size() <= 60
+        && request.resource.data.entry is string
+        && request.resource.data.entry.size() <= 120
+        && request.resource.data.referrer is string
+        && request.resource.data.referrer.size() <= 120
+        && request.resource.data.city is string
+        && request.resource.data.city.size() <= 60
+        && request.resource.data.country is string
+        && request.resource.data.country.size() <= 60
+        && request.resource.data.countryCode is string
+        && request.resource.data.countryCode.size() <= 4;
+
+      allow update, delete: if false;
+    }
+
+    // ── Private link-click feed ────────────────────────────────────────────
+    // One document per click, stamped with the visitor id so the dashboard can
+    // answer "who clicked what" by joining against `visits`. Deliberately no
+    // device/location here — those are looked up from the visit instead of
+    // being written twice.
+    match /linkClicks/{clickId} {
+      allow read: if isOwner();
+
+      allow create: if request.resource.data.keys().hasOnly([
+          'createdAt', 'visitorId', 'visitCount', 'label', 'target', 'path'
+        ])
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.visitorId is string
+        && request.resource.data.visitorId.size() <= 16
+        && request.resource.data.visitCount is int
+        && request.resource.data.visitCount >= 1
+        && request.resource.data.visitCount <= 100
+        && request.resource.data.label is string
+        && request.resource.data.label.size() > 0
+        && request.resource.data.label.size() <= 60
+        && request.resource.data.target is string
+        && request.resource.data.target.size() > 0
+        && request.resource.data.target.size() <= 120
+        && request.resource.data.path is string
+        && request.resource.data.path.size() <= 120;
+
       allow update, delete: if false;
     }
 

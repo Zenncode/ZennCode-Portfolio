@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react'
-import { Link, Route, Routes, useLocation } from 'react-router-dom'
+import { Link as RouterLink, Route, Routes, useLocation } from 'react-router-dom'
 import Layout from './components/Layout'
 
 const Home = lazy(() => import('./pages/Home'))
@@ -45,6 +45,11 @@ const CollabsPage = lazy(() =>
 const ConsultingPage = lazy(() =>
   import('./pages/SimplePages').then((m) => ({ default: m.ConsultingPage })),
 )
+// Admin is code-split so its bundle never lands in a visitor's critical path.
+// The route itself is public; the *data* behind it is what firestore.rules
+// gates — see src/pages/Admin.tsx.
+const AdminPage = lazy(() => import('./pages/Admin'))
+const AdminVisitorsPage = lazy(() => import('./pages/AdminVisitors'))
 
 /** Fallback for lazy page chunks — sits inside Layout so chrome stays mounted. */
 function PageFallback() {
@@ -72,9 +77,9 @@ function NotFound() {
         <p className="text-[var(--color-muted)] mb-6">
           That page doesn&apos;t exist.
         </p>
-        <Link to="/" className="section-link">
+        <RouterLink to="/" className="section-link">
           ← back home
-        </Link>
+        </RouterLink>
       </div>
     </div>
   )
@@ -217,6 +222,15 @@ export default function App() {
             </Suspense>
           }
         />
+        <Route
+          path="admin"
+          element={
+            <Suspense fallback={<PageFallback />}>
+              <AdminPage />
+            </Suspense>
+          }
+        />
+        <Route path="admin/visitors" element={<AdminVisitorsPage />} />
         <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

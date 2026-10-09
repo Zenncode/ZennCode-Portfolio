@@ -2,6 +2,16 @@
   "firestore": {
     "rules": "firestore.rules"
   },
+  "auth": {
+    "authorizedDomains": [
+      "localhost",
+      "zenncode-portfolio.web.app",
+      "zenncode-portfolio.firebaseapp.com"
+    ],
+    "providers": {
+      "emailPassword": true
+    }
+  },
   "hosting": {
     "public": "dist",
     "ignore": [

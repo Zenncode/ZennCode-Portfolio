@@ -194,6 +194,10 @@ function ShopProductDetail({ product }: { product: ShopProduct }) {
             <a
               href={product.downloadHref}
               download
+              // Tracks a download in /admin/visitors. The download is a real
+              // anchor so the global listener already sees it — this only
+              // gives it a better label than the CTA text.
+              data-track={`download: ${product.title}`}
               className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[var(--color-ink)] text-[var(--color-bg)] font-mono text-[0.78rem] tracking-wide no-underline hover:opacity-90 transition-opacity mb-8"
             >
               {product.cta}

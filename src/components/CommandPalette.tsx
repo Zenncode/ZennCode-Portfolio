@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { blogPosts, projects, site } from '../data/portfolio'
 import { answerQuestion, SUGGESTIONS } from '../lib/assistant'
+import { trackClick } from '../lib/links'
 import OverlayBackButton from './OverlayBackButton'
 
 /**
@@ -28,16 +29,31 @@ export default function CommandPalette({ open, onClose }: Props) {
   const [active, setActive] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
 
+  /**
+   * Every palette choice reports a click. These are `<button>`s driven by JS,
+   * not anchors, so the global listener in lib/links never sees them.
+   */
+  const log = (label: string, target: string) => {
+    void trackClick(`⌘K: ${label}`, target)
+  }
+
   const items = useMemo<Item[]>(() => {
-    const go = (path: string) => () => {
+    const go = (path: string, label = path) => () => {
+      log(label, path)
       navigate(path)
       onClose()
     }
-    const hash = (id: string) => () => {
+    const hash = (id: string, label: string) => () => {
+      log(`jump to ${label}`, `/#${id}`)
       navigate('/')
       window.setTimeout(() => {
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
       }, 50)
+      onClose()
+    }
+    const external = (label: string, href: string) => () => {
+      log(label, href)
+      window.open(href, '_blank')
       onClose()
     }
 
@@ -100,6 +116,7 @@ export default function CommandPalette({ open, onClose }: Props) {
         label: `Email ${site.email}`,
         group: 'Actions',
         action: () => {
+          log('email', `mailto:${site.email}`)
           window.location.href = `mailto:${site.email}`
           onClose()
         },
@@ -108,37 +125,31 @@ export default function CommandPalette({ open, onClose }: Props) {
         id: 'github',
         label: 'Open GitHub',
         group: 'Actions',
-        action: () => {
-          window.open(site.socials.github, '_blank')
-          onClose()
-        },
+        action: () => external('github', site.socials.github),
       },
       {
         id: 'linkedin',
         label: 'Open LinkedIn',
         group: 'Actions',
-        action: () => {
-          window.open(site.socials.linkedin, '_blank')
-          onClose()
-        },
+        action: () => external('linkedin', site.socials.linkedin),
       },
       {
         id: 'sec-blog',
         label: 'Jump to Blog',
         group: 'On this page',
-        action: hash('blog'),
+        action: () => hash('blog', 'Blog'),
       },
       {
         id: 'sec-projects',
         label: 'Jump to Projects',
         group: 'On this page',
-        action: hash('projects'),
+        action: () => hash('projects', 'Projects'),
       },
       {
         id: 'sec-contact',
         label: 'Jump to Contact',
         group: 'On this page',
-        action: hash('contact'),
+        action: () => hash('contact', 'Contact'),
       },
     ]
 
@@ -148,7 +159,7 @@ export default function CommandPalette({ open, onClose }: Props) {
         label: p.title,
         hint: p.date,
         group: 'Posts',
-        action: go(`/blog/${p.slug}`),
+        action: () => go(`/blog/${p.slug}`, p.title)(),
       })
     })
 
@@ -158,7 +169,7 @@ export default function CommandPalette({ open, onClose }: Props) {
         label: p.name,
         hint: p.highlights?.[0],
         group: 'Projects',
-        action: go('/projects'),
+        action: () => go('/projects', `project: ${p.name}`)(),
       })
     })
 
@@ -179,7 +190,9 @@ export default function CommandPalette({ open, onClose }: Props) {
   /** Hardcoded knowledge-base answer for free-form questions. */
   const answer = useMemo(() => answerQuestion(query), [query])
 
-  const followLink = (href: string) => {
+  /** Answer-card chips. Also buttons, so they need the same explicit log. */
+  const followLink = (href: string, label: string) => {
+    log(label, href)
     if (href.startsWith('/')) {
       navigate(href)
       onClose()
@@ -287,7 +300,7 @@ export default function CommandPalette({ open, onClose }: Props) {
                       <button
                         key={l.label}
                         type="button"
-                        onClick={() => followLink(l.href)}
+                        onClick={() => followLink(l.href, l.label)}
                         className="rounded-full border border-[var(--color-border-strong)] px-3 py-1 font-mono text-[0.7rem] text-[var(--color-ink)] hover:bg-[var(--color-ink)] hover:text-[var(--color-bg)] transition-colors"
                       >
                         {l.label} ↗

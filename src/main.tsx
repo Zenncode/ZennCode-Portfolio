@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { applyTheme, ThemeProvider } from './hooks/useTheme'
+import { recordVisit } from './lib/visitors'
+import { startLinkTracking } from './lib/links'
 import './lib/firebase'
 import './index.css'
 
@@ -18,6 +20,12 @@ import './index.css'
 
   applyTheme(pref as 'light' | 'dark' | 'system')
 })()
+
+// One count per browser session, ignored for signed-in users and for anyone
+// who set Do Not Track. See src/lib/visitors.ts.
+recordVisit()
+// Outbound + internal link clicks, attributed to the same visitor id.
+startLinkTracking()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

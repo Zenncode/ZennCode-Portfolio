@@ -1,4 +1,5 @@
 import { site } from '../data/portfolio'
+import { Link as RouterLink } from 'react-router-dom'
 
 export default function Footer() {
   return (
@@ -7,10 +8,6 @@ export default function Footer() {
         <div className="container-read mx-auto flex flex-wrap items-center justify-between gap-3">
           <p className="font-mono text-[0.68rem] tracking-wider uppercase text-[var(--color-dim)]">
             © {new Date().getFullYear()} {site.name}
-            <span className="mx-2 opacity-60">·</span>
-            <span className="text-[var(--color-dim)] hover:text-[var(--color-ink)] transition-colors">
-              made with ✦
-            </span>
           </p>
           <div className="flex gap-4">
             <a
@@ -35,6 +32,14 @@ export default function Footer() {
             >
               email
             </a>
+            {/* Owner entry point. Anyone can click it — the /admin gate is
+                Firebase Auth + the `admins` allowlist, not an unlisted URL. */}
+            <RouterLink
+              to="/admin"
+              className="font-mono text-[0.7rem] text-[var(--color-dim)] hover:text-[var(--color-ink)] no-underline transition-colors"
+            >
+              admin
+            </RouterLink>
           </div>
         </div>
       </footer>

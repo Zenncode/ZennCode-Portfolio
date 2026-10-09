@@ -24,6 +24,7 @@ import gearSectionsData from './gear.json'
 import resourceSectionsData from './resources.json'
 import shopProductsData from './shop.json'
 import githubData from './github.json'
+import adminData from './admin.json'
 
 /* ─── Types ─────────────────────────────────────────────────────────────── */
 
@@ -216,6 +217,17 @@ export const gearSections = gearSectionsData as GearSection[]
 export const resourceSections = resourceSectionsData as ResourceSection[]
 export const shopProducts = shopProductsData as ShopProduct[]
 export const contributionCount = githubData.contributionCount
+
+/* ─── Admin (private dashboard) ───────────────────────────────────────────── */
+
+export type AdminConfig = {
+  /** The allowlisted owner account. Public on purpose — it's in the footer. */
+  ownerEmail: string
+  /** Short names accepted by the /admin login box instead of the email. */
+  usernames: string[]
+}
+
+export const adminConfig: AdminConfig = adminData
 
 /* ─── Helpers (not content) ─────────────────────────────────────────────── */
 
