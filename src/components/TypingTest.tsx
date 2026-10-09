@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import OverlayBackButton from './OverlayBackButton'
 
 /**
- * Typing test — full-screen Monkeytype-style (bryllim reference)
+ * Typing test — full-screen, Monkeytype-style
  * Stats · sample text · on-screen keyboard · tab restart · esc close
  */
 

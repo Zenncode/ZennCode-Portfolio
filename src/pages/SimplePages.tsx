@@ -461,7 +461,7 @@ export function ConsultingPage() {
             key={offer.id}
             className="consult-card relative flex flex-col overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-5 hover:border-[var(--color-border-strong)] hover:shadow-[var(--shadow-card)] transition-all"
           >
-            {/* Soft corner dots like bryllim */}
+            {/* Soft corner dots */}
             <div
               className="pointer-events-none absolute top-0 right-0 w-24 h-24 opacity-30"
               style={{

@@ -83,7 +83,7 @@ function clickPoint(ev?: ThemeClick): { x: number; y: number } {
 
 /**
  * Circular wave reveal: OLD theme stays until the expanding circle covers it.
- * Uses View Transitions API (same idea as bryllim.com).
+ * Uses the View Transitions API when available.
  */
 function revealWithCircle(
   commit: () => void,

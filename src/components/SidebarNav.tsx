@@ -134,7 +134,7 @@ export default function SidebarNav({
   }, [open])
 
   /**
-   * Horizontal layout (bryllim):
+   * Horizontal layout:
    *   sidePad | [arrow gutter] | icon | gap | label
    * Brand name uses the same gutter so “Zenn” lines up with tab icons.
    */

@@ -12,7 +12,7 @@ import {
   stackIconUrl,
 } from '../data/portfolio'
 
-/** Match bryllim: ~5 posts per page → 1 / 2 for ten posts */
+/** ~5 posts per page; 1 / 2 pages for ten posts */
 const BLOG_PAGE_SIZE = 5
 
 export function BlogPage() {
@@ -152,7 +152,7 @@ export function BlogPage() {
                 <h2 className="text-[0.98rem] font-semibold tracking-tight mt-1.5 mb-1.5 leading-snug text-[var(--color-ink)] group-hover:underline underline-offset-2">
                   {post.title}
                 </h2>
-                {/* bryllim hides excerpt in grid view */}
+                {/* excerpts are hidden in grid view */}
                 <span className="font-mono text-[0.68rem] text-[var(--color-dim)] mt-auto">
                   Read · {post.readMinutes} min
                 </span>
@@ -660,7 +660,7 @@ function CertFooter() {
   )
 }
 
-/** Decorative brackets beside “Verify” (bryllim style) */
+/** Decorative brackets beside “Verify” */
 function CertVerifyMarks() {
   return (
     <svg
@@ -708,7 +708,7 @@ export function CertificationsPage() {
             <h2 className="font-mono text-[0.72rem] tracking-[0.12em] uppercase text-[var(--color-dim)] mb-5">
               {group}
             </h2>
-            {/* Polaroid-style cards — matches bryllim.com/certifications */}
+            {/* Polaroid-style cards */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-4 sm:gap-x-3 sm:gap-y-5">
               {certifications
                 .filter((c) => c.group === group)

@@ -6,7 +6,7 @@ import { trackClick } from '../lib/links'
 import OverlayBackButton from './OverlayBackButton'
 
 /**
- * Ask Anything — full-screen minimal UI (bryllim-style)
+ * Ask Anything — full-screen minimal UI
  * Large centered: "what do you want to ask?" + typeahead results
  */
 

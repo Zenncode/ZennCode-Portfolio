@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-/* Self-hosted fonts — same stack as bryllim.com */
+/* Self-hosted fonts */
 @import '@fontsource-variable/geist/wght.css';
 @import '@fontsource-variable/geist-mono/wght.css';
 @import '@fontsource/geist-pixel/400.css';
@@ -83,7 +83,7 @@
   --shadow-modal: 0 40px 90px -20px rgb(0 0 0 / 0.65);
 }
 
-/* Home projects 3-card deck (bryllim.com) */
+/* Home projects 3-card deck */
 .project-deck {
   position: relative;
   height: 19rem;
@@ -187,7 +187,7 @@
 /* Off-center cards render links as inert spans, so no pointer-events hack
    is needed here — only the center card's links are real anchors. */
 
-/* Blog article prose — matches bryllim post body */
+/* Blog article prose */
 .prose {
   font-family: var(--font-serif);
   max-width: none;
@@ -215,7 +215,7 @@
   color: var(--color-muted);
 }
 
-/* Certifications polaroid cards (bryllim.com/certifications) */
+/* Certifications polaroid cards */
 .cert-card {
   transform: rotate(var(--rot, 0deg)) translateY(var(--ty, 0px));
   transition:
@@ -255,7 +255,7 @@
   );
 }
 
-/* Community chat message list — hide scrollbar (bryllim-style) */
+/* Community chat message list — hide scrollbar */
 .chat-msg-list {
   scrollbar-width: none;
 }
@@ -282,7 +282,7 @@
 /*
  * Circular theme wave (View Transitions):
  * Old page stays; new theme is revealed only where the circle expands.
- * Matches bryllim.com — wave covers → then that area shows new colors.
+ * The wave covers → then that area shows the new theme.
  */
 ::view-transition-old(root),
 ::view-transition-new(root) {
@@ -502,7 +502,7 @@ html.theme-anim #root {
     opacity: 0.2;
   }
 
-  /* Section headers like “01 — blog” on bryllim.com */
+  /* Section headers like "01 — blog" */
   .section-label {
     font-family: var(--font-mono);
     font-size: 0.8rem;

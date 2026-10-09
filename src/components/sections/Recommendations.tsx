@@ -16,7 +16,7 @@ export default function Recommendations() {
         </FadeIn>
 
         <div className="flex flex-col gap-4">
-          {/* Pick DICT + two strong Cambridge/mentor recs like bryllim home order */}
+          {/* Pick DICT + two strong Cambridge/mentor recs here */}
           {(
             [
               recommendations.find((r) => r.initials === 'HA'),

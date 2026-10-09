@@ -15,7 +15,7 @@ export default function Experience() {
           />
         </FadeIn>
 
-        {/* year | role / company — same as bryllim list */}
+        {/* year | role / company */}
         <div className="flex flex-col gap-5 mb-10">
           {experience.map((item, i) => (
             <FadeIn

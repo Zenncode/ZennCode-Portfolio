@@ -1,5 +1,5 @@
 /**
- * Active tab indicator — bryllim style:
+ * Active tab indicator:
  *   →  [icon]  Shop
  * Lives inside the shared arrow gutter (same width as brand spacer).
  */

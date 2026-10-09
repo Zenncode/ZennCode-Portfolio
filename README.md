@@ -1,6 +1,7 @@
 # ZennCode Portfolio
 
-Personal portfolio matching the structure and **bryl-minimal** design language of [bryllim.com](https://bryllim.com/), based on the official open skill: [bryllim/bryl-minimal-design](https://github.com/bryllim/bryl-minimal-design).
+Personal portfolio — a minimal, monochrome editorial layout in light, dark,
+and system themes.
 
 ## Stack
 
@@ -76,4 +77,7 @@ anchor with `data-track="…"` to override its display text.
 
 ## Design reference
 
-Do not copy Bryl’s personal content. Copy the **layout system and visual language** only (MIT design skill).
+- Monochrome palette, one ink colour, no accents
+- Left sidebar nav on desktop, top bar + overlay on mobile
+- Mono type for UI, serif for article body
+- Everything hairline-divided; cards are flat with soft shadows

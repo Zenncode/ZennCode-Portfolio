@@ -30,7 +30,7 @@ function BracketMarks() {
 type Slot = 'is-left' | 'is-center' | 'is-right'
 
 /**
- * Home “02 — projects” — 3-card deck carousel (bryllim-style).
+ * Home “02 — projects” — 3-card deck carousel.
  * Center card is full; left/right are tilted behind. Click to bring forward.
  */
 export default function Projects() {

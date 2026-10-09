@@ -312,7 +312,7 @@ export function saveChatUser(user: ChatUser): void {
   }
 }
 
-/** Real geo from IP (same idea as bryllim) — optional auto-fill for location */
+/** Real geo from IP — optional auto-fill for location */
 export async function detectLocation(
   outerSignal?: AbortSignal,
 ): Promise<{ location: string; countryCode: string } | null> {
