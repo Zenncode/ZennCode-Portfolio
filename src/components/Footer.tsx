@@ -1,5 +1,4 @@
 import { site } from '../data/portfolio'
-import { Link as RouterLink } from 'react-router-dom'
 
 export default function Footer() {
   return (
@@ -32,14 +31,6 @@ export default function Footer() {
             >
               email
             </a>
-            {/* Owner entry point. Anyone can click it — the /admin gate is
-                Firebase Auth + the `admins` allowlist, not an unlisted URL. */}
-            <RouterLink
-              to="/admin"
-              className="font-mono text-[0.7rem] text-[var(--color-dim)] hover:text-[var(--color-ink)] no-underline transition-colors"
-            >
-              admin
-            </RouterLink>
           </div>
         </div>
       </footer>
