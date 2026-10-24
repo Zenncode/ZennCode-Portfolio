@@ -107,16 +107,16 @@
       "href": "https://codeclash-fqke.onrender.com/"
     },
     {
-      "name": "zenncode",
+      "name": "@zenntechinc/zennstack",
       "category": "Node Package Manager (NPM) · Frontend",
-      "description": "Frontend template package on npm.",
-      "href": "https://www.npmjs.com/package/zenncode"
+      "description": "Frontend scaffolding CLI — `zennstack init` for React, Vue, Next.js, Angular and more with 12 architecture choices and UI design agents.",
+      "href": "https://www.npmjs.com/package/@zenntechinc/zennstack"
     },
     {
-      "name": "zenntechinc-cli",
+      "name": "@zenntechinc/zennova-cli",
       "category": "Node Package Manager (NPM) · Backend",
-      "description": "Backend CLI package on npm.",
-      "href": "https://www.npmjs.com/package/zenntechinc-cli"
+      "description": "Official ZENNOVA CLI — `zennova new` backend scaffolding with Express, MongoDB, Socket.IO, Redis, Docker and Jest.",
+      "href": "https://www.npmjs.com/package/@zenntechinc/zennova-cli"
     }
   ]
 }
