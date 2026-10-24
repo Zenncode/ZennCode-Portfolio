@@ -294,7 +294,7 @@ const ENTRIES: Entry[] = [
     hints: ['github', 'git hub', 'repo', 'repository', 'repos', 'code'],
     answer: {
       title: 'GitHub',
-      body: `Find Zenjan on GitHub at ${site.socials.githubUser} — ${contributionCount.toLocaleString()} contributions and counting, spanning web, mobile, IoT, games, and npm packages (zenncode, zenntechinc-cli).`,
+      body: `Find Zenjan on GitHub at ${site.socials.githubUser} — ${contributionCount.toLocaleString()} contributions and counting, spanning web, mobile, IoT, games, and npm packages (@zenntechinc/zennstack, @zenntechinc/zennova-cli).`,
       links: [{ label: 'Open GitHub', href: site.socials.github }],
     },
   },
