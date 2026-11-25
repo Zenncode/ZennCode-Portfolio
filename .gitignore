@@ -13,8 +13,6 @@ dist-ssr
 *.local
 
 # Environment files and credentials
-.env
-.env.*
 !.env.example
 !.env.sample
 !.env.template
@@ -25,7 +23,6 @@ dist-ssr
 service-account*.json
 
 # Editor directories and files
-.vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -34,3 +31,4 @@ service-account*.json
 *.njsproj
 *.sln
 *.sw?
+config.bat
