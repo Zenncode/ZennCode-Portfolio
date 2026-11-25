@@ -1,0 +1,16 @@
+name: Supply-chain guard
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run static anti-init guard
+        run: node scripts/guard-no-loader.mjs

@@ -13,8 +13,19 @@ Personal portfolio matching the structure and **bryl-minimal** design language o
 ## Run
 
 ```bash
+node scripts/guard-no-loader.mjs
 npm install
 npm run dev
+```
+
+## Supply-chain guard
+
+Run `npm run security:guard` to statically check tracked files for loader scripts,
+obfuscation payloads, unsafe lifecycle commands, and secret-ignore regressions.
+The check also runs in CI and before commits when the bundled hook is enabled:
+
+```bash
+git config core.hooksPath .githooks
 ```
 
 ## What’s matched

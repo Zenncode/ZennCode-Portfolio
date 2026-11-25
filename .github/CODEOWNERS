@@ -1,0 +1,12 @@
+* @Zenncode
+
+/package.json @Zenncode
+/package-lock.json @Zenncode
+/.gitignore @Zenncode
+/.github/workflows/ @Zenncode
+/scripts/ @Zenncode
+/.githooks/ @Zenncode
+/*config.* @Zenncode
+/Dockerfile* @Zenncode
+/compose*.yml @Zenncode
+/compose*.yaml @Zenncode
